@@ -94,7 +94,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             exit(flag);
         }
         //double runtime = GetTimer();
-        double runtime = time0 - omp_get_wtime( );
+        double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
         //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
 
