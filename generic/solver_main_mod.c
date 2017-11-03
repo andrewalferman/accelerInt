@@ -23,7 +23,7 @@
 //our code
 #include "header.h"
 #include "solver.h"
-#include "timer.h"
+//#include "timer.h"
 #include "read_initial_conditions.h"
 
 #ifdef GENERATE_DOCS
@@ -179,9 +179,10 @@ int main (int argc, char *argv[])
     init_solver_log();
 #endif
 
+    // Commented out to allow for individual timesteps to be timed
     //////////////////////////////
     // start timer
-    StartTimer();
+    //StartTimer();
     //////////////////////////////
 
     // set initial time
@@ -193,8 +194,18 @@ int main (int argc, char *argv[])
     while (t + EPS < end_time)
     {
         numSteps++;
-
+        // Changes here to support timing individual timesteps
+        ////////////////////
+        // Start timer
+        //StartTimer();
+        ////////////////////
         intDriver(NUM, t, t_next, var_host, y_host);
+        ////////////////////
+        //double runtime = GetTimer();
+        //runtime /= 1000.0;
+        //printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
+        ////////////////////
+
         t = t_next;
         t_next = fmin(end_time, (numSteps + 1) * t_step);
 
@@ -230,16 +241,17 @@ int main (int argc, char *argv[])
     solver_log();
 #endif
 
+    // Commented out to time individual timesteps
     /////////////////////////////////
     // end timer
-    double runtime = GetTimer();
+    //double runtime = GetTimer();
     /////////////////////////////////
 
 
-    runtime /= 1000.0;
-    printf ("Time: %.15e sec\n", runtime);
-    runtime = runtime / ((double)(numSteps));
-    printf ("Time per step: %e (s)\t%.15e (s/thread)\n", runtime, runtime / NUM);
+    //runtime /= 1000.0;
+    //printf ("Time: %.15e sec\n", runtime);
+    //runtime = runtime / ((double)(numSteps));
+    //printf ("Time per step: %e (s)\t%.15e (s/thread)\n", runtime, runtime / NUM);
 #ifdef IGN
     printf ("Ig. Delay (s): %e\n", t_ign);
 #endif

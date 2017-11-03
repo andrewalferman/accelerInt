@@ -6,9 +6,11 @@
  * \date 03/10/2015
  *
  */
+#include <stdio.h>
 
 #include "header.h"
 #include "solver.h"
+#include "timer.h"
 
 #ifdef GENERATE_DOCS
  namespace generic {
@@ -28,6 +30,7 @@
 void intDriver (const int NUM, const double t, const double t_end,
                 const double *pr_global, double *y_global)
 {
+    //StartTimer();
     int tid;
     #pragma omp parallel for shared(y_global, pr_global) private(tid)
     for (tid = 0; tid < NUM; ++tid) {
@@ -42,10 +45,13 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             y_local[i] = y_global[tid + i * NUM];
         }
-
+        fprintf(stderr, "It got here.");
+        StartTimer();
         // call integrator for one time step
         check_error(tid, integrate (t, t_end, pr_local, y_local));
-
+        double runtime = GetTimer();
+        runtime /= 1000.0;
+        printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
         // update global array with integrated values
 
         for (int i = 0; i < NSP; i++)
@@ -54,7 +60,9 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
     } //end tid loop
-
+    //double runtime = GetTimer();
+    //runtime /= 1000.0;
+    //printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
 } // end intDriver
 
 #ifdef GENERATE_DOCS

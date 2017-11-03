@@ -64,3 +64,13 @@ rk78-int
 radau-int*
 exprb43-int*
 exp4-int*
+radau2a-int
+rkc-int
+
+#ignore logs
+log/
+
+#ignore specific initial condition files
+ign_data.bin
+ign_data_H2CO.bin
+ign_data_GRI

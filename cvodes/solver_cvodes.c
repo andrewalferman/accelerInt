@@ -9,6 +9,7 @@
 
 #include "header.h"
 #include "solver.h"
+#include "timer.h"
 
 /* CVODES INCLUDES */
 #include "sundials/sundials_types.h"
@@ -80,7 +81,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             printf("Error setting end time for thread %d, code: %d\n", tid, flag);
             exit(flag);
         }
-
+        StartTimer();
         // call integrator for one time step
         flag = CVode(integrators[index], t_end, fill, &t_next, CV_NORMAL);
         if ((flag != CV_SUCCESS && flag != CV_TSTOP_RETURN) || t_next != t_end)
@@ -88,12 +89,17 @@ void intDriver (const int NUM, const double t, const double t_end,
             printf("Error on integration step for thread %d, code %d\n", tid, flag);
             exit(flag);
         }
+        double runtime = GetTimer();
+        runtime /= 1000.0;
+        //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
 
         // update global array with integrated values
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
         }
+        printf("tid: %2i \n", tid);
+        printf("Temp: %.15e, Time: %.15e sec\n", y_global[tid], runtime);
 
     } // end tid loop
 

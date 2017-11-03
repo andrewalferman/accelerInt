@@ -14,10 +14,10 @@ def main(directory, cut=None):
         # and save to binary C file
         for npy in sorted(npy_files):
             state_data = np.load(npy)
-            state_data = state_data.reshape(state_data.shape[0] *
-                                state_data.shape[1],
-                                state_data.shape[2]
-                                )
+            #state_data = state_data.reshape(state_data.shape[0] *
+            #                    state_data.shape[1],
+            #                    state_data.shape[2]
+            #                    )
             if data is None:
                 data = state_data
             else:
