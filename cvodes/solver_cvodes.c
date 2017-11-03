@@ -85,7 +85,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         //StartTimer();
-        time0 = omp_get_wtime( );
+        double time0 = omp_get_wtime( );
         // call integrator for one time step
         flag = CVode(integrators[index], t_end, fill, &t_next, CV_NORMAL);
         if ((flag != CV_SUCCESS && flag != CV_TSTOP_RETURN) || t_next != t_end)
