@@ -45,7 +45,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             y_local[i] = y_global[tid + i * NUM];
         }
-        fprintf(stderr, "It got here.");
+        
         StartTimer();
         // call integrator for one time step
         check_error(tid, integrate (t, t_end, pr_local, y_local));
