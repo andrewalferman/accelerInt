@@ -6,11 +6,11 @@
  * \date 03/10/2015
  *
  */
-#include <stdio.h>
+#include <omp.h>
 
 #include "header.h"
 #include "solver.h"
-#include "timer.h"
+//#include "timer.h"
 
 #ifdef GENERATE_DOCS
  namespace generic {
@@ -45,11 +45,13 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             y_local[i] = y_global[tid + i * NUM];
         }
-        
-        StartTimer();
+
+        //StartTimer();
+        double time0 = omp_get_wtime( );
         // call integrator for one time step
         check_error(tid, integrate (t, t_end, pr_local, y_local));
-        double runtime = GetTimer();
+        //double runtime = GetTimer();
+        double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
         printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
         // update global array with integrated values
