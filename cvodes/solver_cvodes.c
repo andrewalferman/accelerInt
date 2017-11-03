@@ -103,8 +103,8 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             y_global[tid + i * NUM] = y_local[i];
         }
-        printf("tid: %2i \n", tid);
-        printf("Temp: %.15e, Time: %.15e sec\n", y_global[tid], runtime);
+        // printf("tid: %2i \n", tid);
+        printf("%.15e,%.15e\n", y_global[tid], runtime);
 
     } // end tid loop
 
