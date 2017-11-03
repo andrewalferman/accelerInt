@@ -53,7 +53,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         //double runtime = GetTimer();
         double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
-        printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
+        printf("%.15e,%.15e\n", y_global[tid], runtime);
         // update global array with integrated values
 
         for (int i = 0; i < NSP; i++)
