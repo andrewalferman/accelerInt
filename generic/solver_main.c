@@ -261,11 +261,11 @@ int main (int argc, char *argv[])
     //printf ("Time: %.15e sec\n", runtime);
     //runtime = runtime / ((double)(numSteps));
     //printf ("Time per step: %e (s)\t%.15e (s/thread)\n", runtime, runtime / NUM);
-    
+
 #ifdef IGN
     printf ("Ig. Delay (s): %e\n", t_ign);
 #endif
-    printf("TFinal: %e\n", y_host[0]);
+//    printf("TFinal: %e\n", y_host[0]);
 
 #ifdef LOG_OUTPUT
     fclose (pFile);
