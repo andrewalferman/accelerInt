@@ -98,13 +98,17 @@ void intDriver (const int NUM, const double t, const double t_end,
         runtime /= 1000.0;
         //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
 
-        // update global array with integrated values
+        // update global array with integrated values and print output
+        printf("%2i,", tid);
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
+            printf("%.15e,", y_local[i]);
         }
+
+        // Print the output
         // printf("tid: %2i \n", tid);
-        printf("%.15e,%.15e\n", y_global[tid], runtime);
+        printf("%.15e\n", runtime);
 
     } // end tid loop
 
