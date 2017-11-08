@@ -21,6 +21,8 @@
 #include "cvodes/cvodes.h"
 #include "cvodes/cvodes_lapack.h"
 #include "cvodes_jac.h"
+//#include "cvodes_dydt.h"
+#include "jacob.h"
 
 extern N_Vector *y_locals;
 extern double* y_local_vectors;
@@ -41,7 +43,7 @@ namespace cvode {
  * The integration driver for the CVODEs solver
  */
 void intDriver (const int NUM, const double t, const double t_end,
-                const double *pr_global, double *y_global, struct timeval *)
+                const double *pr_global, double *y_global)
 {
     int tid;
     double t_next;
@@ -102,29 +104,26 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         // update global array with integrated values and print output
         //char printstring[1500];
-        //printf("%i,", tid);
+        printf("%i,", tid);
 
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
-            //printf("%.15e,", y_local[i]);
+            printf("%.15e,", y_local[i]);
         }
 
         // Calculate the stiffness metrics
-        double N_Vector ydot[NSP];
-        double DlsMat jac[NSP][NSP];
-        dydt_cvodes(t_end, y_local, ydot, pr_global);
-        if (flag != CV_SUCCESS) {
-          printf("Unable to obtain dydt.")
-        }
-        eval_jacob_cvodes(NSP, t_end, y_local, ydot, jac, pr_global, N_Vector tmp1, N_Vector tmp2, N_Vector tmp3);
-        if (flag != CV_SUCCESS) {
-          printf("Unable to obtain Jacobian.")
-        }
+        //N_Vector ydot;
+        //DlsMat * Jac;
+        //dydt_cvodes(t_end, y_local, ydot, pr_global);
+        //eval_jacob_cvodes(NSP, t_end, y_local, ydot, Jac, pr_global, N_Vector tmp1, N_Vector tmp2, N_Vector tmp3);
 
+	//double * jac;
+	//eval_jacob(t_end, pr_global[tid], y_local, jac);
+	//printf("%d, %d\n", y_local[tid], runtime);
         // Print the output
         // printf("tid: %2i \n", tid);
-        //printf("%.15e\n", runtime);
+        printf("%.15e\n", runtime);
         //printf(printstring);
 
     } // end tid loop
