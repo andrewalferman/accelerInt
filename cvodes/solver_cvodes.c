@@ -46,7 +46,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 {
     int tid;
     double t_next;
-    #pragma omp parallel for shared(y_global, pr_global, integrators, y_locals) private(tid, t_next, runtime, time0, printstring)
+    #pragma omp parallel for shared(y_global, pr_global, integrators, y_locals) private(tid, t_next)
     for (tid = 0; tid < NUM; ++tid) {
         int index = omp_get_thread_num();
 
@@ -112,9 +112,9 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Not good practice, but we'll do this for now to get it started
-        float pressure = 101325.0;
-        double jac[sizeof y_local];
-        double* jacobian = eval_jacob(t_end, pressure, y_local, jac)
+        //float pressure = 101325.0;
+        //double * jac;
+        //eval_jacob(t_end, pressure, y_local, jac);
 
         // Print the output
         // printf("tid: %2i \n", tid);
