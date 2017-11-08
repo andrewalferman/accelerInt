@@ -203,17 +203,8 @@ int main (int argc, char *argv[])
     while (t + EPS < end_time)
     {
         numSteps++;
-        // Changes here to support timing individual timesteps
-        ////////////////////
-        // Start timer
-        //StartTimer();
-        ////////////////////
+
         intDriver(NUM, t, t_next, var_host, y_host);
-        ////////////////////
-        //double runtime = GetTimer();
-        //runtime /= 1000.0;
-        //printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
-        ////////////////////
 
         t = t_next;
         t_next = fmin(end_time, (numSteps + 1) * t_step);

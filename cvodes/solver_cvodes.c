@@ -11,7 +11,7 @@
 
 #include "header.h"
 #include "solver.h"
-//#include "timer.h"
+#include "timer.h"
 
 /* CVODES INCLUDES */
 #include "sundials/sundials_types.h"
@@ -20,8 +20,7 @@
 #include "nvector/nvector_serial.h"
 #include "cvodes/cvodes.h"
 #include "cvodes/cvodes_lapack.h"
-
-#include "jacob.h"
+#include "cvodes_jac.h"
 
 extern N_Vector *y_locals;
 extern double* y_local_vectors;
@@ -42,7 +41,7 @@ namespace cvode {
  * The integration driver for the CVODEs solver
  */
 void intDriver (const int NUM, const double t, const double t_end,
-                const double *pr_global, double *y_global)
+                const double *pr_global, double *y_global, struct timeval *)
 {
     int tid;
     double t_next;
@@ -111,10 +110,17 @@ void intDriver (const int NUM, const double t, const double t_end,
             //printf("%.15e,", y_local[i]);
         }
 
-        // Not good practice, but we'll do this for now to get it started
-        //float pressure = 101325.0;
-        //double * jac;
-        //eval_jacob(t_end, pressure, y_local, jac);
+        // Calculate the stiffness metrics
+        double N_Vector ydot[NSP];
+        double DlsMat jac[NSP][NSP];
+        dydt_cvodes(t_end, y_local, ydot, pr_global);
+        if (flag != CV_SUCCESS) {
+          printf("Unable to obtain dydt.")
+        }
+        eval_jacob_cvodes(NSP, t_end, y_local, ydot, jac, pr_global, N_Vector tmp1, N_Vector tmp2, N_Vector tmp3);
+        if (flag != CV_SUCCESS) {
+          printf("Unable to obtain Jacobian.")
+        }
 
         // Print the output
         // printf("tid: %2i \n", tid);
