@@ -21,6 +21,8 @@
 #include "cvodes/cvodes.h"
 #include "cvodes/cvodes_lapack.h"
 
+#include "jacob.h"
+
 extern N_Vector *y_locals;
 extern double* y_local_vectors;
 extern void** integrators;
@@ -44,7 +46,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 {
     int tid;
     double t_next;
-    #pragma omp parallel for shared(y_global, pr_global, integrators, y_locals) private(tid, t_next)
+    #pragma omp parallel for shared(y_global, pr_global, integrators, y_locals) private(tid, t_next, runtime, time0, printstring)
     for (tid = 0; tid < NUM; ++tid) {
         int index = omp_get_thread_num();
 
@@ -84,6 +86,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             exit(flag);
         }
 
+        // Need to replace this with a threadsafe non-OMP method
         //StartTimer();
         double time0 = omp_get_wtime( );
         // call integrator for one time step
@@ -99,16 +102,24 @@ void intDriver (const int NUM, const double t, const double t_end,
         //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
 
         // update global array with integrated values and print output
-        printf("%2i,", tid);
+        //char printstring[1500];
+        //printf("%i,", tid);
+
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
-            printf("%.15e,", y_local[i]);
+            //printf("%.15e,", y_local[i]);
         }
+
+        // Not good practice, but we'll do this for now to get it started
+        float pressure = 101325.0;
+        double jac[sizeof y_local];
+        double* jacobian = eval_jacob(t_end, pressure, y_local, jac)
 
         // Print the output
         // printf("tid: %2i \n", tid);
-        printf("%.15e\n", runtime);
+        //printf("%.15e\n", runtime);
+        //printf(printstring);
 
     } // end tid loop
 
