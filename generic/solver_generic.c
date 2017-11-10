@@ -53,13 +53,16 @@ void intDriver (const int NUM, const double t, const double t_end,
         //double runtime = GetTimer();
         double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
-        printf("%.15e,%.15e\n", y_global[tid], runtime);
+        //printf("%.15e,%.15e\n", y_global[tid], runtime);
+        printf("%i,", tid);
         // update global array with integrated values
 
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
+            printf("%.15e,", y_local[i]);
         }
+        printf("%.15e\n", runtime);
 
     } //end tid loop
     //double runtime = GetTimer();
