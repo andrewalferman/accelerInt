@@ -346,9 +346,14 @@ def rearrangepasr(Y, N2_pos):
 starttime = datetime.datetime.now()
 print('Start time: {}'.format(starttime))
 
+ratios, indicators, CEMAvals = [], [], []
 with open('../speciesdata-cvodes.csv', 'rt') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')  # , quotechar='|')
     for row in reader:
         state = row[1:-1]
-        print(np.shape(state))
-        raise Exception('Test run')
+        ratio, indicator, CEM = stiffmetrics(0, state, jacobval, 101325.0)
+        ratios.append(ratio)
+        indicators.append(indicator)
+        CEMAvals.append(CEM)
+
+print(np.shape(ratios))
