@@ -9,7 +9,7 @@ Created on Thu Aug 04 10:44 2017
 import os as os
 import numpy as np
 import sys
-sys.path.insert(0, '/scratch/Research/GRI_Mech_3/gri-mech-3-files/')
+sys.path.insert(0, '/scratch/Research/GRI_Mech_3/')
 import pyjacob as pyjacob
 # import scipy as sci
 import datetime
@@ -346,9 +346,9 @@ def rearrangepasr(Y, N2_pos):
 starttime = datetime.datetime.now()
 print('Start time: {}'.format(starttime))
 
-with open('../speciesdata-cvodes.csv', 'rb') as csvfile:
+with open('../speciesdata-cvodes.csv', 'rt') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')  # , quotechar='|')
     for row in reader:
         state = row[1:-1]
-        print(state)
+        print(np.shape(state))
         raise Exception('Test run')
