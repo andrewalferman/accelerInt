@@ -350,7 +350,7 @@ ratios, indicators, CEMAvals = [], [], []
 with open('../speciesdata-cvodes.csv', 'rt') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')  # , quotechar='|')
     for row in reader:
-        state = row[1:-1]
+        state = np.array([float(y) for y in row[1:-1]])
         ratio, indicator, CEM = stiffmetrics(0, state, jacobval, 101325.0)
         ratios.append(ratio)
         indicators.append(indicator)
