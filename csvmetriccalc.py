@@ -8,6 +8,8 @@ Created on Thu Aug 04 10:44 2017
 
 import os as os
 import numpy as np
+import sys
+sys.path.insert(0, '/scratch/Research/GRI_Mech_3/gri-mech-3-files/')
 import pyjacob as pyjacob
 # import scipy as sci
 import datetime
