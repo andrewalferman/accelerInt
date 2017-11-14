@@ -32,6 +32,19 @@ extern void** integrators;
 namespace cvode {
 #endif
 
+/* DGEEV prototype */
+extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
+                int* lda, double* wr, double* wi, double* vl, int* ldvl,
+                double* vr, int* ldvr, double* work, int* lwork, int* info );
+/* Auxiliary routines prototypes */
+extern void print_eigenvalues( char* desc, int n, double* wr, double* wi );
+
+/* Parameters */
+#define N NSP
+#define LDA N
+#define LDVL N
+#define LDVR N
+
 /**
  * \brief Integration driver for the CPU integrators
  * \param[in]       NUM         the number of IVPs to solve
@@ -103,7 +116,6 @@ void intDriver (const int NUM, const double t, const double t_end,
         //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
 
         // update global array with integrated values and print output
-        //char printstring[1500];
         //printf("%i,", tid);
 
         for (int i = 0; i < NSP; i++)
@@ -113,34 +125,62 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Calculate the stiffness metrics
-        //N_Vector ydot;
-        //DlsMat * Jac;
-        //dydt_cvodes(t_end, y_local, ydot, pr_global);
-        //eval_jacob_cvodes(NSP, t_end, y_local, ydot, Jac, pr_global, N_Vector tmp1, N_Vector tmp2, N_Vector tmp3);
+      	double jac[NSP*NSP*sizeof(double)];
+      	eval_jacob(t_end, pr_global[tid], y_local, &jac);
+        // Rearrange the Jacobian and also get the transpose
+        double jacobian[NSP][NSP];
+        double hermitian[NSP][NSP];
+        for (int i = 0; i < NSP; i++) {
+          for (int j = 0; j < NSP; j++) {
+            jacobian[i][j] = jac[i * NSP + j];
+            hermitian[i][j] = 0.5 * (jacobian[i][j] + jac[j * NSP + i]);
+          }
+        }
 
-  // Calculate the stiffness metrics
-	double jac[(NSP)*(NSP)*sizeof(double)];
-	eval_jacob(t_end, pr_global[tid], y_local, &jac);
+        // Get the eigenvalues of both matrices
+        int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
+        double wkopt;
+        double* work;
+        /* Local arrays */
+        double wr[N], wi[N], vl[LDVL*N], vr[LDVR*N];
 
-  //Rearrange the Jacobian and also get the transpose
-  double jacobian[NSP][NSP];
-  double hermitian[NSP][NSP];
-  for (int i = 0; i < NSP; i++) {
-    for (int j = 0; j < NSP; j++) {
-      jacobian[j][i] = jac[i * NSP + j];
-      hermitian[j][i] = 0.5 * (jacobian[j][i] + jac[j * NSP + i]);
-    }
-  }
-  
-	//free(jac);
-	//printf("%.15e, %.15e\n", y_local[tid], runtime);
-        // Print the output
-        // printf("tid: %2i \n", tid);
-        //printf("%.15e\n", runtime);
+        /* Query and allocate the optimal workspace */
+        lwork = -1;
+        dgeev( "Vectors", "Vectors", &n, jacobian, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
+         &wkopt, &lwork, &info );
+        lwork = (int)wkopt;
+        work = (double*)malloc( lwork*sizeof(double) );
+        /* Solve eigenproblem */
+        dgeev( "Vectors", "Vectors", &n, jacobian, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
+         work, &lwork, &info );
+        /* Check for convergence */
+        if( info > 0 ) {
+                printf( "The algorithm failed to compute eigenvalues.\n" );
+                exit( 1 );
+        }
+        /* Print eigenvalues */
+        print_eigenvalues( "Eigenvalues", n, wr, wi );
+
+        //Test print statement
+        //printf("%.15e, %.15e\n", jacobian[0][0], jacobian[0][10])
 
     } // end tid loop
 
 } // end intDriver
+
+/* Auxiliary routine: printing eigenvalues */
+void print_eigenvalues( char* desc, int n, double* wr, double* wi ) {
+        int j;
+        printf( "\n %s\n", desc );
+   for( j = 0; j < n; j++ ) {
+      if( wi[j] == (double)0.0 ) {
+         printf( " %6.2f", wr[j] );
+      } else {
+         printf( " (%6.2f,%6.2f)", wr[j], wi[j] );
+      }
+   }
+   printf( "\n" );
+}
 
 #ifdef GENERATE_DOCS
 }
