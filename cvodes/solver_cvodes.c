@@ -119,19 +119,21 @@ void intDriver (const int NUM, const double t, const double t_end,
         //eval_jacob_cvodes(NSP, t_end, y_local, ydot, Jac, pr_global, N_Vector tmp1, N_Vector tmp2, N_Vector tmp3);
 
   // Calculate the stiffness metrics
-	double * jac[(NSP)*(NSP)*sizeof(double)];
+	double jac[(NSP)*(NSP)*sizeof(double)];
 	eval_jacob(t_end, pr_global[tid], y_local, &jac);
 
   //Rearrange the Jacobian and also get the transpose
   double jacobian[NSP][NSP];
   double hermitian[NSP][NSP];
-  for (int i = 0, i < NSP, i++) {
-    for (int j = 0, j < NSP, j++) {
+  for (int i = 0; i < NSP; i++) {
+    for (int j = 0; j < NSP; j++) {
       jacobian[j][i] = jac[i * NSP + j];
       hermitian[j][i] = 0.5 * (jacobian[j][i] + jac[j * NSP + i]);
     }
   }
-	//printf("%d, %d\n", y_local[tid], runtime);
+  
+	//free(jac);
+	//printf("%.15e, %.15e\n", y_local[tid], runtime);
         // Print the output
         // printf("tid: %2i \n", tid);
         //printf("%.15e\n", runtime);
