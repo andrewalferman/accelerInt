@@ -37,7 +37,7 @@ extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                 int* lda, double* wr, double* wi, double* vl, int* ldvl,
                 double* vr, int* ldvr, double* work, int* lwork, int* info );
 /* Auxiliary routines prototypes */
-extern void print_eigenvalues( char* desc, int n, double* wr, double* wi );
+//extern void print_eigenvalues( char* desc, int n, double* wr, double* wi );
 
 /* Parameters */
 #define N NSP
@@ -125,15 +125,15 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Calculate the stiffness metrics
-      	double jac[NSP*NSP*sizeof(double)];
-      	eval_jacob(t_end, pr_global[tid], y_local, &jac);
+      	double jac[NSP*NSP];
+      	eval_jacob(t_end, pr_global[tid], y_local, jac);
         // Rearrange the Jacobian and also get the transpose
-        double jacobian[NSP][NSP];
-        double hermitian[NSP][NSP];
+        //double jacobian[NSP][NSP];
+        double hermitian[NSP*NSP];
         for (int i = 0; i < NSP; i++) {
           for (int j = 0; j < NSP; j++) {
-            jacobian[i][j] = jac[i * NSP + j];
-            hermitian[i][j] = 0.5 * (jacobian[i][j] + jac[j * NSP + i]);
+            //jacobian[i][j] = jac[i * NSP + j];
+            hermitian[i * NSP + j] = 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
           }
         }
 
@@ -152,12 +152,12 @@ void intDriver (const int NUM, const double t, const double t_end,
         /* Query and allocate the optimal workspace */
         // First, the Jacobian
         lwork = -1;
-        dgeev( "Vectors", "Vectors", &n, jacobian, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
+        dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
          &wkopt, &lwork, &info );
         lwork = (int)wkopt;
         work = (double*)malloc( lwork*sizeof(double) );
         /* Solve eigenproblem */
-        dgeev( "Vectors", "Vectors", &n, jacobian, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
+        dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
          work, &lwork, &info );
         /* Check for convergence */
         if( info > 0 ) {
@@ -165,11 +165,11 @@ void intDriver (const int NUM, const double t, const double t_end,
                 exit( 1 );
         }
         // Next, the Hermitian
-        lwork = -1;
+        lworkh = -1;
         dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
          &wkopth, &lworkh, &infoh );
-        lwork = (int)wkopth;
-        work = (double*)malloc( lworkh*sizeof(double) );
+        lworkh = (int)wkopth;
+        workh = (double*)malloc( lworkh*sizeof(double) );
         /* Solve eigenproblem */
         dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, wr, wi, vl, &ldvlh, vr, &ldvrh,
          workh, &lworkh, &infoh );
@@ -184,7 +184,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double maxjaceig = 0;
         double minhereig = 1e10;
         double maxhereig = 0;
-        for (i = 0; i < NSP; i++) {
+        for (int i = 0; i < NSP; i++) {
           if (wr[i] < minjaceig && wr[i] != (double)0.0) {
             minjaceig = wr[i];
           }
