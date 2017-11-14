@@ -118,7 +118,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         //dydt_cvodes(t_end, y_local, ydot, pr_global);
         //eval_jacob_cvodes(NSP, t_end, y_local, ydot, Jac, pr_global, N_Vector tmp1, N_Vector tmp2, N_Vector tmp3);
 
-	double * jac;
+	double * jac[(NSP+2)*(NSP+2)*sizeof(double)];
 	eval_jacob(t_end, pr_global[tid], y_local, &jac);
 	//printf("%d, %d\n", y_local[tid], runtime);
         // Print the output
