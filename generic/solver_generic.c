@@ -11,6 +11,18 @@
 #include "header.h"
 #include "solver.h"
 //#include "timer.h"
+#include "jacob.h"
+
+/* DGEEV prototype */
+extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
+                int* lda, double* wr, double* wi, double* vl, int* ldvl,
+                double* vr, int* ldvr, double* work, int* lwork, int* info );
+
+/* Parameters */
+#define N NSP
+#define LDA N
+#define LDVL N
+#define LDVR N
 
 #ifdef GENERATE_DOCS
  namespace generic {

@@ -25,9 +25,9 @@
 //#include "cvodes_dydt.h"
 #include "jacob.h"
 
-extern N_Vector *y_locals;
-extern double* y_local_vectors;
-extern void** integrators;
+// extern N_Vector *y_locals;
+// extern double* y_local_vectors;
+// extern void** integrators;
 
 #ifdef GENERATE_DOCS
 namespace cvode {
@@ -37,8 +37,6 @@ namespace cvode {
 extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                 int* lda, double* wr, double* wi, double* vl, int* ldvl,
                 double* vr, int* ldvr, double* work, int* lwork, int* info );
-/* Auxiliary routines prototypes */
-//extern void print_eigenvalues( char* desc, int n, double* wr, double* wi );
 
 /* Parameters */
 #define N NSP
@@ -217,20 +215,6 @@ void intDriver (const int NUM, const double t, const double t_end,
     } // end tid loop
 
 } // end intDriver
-
-// /* Auxiliary routine: printing eigenvalues */
-// void print_eigenvalues( char* desc, int n, double* wr, double* wi ) {
-//         int j;
-//         printf( "\n %s\n", desc );
-//    for( j = 0; j < n; j++ ) {
-//       if( wi[j] == (double)0.0 ) {
-//          printf( " %6.2f", wr[j] );
-//       } else {
-//          printf( " (%6.2f,%6.2f)", wr[j], wi[j] );
-//       }
-//    }
-//    printf( "\n" );
-// }
 
 #ifdef GENERATE_DOCS
 }
