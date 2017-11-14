@@ -138,13 +138,19 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Get the eigenvalues of both matrices
+        // Made 2 sets of variables in case dgeev messes them up the first time
         int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
+        int nh = N, ldah = LDA, ldvlh = LDVL, ldvrh = LDVR, infoh, lworkh;
         double wkopt;
         double* work;
+        double wkopth;
+        double* workh;
         /* Local arrays */
         double wr[N], wi[N], vl[LDVL*N], vr[LDVR*N];
+        double xr[N], xi[N], ul[LDVL*N], ur[LDVR*N];
 
         /* Query and allocate the optimal workspace */
+        // First, the Jacobian
         lwork = -1;
         dgeev( "Vectors", "Vectors", &n, jacobian, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
          &wkopt, &lwork, &info );
@@ -158,8 +164,42 @@ void intDriver (const int NUM, const double t, const double t_end,
                 printf( "The algorithm failed to compute eigenvalues.\n" );
                 exit( 1 );
         }
-        /* Print eigenvalues */
-        print_eigenvalues( "Eigenvalues", n, wr, wi );
+        // Next, the Hermitian
+        lwork = -1;
+        dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
+         &wkopth, &lworkh, &infoh );
+        lwork = (int)wkopth;
+        work = (double*)malloc( lworkh*sizeof(double) );
+        /* Solve eigenproblem */
+        dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, wr, wi, vl, &ldvlh, vr, &ldvrh,
+         workh, &lworkh, &infoh );
+        /* Check for convergence */
+        if( info > 0 ) {
+                printf( "The algorithm failed to compute eigenvalues.\n" );
+                exit( 1 );
+        }
+
+        // Get the minimum and maximum values of the eigenvalues
+        double minjaceig = 1e10;
+        double maxjaceig = 0;
+        double minhereig = 1e10;
+        double maxhereig = 0;
+        for (i = 0; i < NSP; i++) {
+          if (wr[i] < minjaceig && wr[i] != (double)0.0) {
+            minjaceig = wr[i];
+          }
+          if (wr[i] > maxjaceig) {
+            maxjaceig = wr[i];
+          }
+          if (xr[i] < minhereig && xr[i] != (double)0.0) {
+            minhereig = wr[i];
+          }
+          if (xr[i] > maxhereig) {
+            maxhereig = xr[i];
+          }
+        }
+        // /* Print eigenvalues */
+        // print_eigenvalues( "Eigenvalues", n, wr, wi );
 
         //Test print statement
         //printf("%.15e, %.15e\n", jacobian[0][0], jacobian[0][10])
@@ -168,19 +208,19 @@ void intDriver (const int NUM, const double t, const double t_end,
 
 } // end intDriver
 
-/* Auxiliary routine: printing eigenvalues */
-void print_eigenvalues( char* desc, int n, double* wr, double* wi ) {
-        int j;
-        printf( "\n %s\n", desc );
-   for( j = 0; j < n; j++ ) {
-      if( wi[j] == (double)0.0 ) {
-         printf( " %6.2f", wr[j] );
-      } else {
-         printf( " (%6.2f,%6.2f)", wr[j], wi[j] );
-      }
-   }
-   printf( "\n" );
-}
+// /* Auxiliary routine: printing eigenvalues */
+// void print_eigenvalues( char* desc, int n, double* wr, double* wi ) {
+//         int j;
+//         printf( "\n %s\n", desc );
+//    for( j = 0; j < n; j++ ) {
+//       if( wi[j] == (double)0.0 ) {
+//          printf( " %6.2f", wr[j] );
+//       } else {
+//          printf( " (%6.2f,%6.2f)", wr[j], wi[j] );
+//       }
+//    }
+//    printf( "\n" );
+// }
 
 #ifdef GENERATE_DOCS
 }
