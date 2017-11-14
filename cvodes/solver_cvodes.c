@@ -8,6 +8,7 @@
  */
 
 #include <omp.h>
+#include <stdlib.h>
 
 #include "header.h"
 #include "solver.h"
@@ -127,8 +128,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
       	eval_jacob(t_end, pr_global[tid], y_local, jac);
-        // Rearrange the Jacobian and also get the transpose
-        //double jacobian[NSP][NSP];
+        // Get the Hermitian
         double hermitian[NSP*NSP];
         for (int i = 0; i < NSP; i++) {
           for (int j = 0; j < NSP; j++) {
@@ -138,7 +138,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Get the eigenvalues of both matrices
-        // Made 2 sets of variables in case dgeev messes them up the first time
+        // Made 2 sets of variables in case dgeev messes them up
         int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
         int nh = N, ldah = LDA, ldvlh = LDVL, ldvrh = LDVR, infoh, lworkh;
         double wkopt;
@@ -180,24 +180,34 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Get the minimum and maximum values of the eigenvalues
-        double minjaceig = 1e10;
-        double maxjaceig = 0;
-        double minhereig = 1e10;
-        double maxhereig = 0;
+        double minjaceig = 1.0e10;
+        double CEM = 0.0;
+        double maxjaceig = 0.0;
+        double minhereig = 1.0e10;
+        double maxhereig = 0.0;
         for (int i = 0; i < NSP; i++) {
-          if (wr[i] < minjaceig && wr[i] != (double)0.0) {
-            minjaceig = wr[i];
+          if (abs(wr[i]) < minjaceig && wr[i] != (double)0.0) {
+            minjaceig = abs(wr[i]);
           }
-          if (wr[i] > maxjaceig) {
-            maxjaceig = wr[i];
+          if (wr[i] > CEM) {
+            CEM = wr[i];
           }
-          if (xr[i] < minhereig && xr[i] != (double)0.0) {
+          if (abs(wr[i]) > maxjaceig) {
+            maxjaceig = abs(wr[i]);
+          }
+          if (xr[i] < minhereig) {
             minhereig = wr[i];
           }
           if (xr[i] > maxhereig) {
             maxhereig = xr[i];
           }
         }
+
+        double stiffratio = maxjaceig / minjaceig;
+        double stiffindicator = 0.5 * (minhereig + maxhereig);
+
+        // Print stiffness metrics and timing info
+        printf("%i,%.15e,%.15e,%.15e,%.15e", tid, stiffratio, stiffindicator, CEM, runtime)
         // /* Print eigenvalues */
         // print_eigenvalues( "Eigenvalues", n, wr, wi );
 
