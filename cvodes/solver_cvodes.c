@@ -171,7 +171,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         lworkh = (int)wkopth;
         workh = (double*)malloc( lworkh*sizeof(double) );
         /* Solve eigenproblem */
-        dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, wr, wi, vl, &ldvlh, vr, &ldvrh,
+        dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
          workh, &lworkh, &infoh );
         /* Check for convergence */
         if( info > 0 ) {
@@ -186,7 +186,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double minhereig = 1.0e10;
         double maxhereig = 0.0;
         for (int i = 0; i < NSP; i++) {
-          if (abs(wr[i]) < minjaceig && wr[i] != (double)0.0) {
+          if (abs(wr[i]) < minjaceig && abs(wr[i]) > 2.22045e-16) {
             minjaceig = abs(wr[i]);
           }
           if (wr[i] > CEM) {
@@ -196,7 +196,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             maxjaceig = abs(wr[i]);
           }
           if (xr[i] < minhereig) {
-            minhereig = wr[i];
+            minhereig = xr[i];
           }
           if (xr[i] > maxhereig) {
             maxhereig = xr[i];
@@ -207,7 +207,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffindicator = 0.5 * (minhereig + maxhereig);
 
         // Print stiffness metrics and timing info
-        printf("%i,%.15e,%.15e,%.15e,%.15e", tid, stiffratio, stiffindicator, CEM, runtime)
+        printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
         // /* Print eigenvalues */
         // print_eigenvalues( "Eigenvalues", n, wr, wi );
 
