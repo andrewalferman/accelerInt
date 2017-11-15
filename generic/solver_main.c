@@ -5,6 +5,9 @@
  * \author Nicholas Curtis
  * \date 03/09/2015
  *
+ * Modifications from Andrew Alferman 
+ * 11/14/2017
+ *
  * Contains main function, setup, initialization, logging, timing and driver functions
  */
 

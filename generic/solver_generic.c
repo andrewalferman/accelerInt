@@ -5,6 +5,9 @@
  * \author Nicholas Curtis
  * \date 03/10/2015
  *
+ * Modifications from Andrew Alferman
+ * 11/14/2017
+ *
  */
 #include <omp.h>
 

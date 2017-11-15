@@ -5,6 +5,9 @@
  * \author Nicholas Curtis
  * \date 03/10/2015
  *
+ * Modifications from Andrew Alferman
+ * 11/14/2017
+ *
  */
 
 #include <omp.h>
@@ -28,11 +31,6 @@
 extern N_Vector *y_locals;
 extern double* y_local_vectors;
 extern void** integrators;
-
-#ifdef GENERATE_DOCS
-namespace cvode {
-#endif
-
 /* DGEEV prototype */
 extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                 int* lda, double* wr, double* wi, double* vl, int* ldvl,
@@ -43,6 +41,10 @@ extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
 #define LDA N
 #define LDVL N
 #define LDVR N
+
+#ifdef GENERATE_DOCS
+namespace cvode {
+#endif
 
 /**
  * \brief Integration driver for the CPU integrators
