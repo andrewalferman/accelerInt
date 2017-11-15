@@ -76,10 +76,10 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         if (tid == 296) {
-          printf("Y Vector:\n")
+          printf("Y Vector:\n");
           for (int i = 0; i < NSP; i++) {
-            printf("%.15e\n", y_local[i])
-          }  
+            printf("%.15e\n", y_local[i]);
+          }
         }
 
         // Calculate the stiffness metrics
@@ -95,13 +95,13 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         if (tid == 296) {
-          printf("Jacobian:\n")
+          printf("Jacobian:\n");
           for (int i = 0; i < NSP*NSP; i++) {
-            printf("%.15e\n", jac[i])
+            printf("%.15e\n", jac[i]);
           }
-          printf("Hermitian:\n")
+          printf("Hermitian:\n");
           for (int i = 0; i < NSP*NSP; i++) {
-            printf("%.15e\n", hermitian[i])
+            printf("%.15e\n", hermitian[i]);
           }
         }
 
