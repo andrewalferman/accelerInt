@@ -9,23 +9,23 @@
  * 11/14/2017
  *
  */
-#include <omp.h>
+//#include <omp.h>
 
 #include "header.h"
 #include "solver.h"
 //#include "timer.h"
-#include "jacob.h"
+//#include "jacob.h"
 
-/* DGEEV prototype */
-extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
-                int* lda, double* wr, double* wi, double* vl, int* ldvl,
-                double* vr, int* ldvr, double* work, int* lwork, int* info );
-
-/* Parameters */
-#define N NSP
-#define LDA N
-#define LDVL N
-#define LDVR N
+// /* DGEEV prototype */
+// extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
+//                 int* lda, double* wr, double* wi, double* vl, int* ldvl,
+//                 double* vr, int* ldvr, double* work, int* lwork, int* info );
+//
+// /* Parameters */
+// #define N NSP
+// #define LDA N
+// #define LDVL N
+// #define LDVR N
 
 #ifdef GENERATE_DOCS
  namespace generic {
@@ -62,12 +62,12 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         //StartTimer();
-        double time0 = omp_get_wtime( );
+        //double time0 = omp_get_wtime( );
         // call integrator for one time step
         check_error(tid, integrate (t, t_end, pr_local, y_local));
         //double runtime = GetTimer();
-        double runtime = omp_get_wtime( ) - time0;
-        runtime /= 1000.0;
+        // double runtime = omp_get_wtime( ) - time0;
+        // runtime /= 1000.0;
 
         // update global array with integrated values
         for (int i = 0; i < NSP; i++)
