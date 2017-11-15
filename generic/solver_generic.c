@@ -75,7 +75,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_global[tid + i * NUM] = y_local[i];
         }
 
-        printf("%i\n", tid)
+        printf("%i\n", tid);
 
         // if (tid == 296) {
         //   printf("Y Vector:\n");
