@@ -75,6 +75,13 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_global[tid + i * NUM] = y_local[i];
         }
 
+        if (tid == 296) {
+          printf("Y Vector:\n")
+          for (int i = 0; i < NSP; i++) {
+            printf("%.15e\n", y_local[i])
+          }  
+        }
+
         // Calculate the stiffness metrics
         double jac[NSP*NSP];
         eval_jacob(t_end, pr_global[tid], y_local, jac);
@@ -88,10 +95,6 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         if (tid == 296) {
-          printf("Y Vector:\n")
-          for (int i = 0; i < NSP; i++) {
-            printf("%.15e\n", y_local[i])
-          }
           printf("Jacobian:\n")
           for (int i = 0; i < NSP*NSP; i++) {
             printf("%.15e\n", jac[i])
