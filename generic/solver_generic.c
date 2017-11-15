@@ -87,6 +87,21 @@ void intDriver (const int NUM, const double t, const double t_end,
           }
         }
 
+        if (tid == 296) {
+          printf("Y Vector:\n")
+          for (int i = 0; i < NSP; i++) {
+            printf("%.15e\n", y_local[i])
+          }
+          printf("Jacobian:\n")
+          for (int i = 0; i < NSP*NSP; i++) {
+            printf("%.15e\n", jac[i])
+          }
+          printf("Hermitian:\n")
+          for (int i = 0; i < NSP*NSP; i++) {
+            printf("%.15e\n", hermitian[i])
+          }
+        }
+
         // Get the eigenvalues of both matrices
         // Made 2 sets of variables in case dgeev messes them up
         int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
@@ -157,7 +172,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffindicator = 0.5 * (minhereig + maxhereig);
 
         // Print stiffness metrics and timing info
-        printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
+        //printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
         // /* Print eigenvalues */
         // print_eigenvalues( "Eigenvalues", n, wr, wi );
 
