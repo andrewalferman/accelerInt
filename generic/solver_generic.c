@@ -17,10 +17,10 @@
 #include "jacob.h"
 
 #ifdef NAN
-printf("NAN is supported");
+/* NAN is supported */
 #endif
 #ifdef INFINITY
-printf("Infinity is supported");
+/* INFINITY is supported */
 #endif
 
 /* DGEEV prototype */
