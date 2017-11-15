@@ -75,104 +75,106 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_global[tid + i * NUM] = y_local[i];
         }
 
-        if (tid == 296) {
-          printf("Y Vector:\n");
-          for (int i = 0; i < NSP; i++) {
-            printf("%.15e\n", y_local[i]);
-          }
-        }
+        printf("%i\n", tid)
 
-        // Calculate the stiffness metrics
-        double jac[NSP*NSP];
-        eval_jacob(t_end, pr_global[tid], y_local, jac);
-        // Get the Hermitian
-        double hermitian[NSP*NSP];
-        for (int i = 0; i < NSP; i++) {
-          for (int j = 0; j < NSP; j++) {
-            //jacobian[i][j] = jac[i * NSP + j];
-            hermitian[i * NSP + j] = 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
-          }
-        }
-
-        if (tid == 296) {
-          printf("Jacobian:\n");
-          for (int i = 0; i < NSP*NSP; i++) {
-            printf("%.15e\n", jac[i]);
-          }
-          printf("Hermitian:\n");
-          for (int i = 0; i < NSP*NSP; i++) {
-            printf("%.15e\n", hermitian[i]);
-          }
-        }
-
-        // Get the eigenvalues of both matrices
-        // Made 2 sets of variables in case dgeev messes them up
-        int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
-        int nh = N, ldah = LDA, ldvlh = LDVL, ldvrh = LDVR, infoh, lworkh;
-        double wkopt;
-        double* work;
-        double wkopth;
-        double* workh;
-        /* Local arrays */
-        double wr[N], wi[N], vl[LDVL*N], vr[LDVR*N];
-        double xr[N], xi[N], ul[LDVL*N], ur[LDVR*N];
-
-        /* Query and allocate the optimal workspace */
-        // First, the Jacobian
-        lwork = -1;
-        dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
-         &wkopt, &lwork, &info );
-        lwork = (int)wkopt;
-        work = (double*)malloc( lwork*sizeof(double) );
-        /* Solve eigenproblem */
-        dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
-         work, &lwork, &info );
-        /* Check for convergence */
-        if( info > 0 ) {
-                printf( "The algorithm failed to compute eigenvalues.\n" );
-                exit( 1 );
-        }
-        // Next, the Hermitian
-        lworkh = -1;
-        dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
-         &wkopth, &lworkh, &infoh );
-        lworkh = (int)wkopth;
-        workh = (double*)malloc( lworkh*sizeof(double) );
-        /* Solve eigenproblem */
-        dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
-         workh, &lworkh, &infoh );
-        /* Check for convergence */
-        if( info > 0 ) {
-                printf( "The algorithm failed to compute eigenvalues.\n" );
-                exit( 1 );
-        }
-
-        // Get the minimum and maximum values of the eigenvalues
-        double minjaceig = 1.0e10;
-        double CEM = 0.0;
-        double maxjaceig = 0.0;
-        double minhereig = 1.0e10;
-        double maxhereig = 0.0;
-        for (int i = 0; i < NSP; i++) {
-          if (abs(wr[i]) < minjaceig && abs(wr[i]) > 2.22045e-16) {
-            minjaceig = abs(wr[i]);
-          }
-          if (wr[i] > CEM) {
-            CEM = wr[i];
-          }
-          if (abs(wr[i]) > maxjaceig) {
-            maxjaceig = abs(wr[i]);
-          }
-          if (xr[i] < minhereig) {
-            minhereig = xr[i];
-          }
-          if (xr[i] > maxhereig) {
-            maxhereig = xr[i];
-          }
-        }
-
-        double stiffratio = maxjaceig / minjaceig;
-        double stiffindicator = 0.5 * (minhereig + maxhereig);
+        // if (tid == 296) {
+        //   printf("Y Vector:\n");
+        //   for (int i = 0; i < NSP; i++) {
+        //     printf("%.15e\n", y_local[i]);
+        //   }
+        // }
+        //
+        // // Calculate the stiffness metrics
+        // double jac[NSP*NSP];
+        // eval_jacob(t_end, pr_global[tid], y_local, jac);
+        // // Get the Hermitian
+        // double hermitian[NSP*NSP];
+        // for (int i = 0; i < NSP; i++) {
+        //   for (int j = 0; j < NSP; j++) {
+        //     //jacobian[i][j] = jac[i * NSP + j];
+        //     hermitian[i * NSP + j] = 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
+        //   }
+        // }
+        //
+        // if (tid == 296) {
+        //   printf("Jacobian:\n");
+        //   for (int i = 0; i < NSP*NSP; i++) {
+        //     printf("%.15e\n", jac[i]);
+        //   }
+        //   printf("Hermitian:\n");
+        //   for (int i = 0; i < NSP*NSP; i++) {
+        //     printf("%.15e\n", hermitian[i]);
+        //   }
+        // }
+        //
+        // // Get the eigenvalues of both matrices
+        // // Made 2 sets of variables in case dgeev messes them up
+        // int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
+        // int nh = N, ldah = LDA, ldvlh = LDVL, ldvrh = LDVR, infoh, lworkh;
+        // double wkopt;
+        // double* work;
+        // double wkopth;
+        // double* workh;
+        // /* Local arrays */
+        // double wr[N], wi[N], vl[LDVL*N], vr[LDVR*N];
+        // double xr[N], xi[N], ul[LDVL*N], ur[LDVR*N];
+        //
+        // /* Query and allocate the optimal workspace */
+        // // First, the Jacobian
+        // lwork = -1;
+        // dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
+        //  &wkopt, &lwork, &info );
+        // lwork = (int)wkopt;
+        // work = (double*)malloc( lwork*sizeof(double) );
+        // /* Solve eigenproblem */
+        // dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
+        //  work, &lwork, &info );
+        // /* Check for convergence */
+        // if( info > 0 ) {
+        //         printf( "The algorithm failed to compute eigenvalues.\n" );
+        //         exit( 1 );
+        // }
+        // // Next, the Hermitian
+        // lworkh = -1;
+        // dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
+        //  &wkopth, &lworkh, &infoh );
+        // lworkh = (int)wkopth;
+        // workh = (double*)malloc( lworkh*sizeof(double) );
+        // /* Solve eigenproblem */
+        // dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
+        //  workh, &lworkh, &infoh );
+        // /* Check for convergence */
+        // if( info > 0 ) {
+        //         printf( "The algorithm failed to compute eigenvalues.\n" );
+        //         exit( 1 );
+        // }
+        //
+        // // Get the minimum and maximum values of the eigenvalues
+        // double minjaceig = 1.0e10;
+        // double CEM = 0.0;
+        // double maxjaceig = 0.0;
+        // double minhereig = 1.0e10;
+        // double maxhereig = 0.0;
+        // for (int i = 0; i < NSP; i++) {
+        //   if (abs(wr[i]) < minjaceig && abs(wr[i]) > 2.22045e-16) {
+        //     minjaceig = abs(wr[i]);
+        //   }
+        //   if (wr[i] > CEM) {
+        //     CEM = wr[i];
+        //   }
+        //   if (abs(wr[i]) > maxjaceig) {
+        //     maxjaceig = abs(wr[i]);
+        //   }
+        //   if (xr[i] < minhereig) {
+        //     minhereig = xr[i];
+        //   }
+        //   if (xr[i] > maxhereig) {
+        //     maxhereig = xr[i];
+        //   }
+        // }
+        //
+        // double stiffratio = maxjaceig / minjaceig;
+        // double stiffindicator = 0.5 * (minhereig + maxhereig);
 
         // Print stiffness metrics and timing info
         //printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
