@@ -25,9 +25,9 @@
 //#include "cvodes_dydt.h"
 #include "jacob.h"
 
-// extern N_Vector *y_locals;
-// extern double* y_local_vectors;
-// extern void** integrators;
+extern N_Vector *y_locals;
+extern double* y_local_vectors;
+extern void** integrators;
 
 #ifdef GENERATE_DOCS
 namespace cvode {
