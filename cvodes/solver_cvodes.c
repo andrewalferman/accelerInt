@@ -77,54 +77,6 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_local[i] = y_global[tid + i * NUM];
         }
 
-        //reinit this integrator for time t, w/ updated state
-        int flag = CVodeReInit(integrators[index], t, fill);
-        if (flag != CV_SUCCESS)
-        {
-            printf("Error reinitializing integrator for thread %d, code: %d\n", tid, flag);
-            exit(flag);
-        }
-
-        //set user data to Pr
-        flag = CVodeSetUserData(integrators[index], &pr_local);
-        if (flag != CV_SUCCESS)
-        {
-            printf("Error setting user data for thread %d, code: %d\n", tid, flag);
-            exit(flag);
-        }
-
-        //set end time
-        flag = CVodeSetStopTime(integrators[index], t_end);
-        if (flag != CV_SUCCESS)
-        {
-            printf("Error setting end time for thread %d, code: %d\n", tid, flag);
-            exit(flag);
-        }
-
-        // Need to replace this with a threadsafe non-OMP method
-        //StartTimer();
-        double time0 = omp_get_wtime( );
-        // call integrator for one time step
-        flag = CVode(integrators[index], t_end, fill, &t_next, CV_NORMAL);
-        if ((flag != CV_SUCCESS && flag != CV_TSTOP_RETURN) || t_next != t_end)
-        {
-            printf("Error on integration step for thread %d, code %d\n", tid, flag);
-            exit(flag);
-        }
-        //double runtime = GetTimer();
-        double runtime = omp_get_wtime( ) - time0;
-        runtime /= 1000.0;
-        //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
-
-        // update global array with integrated values and print output
-        //printf("%i,", tid);
-
-        for (int i = 0; i < NSP; i++)
-        {
-            y_global[tid + i * NUM] = y_local[i];
-            //printf("%.15e,", y_local[i]);
-        }
-
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
       	eval_jacob(t_end, pr_global[tid], y_local, jac);
@@ -205,6 +157,54 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         double stiffratio = maxjaceig / minjaceig;
         double stiffindicator = 0.5 * (minhereig + maxhereig);
+
+        //reinit this integrator for time t, w/ updated state
+        int flag = CVodeReInit(integrators[index], t, fill);
+        if (flag != CV_SUCCESS)
+        {
+            printf("Error reinitializing integrator for thread %d, code: %d\n", tid, flag);
+            exit(flag);
+        }
+
+        //set user data to Pr
+        flag = CVodeSetUserData(integrators[index], &pr_local);
+        if (flag != CV_SUCCESS)
+        {
+            printf("Error setting user data for thread %d, code: %d\n", tid, flag);
+            exit(flag);
+        }
+
+        //set end time
+        flag = CVodeSetStopTime(integrators[index], t_end);
+        if (flag != CV_SUCCESS)
+        {
+            printf("Error setting end time for thread %d, code: %d\n", tid, flag);
+            exit(flag);
+        }
+
+        // Need to replace this with a threadsafe non-OMP method
+        //StartTimer();
+        double time0 = omp_get_wtime( );
+        // call integrator for one time step
+        flag = CVode(integrators[index], t_end, fill, &t_next, CV_NORMAL);
+        if ((flag != CV_SUCCESS && flag != CV_TSTOP_RETURN) || t_next != t_end)
+        {
+            printf("Error on integration step for thread %d, code %d\n", tid, flag);
+            exit(flag);
+        }
+        //double runtime = GetTimer();
+        double runtime = omp_get_wtime( ) - time0;
+        runtime /= 1000.0;
+        //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
+
+        // update global array with integrated values and print output
+        //printf("%i,", tid);
+
+        for (int i = 0; i < NSP; i++)
+        {
+            y_global[tid + i * NUM] = y_local[i];
+            //printf("%.15e,", y_local[i]);
+        }
 
         // Print stiffness metrics and timing info
         printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
