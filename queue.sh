@@ -1,18 +1,19 @@
-scons t_step=1e-6 t_end=1e-6 -j 4
-./cvodes-int 4 450900 > speciesdata-cvodes-1e-6.csv
-./exp4-int 4 450900 > speciesdata-exp4-1e-6.csv
-./exprb43-int 4 450900 > speciesdata-exprb43-1e-6.csv
-./radau2a-int 4 450900 > speciesdata-radau2a-1e-6.csv
-./rkc-int 4 450900 > speciesdata-rkc-1e-6.csv
-scons t_step=1e-5 t_end=1e-5 -j 4
-./cvodes-int 4 450900 >	speciesdata-cvodes-1e-5.csv
-./exp4-int 4 450900 > speciesdata-exp4-1e-5.csv
-./exprb43-int 4 450900 > speciesdata-exprb43-1e-5.csv
-./radau2a-int 4 450900 > speciesdata-radau2a-1e-5.csv
-./rkc-int 4 450900 > speciesdata-rkc-1e-5.csv
-scons t_step=1e-4 t_end=1e-4 -j 4
-./cvodes-int 4 450900 >	speciesdata-cvodes-1e-4.csv
-./exp4-int 4 450900 > speciesdata-exp4-1e-4.csv
-./exprb43-int 4 450900 > speciesdata-exprb43-1e-4.csv
-./radau2a-int 4 450900 > speciesdata-radau2a-1e-4.csv
-./rkc-int 4 450900 > speciesdata-rkc-1e-4.csv
+for ((n=6;n>3;n--))
+{
+  touch speciesdata-cvodes-1e-"$n".csv
+  touch speciesdata-exp4-1e-"$n".csv
+  touch speciesdata-exprb43-1e-"$n".csv
+  touch speciesdata-radau2a-1e-"$n".csv
+  touch speciesdata-rkc-1e-"$n".csv
+  scons t_step=1e-"$n" t_end=1e-"$n" -j 4
+  ./cvodes-int 4 450900 > speciesdata-cvodes-1e-"$n".csv
+  ./cvodes-int 4 450900 > speciesdata-exp4-1e-"$n".csv
+  ./cvodes-int 4 450900 > speciesdata-exprb43-1e-"$n".csv
+  ./cvodes-int 4 450900 > speciesdata-radau2a-1e-"$n".csv
+  ./cvodes-int 4 450900 > speciesdata-rkc-1e-"$n".csv
+  mv speciesdata-cvodes-1e-"$n".csv ../Research/accelerInt_Data/
+  mv speciesdata-exp4-1e-"$n".csv ../Research/accelerInt_Data/
+  mv speciesdata-exprb43-1e-"$n".csv ../Research/accelerInt_Data/
+  mv speciesdata-radau2a-1e-"$n".csv ../Research/accelerInt_Data/
+  mv speciesdata-rkc-1e-"$n".csv ../Research/accelerInt_Data/
+}
