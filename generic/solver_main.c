@@ -139,8 +139,8 @@ int main (int argc, char *argv[])
     #endif
 
     // print number of independent ODEs
-    printf ("# ODEs: %d\n", NUM);
-    printf ("# threads: %d\n", num_threads);
+    //printf ("# ODEs: %d\n", NUM);
+    //printf ("# threads: %d\n", num_threads);
 
     initialize_solver(num_threads);
 
