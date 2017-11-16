@@ -74,7 +74,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
-            if (isnan(y_local[i])) {
+            if (y_local[i] != ylocal[i]) {
               failflag = 1;
             }
         }
@@ -189,7 +189,7 @@ void intDriver (const int NUM, const double t, const double t_end,
           //printf("%.15e, %.15e\n", jacobian[0][0], jacobian[0][10])
         }
         else {
-          printf("%i,-1.0,-1.0,-1.0,-1.0");
+          printf("%i,-1.0,-1.0,-1.0,-1.0\n");
         }
 
     } //end tid loop
