@@ -162,7 +162,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         if (failflag == 0) {
           // Print stiffness metrics and timing info
-          runtime = -1
+          runtime = -1;
         }
         printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
 
