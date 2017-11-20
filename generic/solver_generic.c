@@ -61,6 +61,29 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_local[i] = y_global[tid + i * NUM];
         }
 
+        //StartTimer();
+        double time0 = omp_get_wtime( );
+        // call integrator for one time step
+        check_error(tid, integrate (t, t_end, pr_local, y_local));
+        //double runtime = GetTimer();
+        double runtime = omp_get_wtime( ) - time0;
+        runtime /= 1000.0;
+
+        int failflag = 0;
+        // update global array with integrated values
+        for (int i = 0; i < NSP; i++)
+        {
+            y_global[tid + i * NUM] = y_local[i];
+            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+              failflag = 1;
+            }
+        }
+
+        if (failflag == 0) {
+          // Print stiffness metrics and timing info
+          runtime = -1;
+        }
+
         // Calculate the stiffness metrics
         // Get the Jacobian
         double jac[NSP*NSP];
@@ -142,28 +165,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffratio = maxjaceig / minjaceig;
         double stiffindicator = 0.5 * (minhereig + maxhereig);
 
-        //StartTimer();
-        double time0 = omp_get_wtime( );
-        // call integrator for one time step
-        check_error(tid, integrate (t, t_end, pr_local, y_local));
-        //double runtime = GetTimer();
-        double runtime = omp_get_wtime( ) - time0;
-        runtime /= 1000.0;
 
-        int failflag = 0;
-        // update global array with integrated values
-        for (int i = 0; i < NSP; i++)
-        {
-            y_global[tid + i * NUM] = y_local[i];
-            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
-              failflag = 1;
-            }
-        }
-
-        if (failflag == 0) {
-          // Print stiffness metrics and timing info
-          runtime = -1;
-        }
         printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
 
     } //end tid loop
