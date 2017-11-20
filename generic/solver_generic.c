@@ -143,7 +143,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffindicator = 0.5 * (minhereig + maxhereig);
 
         if (tid == 296) {
-          printf("%i,%.15e,%.15e,%.15e,%.15e\n", stiffratio, stiffindicator, CEM);
+          printf("%.15e,%.15e,%.15e\n", stiffratio, stiffindicator, CEM);
         }
 
         //StartTimer();
