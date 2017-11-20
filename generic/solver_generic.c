@@ -70,17 +70,26 @@ void intDriver (const int NUM, const double t, const double t_end,
         check_error(tid, integrate (t, t_end, pr_local, y_local));
         //double runtime = GetTimer();
         double runtime = omp_get_wtime( ) - time0;
-        printf("Integration completed!\n", );
+        if (tid == 296) {
+          printf("Integration 296 completed!\n");
+        }
         runtime /= 1000.0;
 
         int failflag = 0;
         // update global array with integrated values
         for (int i = 0; i < NSP; i++)
         {
+            if (tid == 296) {
+              printf("%.15e\n", y_local[i]);
+            }
             y_global[tid + i * NUM] = y_local[i];
             if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
               failflag = 1;
             }
+        }
+        
+        if (tid == 296) {
+          printf("Updated global array, flag is %i\n", failflag);
         }
 
         if (failflag == 0) {
