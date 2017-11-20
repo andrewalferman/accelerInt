@@ -59,6 +59,38 @@ void intDriver (const int NUM, const double t, const double t_end,
         for (int i = 0; i < NSP; i++)
         {
             y_local[i] = y_global[tid + i * NUM];
+            if (tid == 296) {
+              printf("%.15e\n", y_local[i]);
+            }
+        }
+
+        //StartTimer();
+        double time0 = omp_get_wtime( );
+        // call integrator for one time step
+        check_error(tid, integrate (t, t_end, pr_local, y_local));
+        //double runtime = GetTimer();
+        double runtime = omp_get_wtime( ) - time0;
+        if (tid == 296) {
+          printf("Integration 296 completed\n");
+        }
+        runtime /= 1000.0;
+
+        int failflag = 0;
+        // update global array with integrated values
+        for (int i = 0; i < NSP; i++)
+        {
+            if (tid == 296) {
+              printf("%.15e\n", y_local[i]);
+            }
+            y_global[tid + i * NUM] = y_local[i];
+            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+              failflag = 1;
+            }
+        }
+
+        if (failflag == 0) {
+          // Print stiffness metrics and timing info
+          runtime = -1;
         }
 
         // Calculate the stiffness metrics
@@ -142,33 +174,6 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffratio = maxjaceig / minjaceig;
         double stiffindicator = 0.5 * (minhereig + maxhereig);
 
-        if (tid == 296) {
-          printf("%i,%.15e,%.15e,%.15e,%.15e\n", stiffratio, stiffindicator, CEM);
-        }
-
-        //StartTimer();
-        double time0 = omp_get_wtime( );
-        // call integrator for one time step
-        check_error(tid, integrate (t, t_end, pr_local, y_local));
-        //double runtime = GetTimer();
-        double runtime = omp_get_wtime( ) - time0;
-        runtime /= 1000.0;
-
-        int failflag = 0;
-        // update global array with integrated values
-        for (int i = 0; i < NSP; i++)
-        {
-            y_global[tid + i * NUM] = y_local[i];
-            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
-              failflag = 1;
-            }
-        }
-
-        if (failflag == 0) {
-          runtime = -1;
-        }
-
-        // Print stiffness metrics and timing info
         printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
 
     } //end tid loop
