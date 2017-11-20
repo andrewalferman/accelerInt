@@ -59,6 +59,9 @@ void intDriver (const int NUM, const double t, const double t_end,
         for (int i = 0; i < NSP; i++)
         {
             y_local[i] = y_global[tid + i * NUM];
+            if (tid == 296) {
+              printf("%.15e\n", y_local[i]);
+            }
         }
 
         //StartTimer();
@@ -67,6 +70,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         check_error(tid, integrate (t, t_end, pr_local, y_local));
         //double runtime = GetTimer();
         double runtime = omp_get_wtime( ) - time0;
+        printf("Integration completed!\n", );
         runtime /= 1000.0;
 
         int failflag = 0;
