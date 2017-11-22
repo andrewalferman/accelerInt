@@ -1,4 +1,4 @@
-for ((n=8;n>6;n--))
+for ((n=8;n>3;n--))
 {
   touch speciesdata-cvodes-1e-"$n".csv
   touch speciesdata-exp4-1e-"$n".csv
