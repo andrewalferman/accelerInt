@@ -200,6 +200,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         // update global array with integrated values and print output
         //printf("%i,", tid);
 
+        int failflag = 0;
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
