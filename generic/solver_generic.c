@@ -142,10 +142,6 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffratio = maxjaceig / minjaceig;
         double stiffindicator = 0.5 * (minhereig + maxhereig);
 
-        if (tid == 296) {
-          printf("%.15e,%.15e,%.15e\n", stiffratio, stiffindicator, CEM);
-        }
-
         //StartTimer();
         double time0 = omp_get_wtime( );
         // call integrator for one time step
