@@ -203,7 +203,13 @@ void intDriver (const int NUM, const double t, const double t_end,
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
-            //printf("%.15e,", y_local[i]);
+            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+              failflag = 1;
+            }
+        }
+
+        if (failflag == 1) {
+          runtime = -1;
         }
 
         // Print stiffness metrics and timing info

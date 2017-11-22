@@ -164,7 +164,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             }
         }
 
-        if (failflag == 0) {
+        if (failflag == 1) {
           runtime = -1;
         }
 
