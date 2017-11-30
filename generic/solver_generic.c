@@ -13,6 +13,8 @@
 
 #include "header.h"
 #include "solver.h"
+
+#ifdef STIFF_METRICS
 //#include "timer.h"
 #include "jacob.h"
 
@@ -26,6 +28,7 @@ extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
 #define LDA N
 #define LDVL N
 #define LDVR N
+#endif
 
 #ifdef GENERATE_DOCS
  namespace generic {
@@ -178,11 +181,9 @@ void intDriver (const int NUM, const double t, const double t_end,
         #endif
 
     } //end tid loop
-    #ifndef STIFF_METRICS
     //double runtime = GetTimer();
     //runtime /= 1000.0;
     //printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
-    #endif
 } // end intDriver
 
 #ifdef GENERATE_DOCS

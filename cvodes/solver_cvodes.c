@@ -33,10 +33,15 @@
 extern N_Vector *y_locals;
 extern double* y_local_vectors;
 extern void** integrators;
+
+#ifdef STIFF_METRICS
 /* DGEEV prototype */
 extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                 int* lda, double* wr, double* wi, double* vl, int* ldvl,
                 double* vr, int* ldvr, double* work, int* lwork, int* info );
+#endif
+
+
 
 /* Parameters */
 #define N NSP
@@ -188,7 +193,6 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         #ifdef STIFF_METRICS
         // Need to replace this with a threadsafe non-OMP method
-        //StartTimer();
         double time0 = omp_get_wtime( );
         #endif
 
@@ -200,7 +204,6 @@ void intDriver (const int NUM, const double t, const double t_end,
             exit(flag);
         }
         #ifdef STIFF_METRICS
-        //double runtime = GetTimer();
         double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
         //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);

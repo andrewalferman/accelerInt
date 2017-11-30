@@ -196,7 +196,6 @@ int main (int argc, char *argv[])
 #endif
 
     #ifndef STIFF_METRICS
-    // Commented out to allow for individual timesteps to be timed
     //////////////////////////////
     // start timer
     StartTimer();
