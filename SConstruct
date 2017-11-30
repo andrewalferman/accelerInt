@@ -207,7 +207,6 @@ config_options = [
     ('CONST_TIME_STEP', 'If specified, adaptive timestepping will be turned off (for logging purposes)', False),
     BoolVariable(
         'STIFF_METRICS', 'Calculate the stiffness metrics (work in progress)', False)
-    )
 ]
 
 opts.AddVariables(*config_options)
