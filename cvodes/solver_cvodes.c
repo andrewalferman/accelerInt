@@ -77,6 +77,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_local[i] = y_global[tid + i * NUM];
         }
 
+        #ifdef STIFF_METRICS
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
       	eval_jacob(t_end, pr_global[tid], y_local, jac);
@@ -157,6 +158,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         double stiffratio = maxjaceig / minjaceig;
         double stiffindicator = 0.5 * (minhereig + maxhereig);
+        #endif
 
         //reinit this integrator for time t, w/ updated state
         int flag = CVodeReInit(integrators[index], t, fill);
@@ -182,9 +184,12 @@ void intDriver (const int NUM, const double t, const double t_end,
             exit(flag);
         }
 
+        #ifdef STIFF_METRICS
         // Need to replace this with a threadsafe non-OMP method
         //StartTimer();
         double time0 = omp_get_wtime( );
+        #endif
+
         // call integrator for one time step
         flag = CVode(integrators[index], t_end, fill, &t_next, CV_NORMAL);
         if ((flag != CV_SUCCESS && flag != CV_TSTOP_RETURN) || t_next != t_end)
@@ -192,6 +197,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             printf("Error on integration step for thread %d, code %d\n", tid, flag);
             exit(flag);
         }
+        #ifdef STIFF_METRICS
         //double runtime = GetTimer();
         double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
@@ -201,14 +207,19 @@ void intDriver (const int NUM, const double t, const double t_end,
         //printf("%i,", tid);
 
         int failflag = 0;
+        #endif
+
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
+            #ifdef STIFF_METRICS
             if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
               failflag = 1;
             }
+            #endif
         }
 
+        #ifdef STIFF_METRICS
         if (failflag == 1) {
           runtime = -1;
         }
@@ -220,6 +231,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         //Test print statement
         //printf("%.15e, %.15e\n", jacobian[0][0], jacobian[0][10])
+        #endif
 
     } // end tid loop
 
