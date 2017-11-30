@@ -265,7 +265,9 @@ int main (int argc, char *argv[])
 #ifdef IGN
     printf ("Ig. Delay (s): %e\n", t_ign);
 #endif
+    #ifndef STIFF_METRICS
     printf("TFinal: %e\n", y_host[0]);
+    #endif
 
 #ifdef LOG_OUTPUT
     fclose (pFile);
