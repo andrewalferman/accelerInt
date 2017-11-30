@@ -479,6 +479,12 @@ def write_options(lang, dir):
             #define CONST_TIME_STEP
             """)
 
+        if env['STIFF_METRICS']:
+            file.write("""
+        /*! Calculate the stiffness metrics */
+        #define STIFF_METRICS
+            """)
+
         file.write("""
         #endif
             """)
