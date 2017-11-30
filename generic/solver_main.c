@@ -5,7 +5,7 @@
  * \author Nicholas Curtis
  * \date 03/09/2015
  *
- * Modifications from Andrew Alferman 
+ * Modifications from Andrew Alferman
  * 11/14/2017
  *
  * Contains main function, setup, initialization, logging, timing and driver functions
@@ -28,7 +28,9 @@
 //our code
 #include "header.h"
 #include "solver.h"
-//#include "timer.h"
+#ifndef STIFF_METRICS
+#include "timer.h"
+#endif
 #include "read_initial_conditions.h"
 
 #ifdef GENERATE_DOCS
@@ -138,9 +140,11 @@ int main (int argc, char *argv[])
 
     #endif
 
+    #ifndef STIFF_METRICS
     // print number of independent ODEs
-    //printf ("# ODEs: %d\n", NUM);
-    //printf ("# threads: %d\n", num_threads);
+    printf ("# ODEs: %d\n", NUM);
+    printf ("# threads: %d\n", num_threads);
+    #endif
 
     initialize_solver(num_threads);
 
@@ -191,10 +195,11 @@ int main (int argc, char *argv[])
     init_solver_log();
 #endif
 
+    #ifndef STIFF_METRICS
     // Commented out to allow for individual timesteps to be timed
     //////////////////////////////
     // start timer
-    //StartTimer();
+    StartTimer();
     //////////////////////////////
 
     // set initial time
@@ -244,22 +249,23 @@ int main (int argc, char *argv[])
     solver_log();
 #endif
 
-    // Commented out to time individual timesteps
+    #ifndef STIFF_METRICS
     /////////////////////////////////
     // end timer
-    //double runtime = GetTimer();
+    double runtime = GetTimer();
     /////////////////////////////////
 
 
-    //runtime /= 1000.0;
-    //printf ("Time: %.15e sec\n", runtime);
-    //runtime = runtime / ((double)(numSteps));
-    //printf ("Time per step: %e (s)\t%.15e (s/thread)\n", runtime, runtime / NUM);
+    runtime /= 1000.0;
+    printf ("Time: %.15e sec\n", runtime);
+    runtime = runtime / ((double)(numSteps));
+    printf ("Time per step: %e (s)\t%.15e (s/thread)\n", runtime, runtime / NUM);
+    #endif
 
 #ifdef IGN
     printf ("Ig. Delay (s): %e\n", t_ign);
 #endif
-//    printf("TFinal: %e\n", y_host[0]);
+    printf("TFinal: %e\n", y_host[0]);
 
 #ifdef LOG_OUTPUT
     fclose (pFile);

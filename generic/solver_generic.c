@@ -61,6 +61,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_local[i] = y_global[tid + i * NUM];
         }
 
+        #ifdef STIFF_METRICS
         // Calculate the stiffness metrics
         // Get the Jacobian
         double jac[NSP*NSP];
@@ -144,33 +145,44 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         //StartTimer();
         double time0 = omp_get_wtime( );
+        #endif
+
         // call integrator for one time step
         check_error(tid, integrate (t, t_end, pr_local, y_local));
         //double runtime = GetTimer();
+
+        #ifdef STIFF_METRICS
         double runtime = omp_get_wtime( ) - time0;
         runtime /= 1000.0;
 
         int failflag = 0;
+        #endif
         // update global array with integrated values
         for (int i = 0; i < NSP; i++)
         {
             y_global[tid + i * NUM] = y_local[i];
+            #ifdef STIFF_METRICS
             if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
               failflag = 1;
             }
+            #endif
         }
 
+        #ifdef STIFF_METRICS
         if (failflag == 1) {
           runtime = -1;
         }
 
         // Print stiffness metrics and timing info
         printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
+        #endif
 
     } //end tid loop
+    #ifndef STIFF_METRICS
     //double runtime = GetTimer();
     //runtime /= 1000.0;
     //printf("Step: %.15e, Time: %.15e sec\n", t, runtime);
+    #endif
 } // end intDriver
 
 #ifdef GENERATE_DOCS
