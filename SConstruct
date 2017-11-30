@@ -204,7 +204,10 @@ config_options = [
     ('DIVERGENCE_WARPS', 'If specified, measure divergence in that many warps', '0'),
     ('CV_HMAX', 'If specified, the maximum stepsize for CVode', '0'),
     ('CV_MAX_STEPS', 'If specified, the maximum stepsize for CVode', '20000'),
-    ('CONST_TIME_STEP', 'If specified, adaptive timestepping will be turned off (for logging purposes)', False)
+    ('CONST_TIME_STEP', 'If specified, adaptive timestepping will be turned off (for logging purposes)', False),
+    BoolVariable(
+        'STIFF_METRICS', 'Calculate the stiffness metrics (work in progress)', False)
+    )
 ]
 
 opts.AddVariables(*config_options)
