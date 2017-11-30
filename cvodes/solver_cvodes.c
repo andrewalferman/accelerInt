@@ -15,7 +15,9 @@
 
 #include "header.h"
 #include "solver.h"
+#ifndef STIFF_METRICS
 #include "timer.h"
+#endif
 
 /* CVODES INCLUDES */
 #include "sundials/sundials_types.h"
