@@ -201,6 +201,7 @@ int main (int argc, char *argv[])
     // start timer
     StartTimer();
     //////////////////////////////
+    #endif
 
     // set initial time
     double t = 0;
