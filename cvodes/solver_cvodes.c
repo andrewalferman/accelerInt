@@ -220,7 +220,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             }
             #endif
         }
-
+        printf("%.15e\n", y_local[0])
         #ifdef STIFF_METRICS
         if (failflag == 1) {
           runtime = -1;
