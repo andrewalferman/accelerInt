@@ -99,16 +99,16 @@ void intDriver (const int NUM, const double t, const double t_end,
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
         printf("%.15e\n", pr_global[tid]);
-        double pr_local;
+        double pr_stiffcalc;
         if (pr_global[tid] >= 1000.0)
         {
-          pr_local = pr_global[tid] / 101325.0;
+          pr_stiffcalc = pr_global[tid] / 101325.0;
         }
         else
         {
-          pr_local = pr_global[tid];
+          pr_stiffcalc = pr_global[tid];
         }
-        eval_jacob(t_end, pr_local, re_local, jac);
+        eval_jacob(t_end, pr_stiffcalc, re_local, jac);
         // Get the Hermitian
         double hermitian[NSP*NSP];
         for (int i = 0; i < NSP; i++) {
