@@ -83,7 +83,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         // Calculate the stiffness metrics
         // Get the Jacobian
         double jac[NSP*NSP];
-        printf("%.15e\n", pr_global[tid]);
+        //printf("%.15e\n", pr_global[tid]);
         double pr_stiffcalc;
         if (pr_global[tid] >= 1000.0)
         {

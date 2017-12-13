@@ -98,7 +98,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         re_local[NSP] = nmf;
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
-        printf("%.15e\n", pr_global[tid]);
+        //printf("%.15e\n", pr_global[tid]);
         double pr_stiffcalc;
         if (pr_global[tid] >= 1000.0)
         {
