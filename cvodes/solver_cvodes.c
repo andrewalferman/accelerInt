@@ -84,7 +84,8 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         #ifdef STIFF_METRICS
         // Rearrange the solution vector for pyJac
-        double re_local[NSP]
+        double re_local[NSP];
+        double nmf;
         for (int i = 0; i < NSP; i++)
         {
           re_local[i] = y_local[i];
@@ -97,7 +98,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         re_local[NSP] = nmf;
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
-        printf("%.15e", pr_global[tid])
+        printf("%.15e", pr_global[tid]);
       	eval_jacob(t_end, pr_global[tid], re_local, jac);
         // Get the Hermitian
         double hermitian[NSP*NSP];

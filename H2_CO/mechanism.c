@@ -44,15 +44,15 @@ void set_same_initial_conditions(int NUM, double** y_host, double** var_host)
 
     //Normalize mole fractions to sum to one
     double Xsum = 0.0;
-    Xi[0] = 1.6142485253557824e-05;
-    Xi[1] = 0.022686582838266037;
-    Xi[2] = 2.7798331740116938e-05;
-    Xi[3] = 2.8630649909322992e-05;
-    Xi[4] = 0.051889632396796836;
-    Xi[5] = 0.17994885939513616;
-    Xi[6] = 0.0002338756565901162;
-    Xi[7] = 5.134979310170904e-05;
-    Xi[12] = 0.745117128453206;
+    Xi[0] = 1.1636247155941894e-05;
+    Xi[1] = 0.022754941415572758;
+    Xi[2] = 1.9895064116812003e-05;
+    Xi[3] = 2.0993869462435053e-05;
+    Xi[4] = 0.05131099405277086;
+    Xi[5] = 0.18045534227727603;
+    Xi[6] = 0.0002361082973661372;
+    Xi[7] = 7.296032306490985e-05;
+    Xi[12] = 0.7451171284532138;
     Xi[8] = 0.0;
     Xi[9] = 0.0;
     Xi[10] = 0.0;
@@ -75,7 +75,7 @@ void set_same_initial_conditions(int NUM, double** y_host, double** var_host)
     //set initial pressure, units [PA]
     double P = 101325.0;
     // set intial temperature, units [K]
-    double T0 = 886.3988197135249;
+    double T0 = 881.9061350328426;
 
     (*y_host) = (double*)malloc(NUM * NSP * sizeof(double));
     (*var_host) = (double*)malloc(NUM * sizeof(double));

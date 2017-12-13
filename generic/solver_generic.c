@@ -68,7 +68,8 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         #ifdef STIFF_METRICS
         // Rearrange the solution vector for pyJac
-        double re_local[NSP]
+        double re_local[NSP];
+        double nmf;
         for (int i = 0; i < NSP; i++)
         {
           re_local[i] = y_local[i];
