@@ -16,6 +16,8 @@
 
 #ifdef STIFF_METRICS
 //#include "timer.h"
+// Need a better way of sending this the N2 position
+#define N2POS 48
 #include "jacob.h"
 
 /* DGEEV prototype */
@@ -65,10 +67,22 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         #ifdef STIFF_METRICS
+        // Rearrange the solution vector for pyJac
+        double re_local[NSP]
+        for (int i = 0; i < NSP; i++)
+        {
+          re_local[i] = y_local[i];
+          if (i == N2POS)
+          {
+            double nmf = y_local[i];
+          }
+        }
+        re_local[N2POS] = re_local[NSP];
+        re_local[NSP] = nmf;
         // Calculate the stiffness metrics
         // Get the Jacobian
         double jac[NSP*NSP];
-        eval_jacob(t_end, pr_global[tid], y_local, jac);
+        eval_jacob(t_end, pr_global[tid], re_local, jac);
         // Get the Hermitian
         double hermitian[NSP*NSP];
         for (int i = 0; i < NSP; i++) {

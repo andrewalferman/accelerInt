@@ -32,6 +32,7 @@ extern double* y_local_vectors;
 extern void** integrators;
 
 #ifdef STIFF_METRICS
+#define N2POS 48
 /* DGEEV prototype */
 extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                 int* lda, double* wr, double* wi, double* vl, int* ldvl,
@@ -82,9 +83,22 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         #ifdef STIFF_METRICS
+        // Rearrange the solution vector for pyJac
+        double re_local[NSP]
+        for (int i = 0; i < NSP; i++)
+        {
+          re_local[i] = y_local[i];
+          if (i == N2POS)
+          {
+            double nmf = y_local[i];
+          }
+        }
+        re_local[N2POS] = re_local[NSP];
+        re_local[NSP] = nmf;
         // Calculate the stiffness metrics
       	double jac[NSP*NSP];
-      	eval_jacob(t_end, pr_global[tid], y_local, jac);
+        printf("%.15e", pr_global[tid])
+      	eval_jacob(t_end, pr_global[tid], re_local, jac);
         // Get the Hermitian
         double hermitian[NSP*NSP];
         for (int i = 0; i < NSP; i++) {
