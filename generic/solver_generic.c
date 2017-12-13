@@ -83,6 +83,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         // Calculate the stiffness metrics
         // Get the Jacobian
         double jac[NSP*NSP];
+        printf("%.15e\n", pr_global[tid]);
         eval_jacob(t_end, pr_global[tid], re_local, jac);
         // Get the Hermitian
         double hermitian[NSP*NSP];
