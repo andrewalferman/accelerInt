@@ -8,5 +8,5 @@
  *
  */
 
- void calculatemetrics(double *y_local, double stiffratio,
+ void calculatemetrics(double *y_local, double pr_local, double stiffratio,
                       double stiffindicator, double CEM);

@@ -26,7 +26,7 @@
  // Need a better way of sending this the N2 position
  #define N2POS 48
 
- void calculatemetrics(double *y_local, double stiffratio,
+ void calculatemetrics(double *y_local, double pr_local, double stiffratio,
                       double stiffindicator, double CEM) {
    // Rearrange the solution vector for pyJac
    double re_local[NSP];
@@ -44,15 +44,14 @@
    // Calculate the stiffness metrics
    // Get the Jacobian
    double jac[NSP*NSP];
-   //printf("%.15e\n", pr_global[tid]);
    double pr_stiffcalc;
-   if (pr_global[tid] >= 1000.0)
+   if (pr_local >= 1000.0)
    {
-     pr_stiffcalc = pr_global[tid] / 101325.0;
+     pr_stiffcalc = pr_local / 101325.0;
    }
    else
    {
-     pr_stiffcalc = pr_global[tid];
+     pr_stiffcalc = pr_local;
    }
    eval_jacob(t_end, pr_stiffcalc, re_local, jac);
    // Get the Hermitian
