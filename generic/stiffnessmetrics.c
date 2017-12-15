@@ -114,8 +114,8 @@
      if (abs(wr[i]) < minjaceig && abs(wr[i]) > 2.22045e-16) {
        minjaceig = abs(wr[i]);
      }
-     if (wr[i] > CEM) {
-       CEM = wr[i];
+     if (wr[i] > (*CEM)) {
+       (*CEM) = wr[i];
      }
      if (abs(wr[i]) > maxjaceig) {
        maxjaceig = abs(wr[i]);
@@ -128,7 +128,7 @@
      }
    }
 
-   stiffratio = maxjaceig / minjaceig;
-   stiffindicator = 0.5 * (minhereig + maxhereig);
+   (*stiffratio) = maxjaceig / minjaceig;
+   (*stiffindicator) = 0.5 * (minhereig + maxhereig);
 
 }
