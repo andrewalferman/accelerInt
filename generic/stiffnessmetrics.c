@@ -8,6 +8,8 @@
  *
  */
 
+ #include <stdio.h>
+
  //#include "timer.h"
  #include "jacob.h"
  #include "stiffnessmetrics.h"
