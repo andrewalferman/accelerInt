@@ -27,8 +27,8 @@
  // Need a better way of sending this the N2 position
  #define N2POS 48
 
- void calculatemetrics(double *y_local, double pr_local, double stiffratio,
-                      double stiffindicator, double CEM, const double t_end) {
+ void calculatemetrics(double *y_local, double pr_local, double* stiffratio,
+                      double* stiffindicator, double* CEM, const double t_end) {
    // Rearrange the solution vector for pyJac
    double re_local[NSP];
    double nmf;
