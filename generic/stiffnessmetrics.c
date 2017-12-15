@@ -27,7 +27,7 @@
  #define N2POS 48
 
  void calculatemetrics(double *y_local, double stiffratio,
-                      double stiffindicator, double CEM); {
+                      double stiffindicator, double CEM) {
    // Rearrange the solution vector for pyJac
    double re_local[NSP];
    double nmf;
