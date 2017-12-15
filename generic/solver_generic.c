@@ -56,7 +56,8 @@ void intDriver (const int NUM, const double t, const double t_end,
         double CEM = 0.0;
         double stiffratio;
         double stiffindicator;
-        calculatemetrics(y_local, pr_local, stiffratio, stiffindicator, CEM);
+        calculatemetrics(y_local, pr_local, stiffratio, stiffindicator, CEM,
+                        t_end);
 
         //StartTimer();
         double time0 = omp_get_wtime( );

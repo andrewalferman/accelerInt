@@ -9,4 +9,4 @@
  */
 
  void calculatemetrics(double *y_local, double pr_local, double stiffratio,
-                      double stiffindicator, double CEM);
+                      double stiffindicator, double CEM, const double t_end);
