@@ -67,11 +67,11 @@
    // Get the inverse of the diagonals of the Jacobian matrix
    double diagonals[NSP];
    for (int i = 0; i < NSP; i++) {
-     if (jac[i][i] > 2.22045e-16) {
-       diagonals[i] = (double) 1.0 / jac[i][i];
+     if (jac[i * NSP + i] > 2.22045e-16) {
+       diagonals[i] = (double) 1.0 / jac[i * NSP + i];
      }
-     else if (jac[i][i] < -2.22045e-16) {
-       diagonals[i] = (double) -1.0 / jac[i][i];
+     else if (jac[i * NSP + i] < -2.22045e-16) {
+       diagonals[i] = (double) -1.0 / jac[i * NSP + i];
      }
      else {
        diagonals[i] = -1.0;
