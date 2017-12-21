@@ -1,7 +1,7 @@
 /**
  * \file
- * \Calculates the stiffness ratio, stiffness indicator, and chemical explosive
- * \mode
+ * \Calculates the stiffness ratio, stiffness indicator, chemical explosive
+ * \mode, and stiffness per the computational singular perturbation method
  *
  * \author Andrew Alferman
  * \date 12/14/2017
@@ -27,8 +27,10 @@
  // Need a better way of sending this the N2 position
  #define N2POS 48
 
- void calculatemetrics(double *y_local, double pr_local, double* stiffratio,
-                      double* stiffindicator, double* CEM, const double t_end) {
+ void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
+                      double* stiffindicator, double* CEM, double* CSP,
+                      const double t_end)
+  {
    // Rearrange the solution vector for pyJac
    double re_local[NSP];
    double nmf;
@@ -59,8 +61,20 @@
    double hermitian[NSP*NSP];
    for (int i = 0; i < NSP; i++) {
      for (int j = 0; j < NSP; j++) {
-       //jacobian[i][j] = jac[i * NSP + j];
-       hermitian[i * NSP + j] = 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
+       hermitian[i * NSP + j] = (double) 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
+     }
+   }
+   // Get the inverse of the diagonals of the Jacobian matrix
+   double diagonals[NSP];
+   for (int i = 0; i < NSP, i++) {
+     if (jac[i][i] > 2.22045e-16) {
+       diagonals[i] = (double) 1.0 / jac[i][i];
+     }
+     else if (jac[i][i] < -2.22045e-16) {
+       diagonals[i] = (double) -1.0 / jac[i][i];
+     }
+     else {
+       diagonals[i] = -1.0
      }
    }
    // Get the eigenvalues of both matrices
@@ -110,15 +124,24 @@
    double maxjaceig = 0.0;
    double minhereig = 1.0e10;
    double maxhereig = 0.0;
+   double mindiag = 1.0e10;
+   double maxdiag = 0.0;
+   double eigenvalue;
    for (int i = 0; i < NSP; i++) {
-     if (abs(wr[i]) < minjaceig && abs(wr[i]) > 2.22045e-16) {
-       minjaceig = abs(wr[i]);
+     if (wr[i] < 0) {
+       eigenvalue = wr[i] * (double) -1.0;
+     }
+     else {
+       eigenvalue = wr[i];
+     }
+     if ((eigenvalue < minjaceig) && (eigenvalue > 2.22045e-16)) {
+       minjaceig = eigenvalue;
      }
      if (wr[i] > (*CEM)) {
        (*CEM) = wr[i];
      }
-     if (abs(wr[i]) > maxjaceig) {
-       maxjaceig = abs(wr[i]);
+     if (eigenvalue > maxjaceig) {
+       maxjaceig = eigenvalue;
      }
      if (xr[i] < minhereig) {
        minhereig = xr[i];
@@ -126,9 +149,17 @@
      if (xr[i] > maxhereig) {
        maxhereig = xr[i];
      }
+     if ((diagonals[i] < mindiag) && (diagonals[i] != -1.0)) {
+       mindiag = diagonals[i]
+     }
+     if (diagonals[i] > maxdiag) {
+       maxdiag = diagonals[i]
+     }
+
    }
 
+   (*CSP) = mindiag / maxdiag;
    (*stiffratio) = maxjaceig / minjaceig;
-   (*stiffindicator) = 0.5 * (minhereig + maxhereig);
+   (*stiffindicator) = (double) 0.5 * (minhereig + maxhereig);
 
 }

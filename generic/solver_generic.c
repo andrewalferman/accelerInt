@@ -53,10 +53,11 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         #ifdef STIFF_METRICS
         double CEM = 0.0;
+        double CSP;
         double stiffratio;
         double stiffindicator;
         calculatemetrics(y_local, pr_local, &stiffratio, &stiffindicator, &CEM,
-                        t_end);
+                        &CSP, t_end);
 
         //StartTimer();
         double time0 = omp_get_wtime( );
@@ -89,7 +90,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Print stiffness metrics and timing info
-        printf("%i,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, runtime);
+        printf("%i,%.15e,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, runtime);
         #endif
 
     } //end tid loop
