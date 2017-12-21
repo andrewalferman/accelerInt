@@ -74,7 +74,7 @@
        diagonals[i] = (double) -1.0 / jac[i][i];
      }
      else {
-       diagonals[i] = -1.0
+       diagonals[i] = -1.0;
      }
    }
    // Get the eigenvalues of both matrices
@@ -150,10 +150,10 @@
        maxhereig = xr[i];
      }
      if ((diagonals[i] < mindiag) && (diagonals[i] != -1.0)) {
-       mindiag = diagonals[i]
+       mindiag = diagonals[i];
      }
      if (diagonals[i] > maxdiag) {
-       maxdiag = diagonals[i]
+       maxdiag = diagonals[i];
      }
 
    }
