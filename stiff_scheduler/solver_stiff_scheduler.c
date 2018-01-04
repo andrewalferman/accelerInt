@@ -72,6 +72,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         calculatemetrics(y_local, pr_local, &stiffratio, &stiffindicator, &CEM,
                         &CSP, t_end);
 
+        double time0;
         // ADJUST THIS "IF" STATEMENT TO CHANGE SWITCHING CRITERIA
         if (CEM > (double) 2.5) {
           //reinit this integrator for time t, w/ updated state
@@ -100,7 +101,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 
           #ifdef STIFF_METRICS
           // Need to replace this with a threadsafe non-OMP method
-          double time0 = omp_get_wtime( );
+          time0 = omp_get_wtime( );
           #endif
 
           // call integrator for one time step
@@ -114,7 +115,7 @@ void intDriver (const int NUM, const double t, const double t_end,
           #ifdef STIFF_METRICS
           // Need to replace this with a threadsafe non-OMP method
           //StartTimer();
-          double time0 = omp_get_wtime( );
+          time0 = omp_get_wtime( );
           #endif
 
           // call integrator for one time step
