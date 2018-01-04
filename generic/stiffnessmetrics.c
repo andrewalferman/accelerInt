@@ -9,6 +9,7 @@
  */
 
  #include <stdio.h>
+ #include <float.h>
 
  //#include "timer.h"
  #include "jacob.h"
@@ -67,10 +68,10 @@
    // Get the inverse of the diagonals of the Jacobian matrix
    double diagonals[NSP];
    for (int i = 0; i < NSP; i++) {
-     if (jac[i * NSP + i] > DBL_EPSILON) {
+     if (jac[i * NSP + i] > DBL_MIN) {
        diagonals[i] = (double) 1.0 / jac[i * NSP + i];
      }
-     else if ((double) -1.0 * jac[i * NSP + i] > DBL_EPSILON) {
+     else if ((double) -1.0 * jac[i * NSP + i] > DBL_MIN) {
        diagonals[i] = (double) -1.0 / jac[i * NSP + i];
      }
      else {
@@ -134,7 +135,7 @@
      else {
        eigenvalue = wr[i];
      }
-     if ((eigenvalue < minjaceig) && (eigenvalue > DBL_EPSILON)) {
+     if ((eigenvalue < minjaceig) && (eigenvalue > DBL_MIN)) {
        minjaceig = eigenvalue;
      }
      if (wr[i] > (*CEM)) {
