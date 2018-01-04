@@ -696,6 +696,18 @@ builder(env_save, mech_c, None, new_defines,
         rk78_dir, variant, 'rk78-int', target_list,
         filter_out=['solver_generic', 'nverse'])
 
+# stiff_scheduler
+new_defines = {}
+new_defines['CPPPATH'] = [stiff_scheduler_dir]
+new_defines['NVCC_INC_PATH'] = [stiff_scheduler_dir]
+new_defines['CPPDEFINES'] = ['STIFF_SCHEDULER']
+new_defines['NVCCDEFINES'] = ['STIFF_SCHEDULER']
+rkc, rkccu = builder(env_save, mech_c,
+                     mech_cuda if build_cuda else None,
+                     new_defines, stiff_scheduler_dir,
+                     variant, 'stiff_scheduler-int', target_list,
+                     filter_out=['nverse'])
+
 flat_values = []
 cpu_vals = []
 gpu_vals = []
