@@ -701,7 +701,9 @@ new_defines = {}
 new_defines['CPPPATH'] = [stiff_scheduler_dir]
 new_defines['NVCC_INC_PATH'] = [stiff_scheduler_dir]
 new_defines['CPPDEFINES'] = ['STIFF_SCHEDULER']
+new_defines['CPPPATH'] = [cvodes_dir, env['sundials_inc_dir']]
 new_defines['NVCCDEFINES'] = ['STIFF_SCHEDULER']
+new_defines['LIBS'] = ['sundials_cvodes', 'sundials_nvecserial']
 stiff_scheduler_c, stiff_scheduler_cu = builder(env_save, mech_c,
                      mech_cuda if build_cuda else None,
                      new_defines, stiff_scheduler_dir,
