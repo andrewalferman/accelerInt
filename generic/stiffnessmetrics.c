@@ -67,10 +67,10 @@
    // Get the inverse of the diagonals of the Jacobian matrix
    double diagonals[NSP];
    for (int i = 0; i < NSP; i++) {
-     if (jac[i * NSP + i] > 2.22045e-16) {
+     if (jac[i * NSP + i] > DBL_EPSILON) {
        diagonals[i] = (double) 1.0 / jac[i * NSP + i];
      }
-     else if (jac[i * NSP + i] < -2.22045e-16) {
+     else if ((double) -1.0 * jac[i * NSP + i] > DBL_EPSILON) {
        diagonals[i] = (double) -1.0 / jac[i * NSP + i];
      }
      else {
@@ -134,7 +134,7 @@
      else {
        eigenvalue = wr[i];
      }
-     if ((eigenvalue < minjaceig) && (eigenvalue > 2.22045e-16)) {
+     if ((eigenvalue < minjaceig) && (eigenvalue > DBL_EPSILON)) {
        minjaceig = eigenvalue;
      }
      if (wr[i] > (*CEM)) {

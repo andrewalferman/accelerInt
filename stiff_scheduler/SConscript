@@ -1,17 +1,10 @@
 Import('env')
-
-cObj = []
 c_src = Glob('*.c')
-
+cObj = []
+cuObj = []
 for src in c_src:
+	if env['FINITE_DIFFERENCE'] and 'cvodes_jac' in str(src):
+		continue
 	cObj.append(env.Object(src, variant_dir=env['variant']))
 
-cudaObj = []
-
-if env['build_cuda']:
-	cuda_src = Glob('*.cu')
-
-	for src in cuda_src:
-		cudaObj.append(env.CUDAObject(src, variant_dir=env['variant']))
-
-Return ('cObj', 'cudaObj')
+Return ('cObj', 'cuObj')
