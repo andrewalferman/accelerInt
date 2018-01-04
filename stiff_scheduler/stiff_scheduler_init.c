@@ -1,9 +1,14 @@
-/*! \file cvodes_init.c
- *  \brief Implementation of the necessary initialization for the CVODE interface
+/*! \file stiff_scheduler_init.c
+ *  \brief Implementation of the necessary initialization for the stiffness
+ *  \scheduler interface
+ *
+ *  \Modified from cvodes_init.c
  *
  * \author Nicholas Curtis
  * \date 03/09/2015
  *
+ * \Modified by Andrew Alferman
+ * \date 1/4/2018
  */
 
 #include "header.h"
@@ -23,7 +28,7 @@
 #include "cvodes/cvodes_lapack.h"
 
 #ifdef GENERATE_DOCS
-namespace cvode {
+namespace stiff_schedule {
 #endif
 
 /** The state vectors used in CVODE operation */
@@ -180,9 +185,9 @@ void** integrators;
 */
  const char* solver_name() {
 #ifdef SUNDIALS_ANALYTIC_JACOBIAN
- 	const char* name = "cvodes-analytic-int";
+ 	const char* name = "stiff_scheduler-analytic-int";
 #else
- 	const char* name = "cvodes-int";
+ 	const char* name = "stiff_scheduler-int";
 #endif
  	return name;
  }
