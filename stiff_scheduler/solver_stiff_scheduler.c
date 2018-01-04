@@ -2,6 +2,8 @@
  * \file
  * \brief The integration driver for the stiffness scheduler solver
  *
+ * Heavily adapted from solver_cvodes.c
+ *
  * \author Andrew Alferman
  * 1/4/2018
  *
