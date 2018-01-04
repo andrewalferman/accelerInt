@@ -66,6 +66,7 @@ exprb43-int*
 exp4-int*
 radau2a-int
 rkc-int
+stiff_scheduler-int
 
 #ignore logs
 log/
