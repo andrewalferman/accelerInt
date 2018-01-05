@@ -14,6 +14,7 @@
 
  #include "header.h"
  #include "solver.h"
+ #include "radau2a_props.h"
 
  /* CVODES INCLUDES */
  #include "sundials/sundials_types.h"
