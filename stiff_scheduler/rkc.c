@@ -206,7 +206,7 @@ void rkc_step (const Real t, const Real pr, const Real h, const Real* y_0, const
 // * \param[in] task      0 to take a single integration step, 1 to integrate to tEnd.
  * \param[in,out] y     Dependent variable array, integrated values replace initial conditions.
  */
-int integrate (Real t, const Real tEnd, const Real pr, Real* y) {
+int integrateRKC (Real t, const Real tEnd, const Real pr, Real* y) {
 
     int nstep = 0;
     Real work[4 + NSP] = {0};
