@@ -142,7 +142,7 @@
      // Only doing these checks if we have a nonzero eigenvalue
      if (eigenvalue > DBL_MIN) {
        timescale = (double) 1.0 / eigenvalue;
-       if (timescale < mintimescale) {
+       if (timescale < minfasttimescale) {
          minfasttimescale = timescale;
        }
        if ((timescale < minslowtimescale) && (timescale > deltaT)) {
