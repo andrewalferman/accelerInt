@@ -30,7 +30,7 @@
 
  void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
                       double* stiffindicator, double* CEM, double* CSP,
-                      const double t_end)
+                      const double t, const double t_end)
   {
    // Rearrange the solution vector for pyJac
    double re_local[NSP];
@@ -125,15 +125,29 @@
    double maxjaceig = 0.0;
    double minhereig = 1.0e10;
    double maxhereig = 0.0;
-   double mindiag = 1.0e10;
-   double maxdiag = 0.0;
+   // double mindiag = 1.0e10;
+   // double maxdiag = 0.0;
+   double timescale;
+   double minfasttimescale = 1e10;
+   double minslowtimescale = 1e10;
    double eigenvalue;
+   double deltaT = t_end - t;
    for (int i = 0; i < NSP; i++) {
      if (wr[i] < 0) {
        eigenvalue = wr[i] * (double) -1.0;
      }
      else {
        eigenvalue = wr[i];
+     }
+     // Only doing these checks if we have a nonzero eigenvalue
+     if (eigenvalue > DBL_MIN) {
+       timescale = (double) 1.0 / eigenvalue;
+       if (timescale < mintimescale) {
+         minfasttimescale = timescale;
+       }
+       if ((timescale < minslowtimescale) && (timescale > deltaT)) {
+         minslowtimescale = timescale;
+       }
      }
      if ((eigenvalue < minjaceig) && (eigenvalue > DBL_MIN)) {
        minjaceig = eigenvalue;
@@ -150,16 +164,16 @@
      if (xr[i] > maxhereig) {
        maxhereig = xr[i];
      }
-     if ((diagonals[i] < mindiag) && (diagonals[i] != -1.0)) {
-       mindiag = diagonals[i];
-     }
-     if (diagonals[i] > maxdiag) {
-       maxdiag = diagonals[i];
-     }
+     // if ((diagonals[i] < mindiag) && (diagonals[i] != -1.0)) {
+     //   mindiag = diagonals[i];
+     // }
+     // if (diagonals[i] > maxdiag) {
+     //   maxdiag = diagonals[i];
+     // }
 
    }
 
-   (*CSP) = mindiag / maxdiag;
+   (*CSP) = minfasttimescale / minslowtimescale;
    (*stiffratio) = maxjaceig / minjaceig;
    (*stiffindicator) = (double) 0.5 * (minhereig + maxhereig);
 

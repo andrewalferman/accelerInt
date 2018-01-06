@@ -76,7 +76,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double stiffratio;
         double stiffindicator;
         calculatemetrics(y_local, pr_local, &stiffratio, &stiffindicator, &CEM,
-                        &CSP, t_end);
+                        &CSP, t, t_end);
         #endif
 
         //reinit this integrator for time t, w/ updated state

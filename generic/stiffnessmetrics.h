@@ -10,4 +10,4 @@
 
  void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
                       double* stiffindicator, double* CEM, double* CSP,
-                      const double t_end);
+                      const double t, const double t_end);
