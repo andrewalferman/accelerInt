@@ -14,7 +14,7 @@
  //#include "timer.h"
  #include "jacob.h"
  #include "stiffnessmetrics.h"
- #include "head.h"
+
 
  /* DGEEV prototype */
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
@@ -175,14 +175,14 @@
      insertion_sort(NSP, wr, sorted_eigs);
 
      // CSP slow-manifold projector matrix
-     Real Qs[NN*NN];
+     double Qs[NN*NN];
 
      // CSP radical correction tensor matrix
-     Real Rc[NN*NN];
+     double Rc[NN*NN];
 
      // time scale of fastest slow mode (controlling time scale)
-     Real tau;
-     Real * ptau = &tau; // pointer to tau
+     double tau;
+     double * ptau = &tau; // pointer to tau
 
      uint modes = get_slow_projector( *t, y_local, Qs, ptau, Rc );
      printf("%i\n", modes)
