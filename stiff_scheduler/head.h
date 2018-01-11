@@ -7,7 +7,7 @@
  * computational singular perturbation (CSP) method to separate the fast and slow
  * modes and generate a slow manifold projection matrix to eliminate the stiffness
  * (and therefore allow explicit integration).
- * 
+ *
  * Change stiffness using stiffness factor eps, and the CSP error tolerance
  * parameters eps_r and eps_i in head.h.
  */
@@ -30,11 +30,11 @@
 #include <float.h>
 #include <stdbool.h>
 
-/** Problem size definition. */
-#define NN 4
+// /** Problem size definition. */
+// #define NN 4
 
-/** Number of "threads" (simultaneous integrations) */
-#define NUM 1
+// /** Number of "threads" (simultaneous integrations) */
+// #define NUM 1
 
 /** Stiffness factor eps. */
 extern const double eps;
@@ -50,7 +50,7 @@ extern const double eps;
 #ifdef DOUBLE
   /** Define Real as double. */
   #define Real double
-  
+
   /** Double precision ZERO. */
   #define ZERO 0.0
   /** Double precision ONE. */
@@ -61,13 +61,13 @@ extern const double eps;
   #define THREE 3.0
   /** Double precision FOUR. */
   #define FOUR 4.0
-  
+
   /** Machine precision constant. */
   #define SMALL DBL_EPSILON
 #else
   /** Define Real as float. */
   #define Real float
-  
+
   /** Single precision ZERO. */
   #define ZERO 0.0f
   /** Single precision ONE. */
@@ -78,7 +78,7 @@ extern const double eps;
   #define THREE 3.0f
   /** Single precision FOUR. */
   #define FOUR 4.0f
-  
+
   /** Machine precision constant. */
   #define SMALL FLT_EPSILON
 #endif
