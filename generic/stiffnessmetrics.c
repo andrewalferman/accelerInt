@@ -20,7 +20,7 @@
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                  int* lda, double* wr, double* wi, double* vl, int* ldvl,
                  double* vr, int* ldvr, double* work, int* lwork, int* info );
-void insertion_sort ( uint n, Real * vals, uint * order );
+void insertion_sort ( int n, double * vals, int * order );
 
  /* Parameters */
  #define N NSP
