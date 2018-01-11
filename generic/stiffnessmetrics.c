@@ -14,6 +14,7 @@
  //#include "timer.h"
  #include "jacob.h"
  #include "stiffnessmetrics.h"
+ #include "head.h"
 
  /* DGEEV prototype */
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
