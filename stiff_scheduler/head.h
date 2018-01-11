@@ -29,6 +29,7 @@
 #include <string.h>
 #include <float.h>
 #include <stdbool.h>
+#include "header.h"
 
 // /** Problem size definition. */
 // #define NN 4
@@ -62,8 +63,8 @@ extern const double eps;
   /** Double precision FOUR. */
   #define FOUR 4.0
 
-  /** Machine precision constant. */
-  #define SMALL DBL_EPSILON
+  // /** Machine precision constant. */
+  // #define SMALL DBL_EPSILON
 #else
   /** Define Real as float. */
   #define Real float
