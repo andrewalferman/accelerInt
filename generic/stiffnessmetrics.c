@@ -129,7 +129,7 @@
    // double maxdiag = 0.0;
    double timescale;
    double minfasttimescale = 1e10;
-   double minslowtimescale = 1e10;
+   // double minslowtimescale = 1e10;
    double eigenvalue;
    double deltaT = t_end - t;
    for (int i = 0; i < NSP; i++) {
@@ -145,9 +145,9 @@
        if (timescale < minfasttimescale) {
          minfasttimescale = timescale;
        }
-       if ((timescale < minslowtimescale) && (timescale > deltaT)) {
-         minslowtimescale = timescale;
-       }
+       // if ((timescale < minslowtimescale) && (timescale > deltaT)) {
+       //   minslowtimescale = timescale;
+       // }
      }
      if ((eigenvalue < minjaceig) && (eigenvalue > DBL_MIN)) {
        minjaceig = eigenvalue;
@@ -170,10 +170,24 @@
      // if (diagonals[i] > maxdiag) {
      //   maxdiag = diagonals[i];
      // }
+     double sorted_eigs[N];
+     insertion_sort(NSP, wr, sorted_eigs);
 
+     // CSP slow-manifold projector matrix
+     Real Qs[NN*NN];
+
+     // CSP radical correction tensor matrix
+     Real Rc[NN*NN];
+
+     // time scale of fastest slow mode (controlling time scale)
+     Real tau;
+     Real * ptau = &tau; // pointer to tau
+
+     uint modes = get_slow_projector( *t, y_local, Qs, ptau, Rc );
+     printf("%i\n", modes)
    }
 
-   (*CSP) = minfasttimescale / minslowtimescale;
+   // (*CSP) = minfasttimescale / minslowtimescale;
    (*stiffratio) = maxjaceig / minjaceig;
    (*stiffindicator) = (double) 0.5 * (minhereig + maxhereig);
 
