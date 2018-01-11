@@ -29,7 +29,7 @@ uint eigen ( uint n, double * A, double * evalr, double * evali,
 uint eigenbal ( uint n, double * A, double * evalr, double * evali,
                 double * lev, double * rev );
 uint invers ( uint n, double * A, double * B );
-uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp );
+uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local);
 void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local);
 
 ////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ void radical_correction ( Real tim, Real * y, Real * Rc, Real * g ) {
  * \param[out]  Rc    radical correction tensor, size NN*NN
  * \return      M     number of slow modes
  */
-uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc ) {
+uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc, double pr_local ) {
 
   // CSP mode timescales (s)
   // Positive values indicate explosive modes (never in M exhausted modes)
@@ -74,7 +74,7 @@ uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc
   Real b_csp[NN*NN]; // Array with CSP covectors
 
   // find number of exhausted modes (M) and CSP vectors
-  uint M = get_fast_modes ( tim, y, tau, a_csp, b_csp );
+  uint M = get_fast_modes ( tim, y, tau, a_csp, b_csp, pr_local);
 
   // calculate slow-manifold projector
   for ( uint j = 0; j < NN; ++j ) {
@@ -370,10 +370,10 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
  * \param[out]  b_csp   CSP covectors, size NN*NN
  * \return      M       number of exhausted (fast) modes
  */
-uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp ) {
+uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local) {
 
   // perform CSP analysis to get timescales, vectors, covectors
-  get_csp_vectors ( tim, y, tau, a_csp, b_csp );
+  get_csp_vectors ( tim, y, tau, a_csp, b_csp, pr_local );
 
   // now need to find M exhausted modes
   // first calculate f^i
