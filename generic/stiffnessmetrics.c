@@ -20,6 +20,7 @@
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                  int* lda, double* wr, double* wi, double* vl, int* ldvl,
                  double* vr, int* ldvr, double* work, int* lwork, int* info );
+void insertion_sort ( uint n, Real * vals, uint * order );
 
  /* Parameters */
  #define N NSP
@@ -184,7 +185,7 @@
      double tau;
      double * ptau = &tau; // pointer to tau
 
-     uint modes = get_slow_projector( *t, y_local, Qs, ptau, Rc );
+     int modes = get_slow_projector( *t, y_local, Qs, ptau, Rc );
      printf("%i\n", modes)
    }
 
