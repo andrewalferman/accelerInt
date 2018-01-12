@@ -186,7 +186,7 @@
      double * ptau = &tau; // pointer to tau
 
      int modes = get_slow_projector( *t, y_local, Qs, ptau, Rc );
-     printf("%i\n", modes)
+     printf("%i\n", modes);
    }
 
    // (*CSP) = minfasttimescale / minslowtimescale;
