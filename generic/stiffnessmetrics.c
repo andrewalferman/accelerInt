@@ -172,8 +172,8 @@ void insertion_sort ( int n, double * vals, int * order );
      // if (diagonals[i] > maxdiag) {
      //   maxdiag = diagonals[i];
      // }
-     double sorted_eigs[N];
-     insertion_sort(NSP, wr, sorted_eigs);
+     int order_eigs[N];
+     insertion_sort(NSP, wr, order_eigs);
 
      // CSP slow-manifold projector matrix
      double Qs[NN*NN];
