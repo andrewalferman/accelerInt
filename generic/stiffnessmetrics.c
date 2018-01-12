@@ -185,7 +185,7 @@
      double tau;
      double * ptau = &tau; // pointer to tau
 
-     int modes = get_slow_projector( (Real) * t, y_local, Qs, ptau, Rc, pr_local);
+     int modes = get_slow_projector( t, y_local, Qs, ptau, Rc, pr_local);
      printf("%i\n", modes);
    }
 
