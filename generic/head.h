@@ -32,6 +32,13 @@
 #include "header.h"
 #include "solver_options.h"
 
+uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc );
+void radical_correction ( Real tim, Real * y, Real * Rc, Real * g );
+void RK4 ( Real t, Real h, Real * y0, Real * Q, Real * y );
+void RK2 ( Real t, Real h, Real * y0, Real * Q, Real * y );
+void euler ( Real t, Real h, Real * y0, Real * Q, Real * y );
+void RKB6 ( Real t, Real h, Real * y0, Real * Q, Real * y );
+
 // /** Problem size definition. */
 // #define NN 4
 
