@@ -90,9 +90,5 @@ typedef unsigned int uint;
 /** Unsigned short int typedef. */
 typedef unsigned short int usint;
 
-uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc );
+uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc, double pr_local );
 void radical_correction ( Real tim, Real * y, Real * Rc, Real * g );
-void RK4 ( Real t, Real h, Real * y0, Real * Q, Real * y );
-void RK2 ( Real t, Real h, Real * y0, Real * Q, Real * y );
-void euler ( Real t, Real h, Real * y0, Real * Q, Real * y );
-void RKB6 ( Real t, Real h, Real * y0, Real * Q, Real * y );
