@@ -31,7 +31,6 @@
  extern void** integrators;
 
  #include "stiffnessmetrics.h"
- #include "head.h"
 
  #ifdef GENERATE_DOCS
  namespace stiff_schedule {
