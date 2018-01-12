@@ -21,6 +21,14 @@
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                  int* lda, double* wr, double* wi, double* vl, int* ldvl,
                  double* vr, int* ldvr, double* work, int* lwork, int* info );
+ void insertion_sort ( uint n, Real * vals, uint * order );
+ uint eigen ( uint n, double * A, double * evalr, double * evali,
+              double * lev, double * rev );
+ uint eigenbal ( uint n, double * A, double * evalr, double * evali,
+                 double * lev, double * rev );
+ uint invers ( uint n, double * A, double * B );
+ uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local);
+ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local);
 
  /* Parameters */
  #define N NSP
