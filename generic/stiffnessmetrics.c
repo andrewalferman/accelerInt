@@ -12,7 +12,7 @@
  #include <float.h>
 
  //#include "timer.h"
- //#include "jacob.h"
+ #include "jacob.h"
  #include "stiffnessmetrics.h"
  #include "header.h"
 
