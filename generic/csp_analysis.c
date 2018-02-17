@@ -10,7 +10,6 @@
 
 /** Include common code. */
 #include "head.h"
-#include "stiffmetrics.h"
 //#include "header.h"
 //#include "jacob.h"
 
