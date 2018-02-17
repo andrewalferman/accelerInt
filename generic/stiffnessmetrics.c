@@ -21,6 +21,7 @@
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                  int* lda, double* wr, double* wi, double* vl, int* ldvl,
                  double* vr, int* ldvr, double* work, int* lwork, int* info );
+uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc );
 
  /* Parameters */
  #define N NSP
@@ -132,6 +133,23 @@
    double timescale;
    double minfasttimescale = 1e10;
    // double minslowtimescale = 1e10;
+
+   // CSP slow-manifold projector matrix
+   Real Qs[NN*NN];
+
+   // CSP radical correction tensor matrix
+   Real Rc[NN*NN];
+
+   // time scale of fastest slow mode (controlling time scale)
+   Real tau;
+   Real * ptau = &tau; // pointer to tau
+
+   // get slow-manifold projector, driving time scale, and radical correction
+   uint M = get_slow_projector ( *tim, y0_local, Qs, ptau, Rc );
+
+   // time step size (controlled by fastest slow mode)
+   Real h = mu * tau;
+
    double eigenvalue;
    double deltaT = t_end - t;
    for (int i = 0; i < NSP; i++) {
@@ -172,24 +190,10 @@
      // if (diagonals[i] > maxdiag) {
      //   maxdiag = diagonals[i];
      // }
-     int order_eigs[N];
-     insertion_sort(NSP, wr, order_eigs);
 
-     // CSP slow-manifold projector matrix
-     double Qs[NN*NN];
-
-     // CSP radical correction tensor matrix
-     double Rc[NN*NN];
-
-     // time scale of fastest slow mode (controlling time scale)
-     double tau;
-     double * ptau = &tau; // pointer to tau
-
-     int modes = get_slow_projector( t, y_local, Qs, ptau, Rc, pr_local);
-     printf("%i\n", modes);
    }
 
-   // (*CSP) = minfasttimescale / minslowtimescale;
+   (*CSP) = minfasttimescale / tau;
    (*stiffratio) = maxjaceig / minjaceig;
    (*stiffindicator) = (double) 0.5 * (minhereig + maxhereig);
 

@@ -13,10 +13,10 @@
 #include "jacob.h"
 
 /** Relative CSP error tolerance */
-const Real eps_r = 1.0e-2;
+const Real eps_r = 1.0e-3;
 
 /** Absolute CSP error tolerance */
-const Real eps_a = 1.0e-2;
+const Real eps_a = 1.0e-3;
 
 /** Define sign function */
 #define sign(x) (copysign(ONE, x))
@@ -290,71 +290,71 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
 
   } // end i loop
 
-#ifdef ERROR
-
-  // ensure a and b are inverses
-  for ( uint i = 0; i < NN; ++i ) {
-
-    Real I[NN];
-    for ( uint j = 0; j < NN; ++j ) {
-      I[j] = 0;
-
-      for ( uint k = 0; k < NN; ++k ) {
-        I[j] += a_csp[k + NN*j]*b_csp[k + NN*i];
-      }
-
-      if ( i == j ) {
-        if ( fabs( I[j] - ONE ) > 1.0e-14 ) {
-          printf("CPS vectors not orthogonal\n");
-        }
-      } else {
-        if ( fabs( I[j] ) > 1.0e-14 ) {
-          printf("CPS vectors not orthogonal\n");
-        }
-      }
-      //printf("%17.10le ", I[j]);
-    } // end j loop
-
-    //printf("\n");
-  } // end i loop
-
-
-  // check that new CSP vectors and covectors recover standard base vectors e_i
-  for ( uint ei = 0; ei < NN; ++ei ) {
-    // fill e_i
-    Real e[NN];
-    for ( uint i = 0; i < NN; ++i ) {
-      if ( ei == i ) {
-        e[i] = ONE;
-      } else {
-        e[i] = ZERO;
-      }
-    }
-
-    for ( uint i = 0; i < NN; ++i ) {
-      // ith component of e
-      double e_comp = ZERO;
-      for ( uint j = 0; j < NN; ++j ) {
-        // (b.e_i)*a
-
-        // b.e_i
-        double e_sum = ZERO;
-        for ( uint k = 0; k < NN; ++k ) {
-          e_sum += b_csp[k + NN * j] * e[k];
-        }
-
-        e_sum *= a_csp[i + NN * j];
-        e_comp += e_sum;
-      }
-
-      // if reconstructed basis not very close to original basis
-      if ( fabs( e[i] - e_comp ) > 1.0e-10 ) {
-        printf("Error recreating standard basis vectors.\n");
-        printf("e_%d, component %d, e_comp: %17.10le \t error: %17.10le\n", ei+1, i, e_comp, fabs( e[i] - e_comp ));
-      }
-    }
-  }
-#endif
+// #ifdef ERROR
+//
+//   // ensure a and b are inverses
+//   for ( uint i = 0; i < NN; ++i ) {
+//
+//     Real I[NN];
+//     for ( uint j = 0; j < NN; ++j ) {
+//       I[j] = 0;
+//
+//       for ( uint k = 0; k < NN; ++k ) {
+//         I[j] += a_csp[k + NN*j]*b_csp[k + NN*i];
+//       }
+//
+//       if ( i == j ) {
+//         if ( fabs( I[j] - ONE ) > 1.0e-14 ) {
+//           printf("CPS vectors not orthogonal\n");
+//         }
+//       } else {
+//         if ( fabs( I[j] ) > 1.0e-14 ) {
+//           printf("CPS vectors not orthogonal\n");
+//         }
+//       }
+//       //printf("%17.10le ", I[j]);
+//     } // end j loop
+//
+//     //printf("\n");
+//   } // end i loop
+//
+//
+//   // check that new CSP vectors and covectors recover standard base vectors e_i
+//   for ( uint ei = 0; ei < NN; ++ei ) {
+//     // fill e_i
+//     Real e[NN];
+//     for ( uint i = 0; i < NN; ++i ) {
+//       if ( ei == i ) {
+//         e[i] = ONE;
+//       } else {
+//         e[i] = ZERO;
+//       }
+//     }
+//
+//     for ( uint i = 0; i < NN; ++i ) {
+//       // ith component of e
+//       double e_comp = ZERO;
+//       for ( uint j = 0; j < NN; ++j ) {
+//         // (b.e_i)*a
+//
+//         // b.e_i
+//         double e_sum = ZERO;
+//         for ( uint k = 0; k < NN; ++k ) {
+//           e_sum += b_csp[k + NN * j] * e[k];
+//         }
+//
+//         e_sum *= a_csp[i + NN * j];
+//         e_comp += e_sum;
+//       }
+//
+//       // if reconstructed basis not very close to original basis
+//       if ( fabs( e[i] - e_comp ) > 1.0e-10 ) {
+//         printf("Error recreating standard basis vectors.\n");
+//         printf("e_%d, component %d, e_comp: %17.10le \t error: %17.10le\n", ei+1, i, e_comp, fabs( e[i] - e_comp ));
+//       }
+//     }
+//   }
+// #endif
 
 } // end get_csp_vectors
 
