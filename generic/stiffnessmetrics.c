@@ -12,9 +12,10 @@
  #include <float.h>
 
  //#include "timer.h"
+ #include "header.h"
  #include "jacob.h"
  #include "stiffnessmetrics.h"
- #include "header.h"
+
 
 
  /* DGEEV prototype */
