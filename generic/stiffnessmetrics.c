@@ -14,7 +14,7 @@
  //#include "timer.h"
  //#include "jacob.h"
  #include "stiffnessmetrics.h"
- //#include "header.h"
+ #include "header.h"
 
 
  /* DGEEV prototype */
