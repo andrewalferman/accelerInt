@@ -8,6 +8,8 @@
  *
  */
 
+#include "header.h"
+
  void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
                       double* stiffindicator, double* CEM, double* CSP,
                       const double t, const double t_end);
