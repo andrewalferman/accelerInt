@@ -29,7 +29,7 @@
 #include <string.h>
 #include <float.h>
 #include <stdbool.h>
-#include "header.h"
+//#include "header.h"
 #include "solver_options.h"
 
 // /** Problem size definition. */
