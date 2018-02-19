@@ -707,8 +707,7 @@ stiff_scheduler_c, stiff_scheduler_cu = builder(env_save, mech_c,
                      mech_cuda if build_cuda else None,
                      new_defines, stiff_scheduler_dir,
                      variant, 'stiff_scheduler-int', target_list,
-                     filter_out=['nverse'])
-                    #filter_out=['solver_generic', 'nverse'])
+                     filter_out=['solver_generic', 'nverse'])
 
 flat_values = []
 cpu_vals = []
