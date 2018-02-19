@@ -22,7 +22,7 @@
  extern void dgeev( char* jobvl, char* jobvr, int* n, double* a,
                  int* lda, double* wr, double* wi, double* vl, int* ldvl,
                  double* vr, int* ldvr, double* work, int* lwork, int* info );
- uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc );
+ uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc, double pr_local  );
 
  /* Parameters */
  #define N NSP
@@ -146,7 +146,7 @@
    Real * ptau = &tau; // pointer to tau
 
    // get slow-manifold projector, driving time scale, and radical correction
-   uint M = get_slow_projector ( *tim, y0_local, Qs, ptau, Rc );
+   uint M = get_slow_projector ( *tim, y0_local, Qs, ptau, Rc , double pr_local );
 
    /** Time step factor mu.
     * Time step divided by controlling time scale.
