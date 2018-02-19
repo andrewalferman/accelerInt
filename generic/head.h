@@ -92,5 +92,6 @@ typedef unsigned int uint;
 typedef unsigned short int usint;
 
 uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc, double pr_local );
-void radical_correction ( Real tim, Real * y, Real * Rc, Real * g );
+void radical_correction ( const double tim, const double pres,
+                          const double * y, Real * Rc, Real * g );
 void insertion_sort ( uint n, Real * vals, uint * order );
