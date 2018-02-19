@@ -146,7 +146,7 @@
    Real * ptau = &tau; // pointer to tau
 
    // get slow-manifold projector, driving time scale, and radical correction
-   uint M = get_slow_projector ( *t, y_local, Qs, ptau, Rc , pr_local );
+   uint M = get_slow_projector ( t, y_local, Qs, ptau, Rc , pr_local );
 
    /** Time step factor mu.
     * Time step divided by controlling time scale.
