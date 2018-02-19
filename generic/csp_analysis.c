@@ -49,7 +49,7 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
 //void radical_correction ( Real tim, Real * y, Real * Rc, Real * g ) {
 void radical_correction ( const double tim, const double pres,
                           const double * y, Real * Rc, Real * g ) {
-  printf("radical_correction called.\n");
+
   // call derivative, and apply radical correction tensor on derivative vector
   double dy[NN];
 
@@ -88,7 +88,7 @@ void radical_correction ( const double tim, const double pres,
  * \return      M     number of slow modes
  */
 uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc, double pr_local ) {
-  printf("get_slow_projector called.\n");
+
   // CSP mode timescales (s)
   // Positive values indicate explosive modes (never in M exhausted modes)
   Real tau[NN];
@@ -186,7 +186,7 @@ uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc
  * \param[out]  b_csp   CSP covectors, size NN*NN
  */
 void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local ) {
-  printf("get_csp_vectors called.\n");
+
   // array holding Jacobian
   Real jac[NN*NN];
 
@@ -395,7 +395,7 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
  * \return      M       number of exhausted (fast) modes
  */
 uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local) {
-  printf("get_fast_modes called.\n");
+
   // perform CSP analysis to get timescales, vectors, covectors
   get_csp_vectors ( tim, y, tau, a_csp, b_csp, pr_local );
 
@@ -503,7 +503,7 @@ uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp
     } // end if
 
   } // end while loop
-
+  printf("M = %i\n",M)
   return M;
 } // end get_fast_modes
 
