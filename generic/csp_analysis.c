@@ -23,7 +23,8 @@ const Real eps_a = 1.0e-3;
 #define sign(x) (copysign(ONE, x))
 
 /** Function prototypes. */
-void dydt ( Real t, Real * y, Real * Q, int qflag, Real * dydt );
+void dydt (const double t, const double pres, const double * y, double * dy);
+//void dydt ( Real t, Real * y, Real * Q, int qflag, Real * dydt );
 void insertion_sort ( uint n, Real * vals, uint * order );
 uint eigen ( uint n, double * A, double * evalr, double * evali,
              double * lev, double * rev );
@@ -40,14 +41,34 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
  * with data array.
  *
  * \param[in]   tim time at new time step (sec)
+ * \param[in]   pres pressure at the time step
  * \param[in]   y   array of data already integrated, size NN
  * \param[in]   Rc  Radical correction tensor, size NN*NN
  * \param[out]  g   array holding radical corrections, size NN
  */
-void radical_correction ( Real tim, Real * y, Real * Rc, Real * g ) {
-
+//void radical_correction ( Real tim, Real * y, Real * Rc, Real * g ) {
+void radical_correction ( const double tim, const double pres,
+                          const double * y, double * dy, Real * Rc ) {
+  printf("radical_correction called.\n");
   // call derivative, and apply radical correction tensor on derivative vector
-  dydt ( tim, y, Rc, 1, g );
+  dydt ( tim, pres, y, dy);
+
+  Real ydotn[NN];
+
+  for ( uint i = 0; i < NN; ++i ) {
+
+    Real sum_row = ZERO;
+    for ( uint j = 0; j < NN; ++j ) {
+      sum_row += Q[i + (NN * j)] * ydot[j];
+    } // end j loop
+
+    ydotn[i] = sum_row;
+  } // end i loop
+
+  // now replace ydot with ydotn
+  for ( uint i = 0; i < NN; ++i ) {
+    ydot[i] = ydotn[i];
+  } // end i loop
 
 }
 
@@ -65,7 +86,7 @@ void radical_correction ( Real tim, Real * y, Real * Rc, Real * g ) {
  * \return      M     number of slow modes
  */
 uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc, double pr_local ) {
-
+  printf("get_slow_projector called.\n");
   // CSP mode timescales (s)
   // Positive values indicate explosive modes (never in M exhausted modes)
   Real tau[NN];
@@ -163,7 +184,7 @@ uint get_slow_projector ( Real tim, Real * y, Real * Qs, Real * taum1, Real * Rc
  * \param[out]  b_csp   CSP covectors, size NN*NN
  */
 void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local ) {
-
+  printf("get_csp_vectors called.\n");
   // array holding Jacobian
   Real jac[NN*NN];
 
@@ -372,7 +393,7 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
  * \return      M       number of exhausted (fast) modes
  */
 uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp, double pr_local) {
-
+  printf("get_fast_modes called.\n");
   // perform CSP analysis to get timescales, vectors, covectors
   get_csp_vectors ( tim, y, tau, a_csp, b_csp, pr_local );
 
