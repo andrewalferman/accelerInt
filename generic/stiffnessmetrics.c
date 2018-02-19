@@ -61,7 +61,7 @@
    {
      pr_stiffcalc = pr_local;
    }
-   eval_jacob(t_end, pr_stiffcalc, re_local, jac);
+   eval_jacob(t, pr_stiffcalc, re_local, jac);
    // Get the Hermitian
    double hermitian[NSP*NSP];
    for (int i = 0; i < NSP; i++) {
@@ -146,7 +146,7 @@
    Real * ptau = &tau; // pointer to tau
 
    // get slow-manifold projector, driving time scale, and radical correction
-   uint M = get_slow_projector ( *tim, y0_local, Qs, ptau, Rc , double pr_local );
+   uint M = get_slow_projector ( *t, y_local, Qs, ptau, Rc , pr_local );
 
    /** Time step factor mu.
     * Time step divided by controlling time scale.
