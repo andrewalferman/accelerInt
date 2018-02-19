@@ -8,14 +8,14 @@
  *
  */
 
- #include <stdio.h>
- #include <float.h>
+ //#include <stdio.h>
+ //#include <float.h>
 
  //#include "timer.h"
- #include "header.h"
- #include "jacob.h"
- #include "stiffnessmetrics.h"
-
+ //#include "header.h"
+ //#include "jacob.h"
+ //#include "stiffnessmetrics.h"
+#include "head.h"
 
 
  /* DGEEV prototype */

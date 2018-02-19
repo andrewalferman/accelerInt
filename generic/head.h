@@ -31,7 +31,7 @@
 #include <stdbool.h>
 //#include "header.h"
 #include "solver_options.h"
-#include "stiffmetrics.h"
+//#include "stiffmetrics.h"
 
 // /** Problem size definition. */
 // #define NN 4
