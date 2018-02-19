@@ -14,7 +14,7 @@
  //#include "timer.h"
 #include "header.h"
 #include "jacob.h"
-#include "stiffnessmetrics.h"
+//#include "stiffnessmetrics.h"
 #include "head.h"
 
 
@@ -147,6 +147,11 @@
 
    // get slow-manifold projector, driving time scale, and radical correction
    uint M = get_slow_projector ( *tim, y0_local, Qs, ptau, Rc );
+
+   /** Time step factor mu.
+    * Time step divided by controlling time scale.
+    */
+   const Real mu = 0.005;
 
    // time step size (controlled by fastest slow mode)
    Real h = mu * tau;
