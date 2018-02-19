@@ -503,7 +503,7 @@ uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp
     } // end if
 
   } // end while loop
-  printf("M = %i\n",M);
+  //printf("M = %i\n",M);
   return M;
 } // end get_fast_modes
 
