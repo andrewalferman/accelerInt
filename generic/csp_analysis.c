@@ -48,10 +48,12 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
  */
 //void radical_correction ( Real tim, Real * y, Real * Rc, Real * g ) {
 void radical_correction ( const double tim, const double pres,
-                          const double * y, double * dy, Real * Rc ) {
+                          const double * y, Real * Rc, Real * g ) {
   printf("radical_correction called.\n");
   // call derivative, and apply radical correction tensor on derivative vector
-  dydt ( tim, pres, y, dy);
+  double dy[NN];
+
+  dydt ( tim, pres, y, dy );
 
   Real ydotn[NN];
 
@@ -59,7 +61,7 @@ void radical_correction ( const double tim, const double pres,
 
     Real sum_row = ZERO;
     for ( uint j = 0; j < NN; ++j ) {
-      sum_row += Q[i + (NN * j)] * ydot[j];
+      sum_row += Rc[i + (NN * j)] * dy[j];
     } // end j loop
 
     ydotn[i] = sum_row;
@@ -67,7 +69,7 @@ void radical_correction ( const double tim, const double pres,
 
   // now replace ydot with ydotn
   for ( uint i = 0; i < NN; ++i ) {
-    ydot[i] = ydotn[i];
+    g[i] = ydotn[i];
   } // end i loop
 
 }
@@ -406,7 +408,7 @@ uint get_fast_modes ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_csp
   int qflag = 0; // flag telling dydt to not use projector
 
   // call derivative function
-  dydt ( tim, y, Q, qflag, g_csp );
+  dydt ( tim, pr_local, y, g_csp );
 
   for ( uint i = 0; i < NN; ++i ) {
 
