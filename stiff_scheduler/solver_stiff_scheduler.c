@@ -71,8 +71,9 @@ void intDriver (const int NUM, const double t, const double t_end,
         double CSP;
         double stiffratio;
         double stiffindicator;
+        int M;
         calculatemetrics(y_local, pr_local, &stiffratio, &stiffindicator, &CEM,
-                        &CSP, t, t_end);
+                        &CSP, M, t, t_end);
 
         double time0;
         // ADJUST THIS "IF" STATEMENT TO CHANGE SWITCHING CRITERIA
@@ -152,7 +153,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Print stiffness metrics and timing info
-        printf("%i,%.15e,%.15e,%.15e,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, runtime);
+        printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime);
         // /* Print eigenvalues */
         // print_eigenvalues( "Eigenvalues", n, wr, wi );
 

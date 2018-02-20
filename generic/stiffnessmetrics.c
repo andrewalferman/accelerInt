@@ -33,7 +33,7 @@
  #define N2POS 48
 
  void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
-                      double* stiffindicator, double* CEM, double* CSP,
+                      double* stiffindicator, double* CEM, double* CSP, int* M,
                       const double t, const double t_end)
   {
    // Rearrange the solution vector for pyJac
@@ -146,7 +146,7 @@
    Real * ptau = &tau; // pointer to tau
 
    // get slow-manifold projector, driving time scale, and radical correction
-   uint M = get_slow_projector ( t, y_local, Qs, ptau, Rc , pr_local );
+   (*M) = get_slow_projector ( t, y_local, Qs, ptau, Rc , pr_local );
 
    /** Time step factor mu.
     * Time step divided by controlling time scale.
