@@ -79,9 +79,12 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             y_global[tid + i * NUM] = y_local[i];
             #ifdef STIFF_METRICS
-            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+            if (y_local[i] != y_local[i] || isinf(y_local[i])) {
               failflag = 1;
             }
+            // if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+            //   failflag = 1;
+            // }
             #endif
         }
         // printf("%.15e\n", y_local[0]);
