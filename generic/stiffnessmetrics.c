@@ -30,7 +30,13 @@
  #define LDVL N
  #define LDVR N
  // Need a better way of sending this the N2 position
- #define N2POS 48
+ #ifdef CHEM_UTILS_HEAD
+   #if (NSP == 53)
+    #define N2POS 48
+   #elif (NSP == 13)
+    #define N2POS 11
+   #endif
+ #endif
 
  void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
                       double* stiffindicator, double* CEM, double* CSP, int* M,
