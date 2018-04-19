@@ -53,7 +53,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         #ifndef CHEM_UTILS_HEAD
-        printf('This could work\n');
+        printf("This could work\n");
         #endif
 
         #ifdef STIFF_METRICS
