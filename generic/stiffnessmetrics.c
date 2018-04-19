@@ -37,18 +37,26 @@
                       const double t, const double t_end)
   {
    // Rearrange the solution vector for pyJac
+   #ifdef CHEM_UTILS_HEAD
+     double re_local[NSP];
+     double nmf;
+     for (int i = 0; i < NSP; i++)
+     {
+       re_local[i] = y_local[i];
+       if (i == N2POS)
+       {
+         double nmf = y_local[i];
+       }
+     }
+     re_local[N2POS] = re_local[NSP];
+     re_local[NSP] = nmf;
+   #else
    double re_local[NSP];
-   double nmf;
    for (int i = 0; i < NSP; i++)
    {
      re_local[i] = y_local[i];
-     if (i == N2POS)
-     {
-       double nmf = y_local[i];
-     }
    }
-   re_local[N2POS] = re_local[NSP];
-   re_local[NSP] = nmf;
+   #endif
    // Calculate the stiffness metrics
    // Get the Jacobian
    double jac[NSP*NSP];
