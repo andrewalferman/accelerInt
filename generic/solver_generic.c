@@ -15,6 +15,7 @@
 
 #ifdef STIFF_METRICS
 #include "stiffnessmetrics.h"
+#include "math.h"
 #endif
 
 #ifdef GENERATE_DOCS
