@@ -52,7 +52,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_local[i] = y_global[tid + i * NUM];
         }
 
-        #ifdef CHEM_UTILS_HEAD
+        #ifndef CHEM_UTILS_HEAD
         printf('This could work\n');
         #endif
 
