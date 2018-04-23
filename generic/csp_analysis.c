@@ -11,7 +11,7 @@
 /** Include common code. */
 #include "head.h"
 #include "header.h"
-//#include "jacob.h"
+#include "jacob.h"
 
 /** Relative CSP error tolerance */
 const Real eps_r = 1.0e-3;
