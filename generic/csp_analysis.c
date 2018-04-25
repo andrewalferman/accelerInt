@@ -190,9 +190,9 @@ void get_csp_vectors ( Real tim, Real * y, Real * tau, Real * a_csp, Real * b_cs
   // array holding Jacobian
   Real jac[NN*NN];
 
-  if (pr_local >= 1000.0)
+  if (pr_local <= 1000.0)
   {
-    pr_local = pr_local / 101325.0;
+    pr_local = pr_local * 101325.0;
   }
 
   // calculate Jacobian for current time step

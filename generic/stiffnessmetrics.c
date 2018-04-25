@@ -67,15 +67,15 @@
    // Get the Jacobian
    double jac[NSP*NSP];
    double pr_stiffcalc;
-   if (pr_local >= 1000.0)
+   if (pr_local <= 1000.0)
    {
-     pr_stiffcalc = pr_local / 101325.0;
+     pr_stiffcalc = pr_local * 101325.0;
    }
    else
    {
      pr_stiffcalc = pr_local;
    }
-   eval_jacob(t, pr_stiffcalc, re_local, jac);
+   eval_jacob(t, pr_local, re_local, jac);
    // Get the Hermitian
    double hermitian[NSP*NSP];
    for (int i = 0; i < NSP; i++) {
