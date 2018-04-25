@@ -85,6 +85,7 @@ void intDriver (const int NUM, const double t, const double t_end,
                 printf("Bad values:\n");
               }
               printf("%i,%.15e,",i,y_local[i]);
+              failflag = 1;
               //   printf("y_local:\n");
               //   for (int j = 0; j < NSP - 1; j++) {
               //     printf("%.15e,",y_local[j]);
@@ -96,11 +97,14 @@ void intDriver (const int NUM, const double t, const double t_end,
               //   }
               //   printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
               }
-              failflag = 1;
-              printf("\n");
+
             #else
             if (y_local[i] != y_local[i] || isinf(y_local[i])) {
+              if (failflag == 0) {
+                printf("Bad values:\n");
+              }
               printf("%i,%.15e,",i,y_local[i]);
+              failflag = 1;
               //   printf("y_local:\n");
               //   for (int j = 0; j < NSP - 1; j++) {
               //     printf("%.15e,",y_local[j]);
@@ -112,14 +116,14 @@ void intDriver (const int NUM, const double t, const double t_end,
               //   }
               //   printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
               }
-              failflag = 1;
-              printf(" \n");
             #endif
-            }
             // if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
             //   failflag = 1;
             // }
             #endif
+            if (failflag == 1) {
+              printf("\n");
+            }
             y_global[tid + i * NUM] = y_local[i];
         }
         // printf("%.15e\n", y_local[0]);
