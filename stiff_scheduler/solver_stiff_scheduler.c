@@ -122,7 +122,7 @@ void intDriver (const int NUM, const double t, const double t_end,
           #endif
 
           // call integrator for one time step
-          check_error(tid, integrateRKC (t, t_end, pr_local, y_local));
+          check_error(tid, integrate(t, t_end, pr_local, y_local));
           //double runtime = GetTimer();
         }
 
