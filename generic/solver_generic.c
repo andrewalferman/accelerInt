@@ -98,7 +98,6 @@ void intDriver (const int NUM, const double t, const double t_end,
               }
               failflag = 1;
               printf("\n");
-            }
             #else
             if (y_local[i] != y_local[i] || isinf(y_local[i])) {
               printf("%i,%.15e,",i,y_local[i]);
@@ -114,9 +113,9 @@ void intDriver (const int NUM, const double t, const double t_end,
               //   printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
               }
               failflag = 1;
-              printf("\n");
-            }
+              printf(" \n");
             #endif
+            }
             // if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
             //   failflag = 1;
             // }
