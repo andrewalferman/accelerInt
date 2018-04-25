@@ -26,6 +26,8 @@
  //#include "cvodes_dydt.h"
  #include "jacob.h"
 
+ #include "rkc.h"
+
  extern N_Vector *y_locals;
  extern double* y_local_vectors;
  extern void** integrators;
