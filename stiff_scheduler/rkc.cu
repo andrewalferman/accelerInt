@@ -189,7 +189,7 @@ void rkc_step (const Real t, const Real pr, const Real h, const Real* y_0,
 
 /////////////////////////////////////////////////////////////
 
-__device__ void integrate (const Real tstart,
+__device__ void integrateRKC (const Real tstart,
                             const Real tEnd,
                             const Real pr,
                             Real *y,
