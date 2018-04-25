@@ -71,7 +71,7 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         #ifdef STIFF_METRICS
         double runtime = omp_get_wtime( ) - time0;
-        runtime /= 1000.0;
+        // runtime /= 1000.0;
 
         int failflag = 0;
         #endif
