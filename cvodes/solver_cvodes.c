@@ -172,14 +172,12 @@ void intDriver (const int NUM, const double t, const double t_end,
             //   failflag = 1;
             // }
             #endif
-            if (failflag == 1) {
-              printf("\n");
-            }
             y_global[tid + i * NUM] = y_local[i];
         }
         // printf("%.15e\n", y_local[0]);
         #ifdef STIFF_METRICS
         if (failflag == 1) {
+          printf("\n");
           runtime = -1;
         }
 
