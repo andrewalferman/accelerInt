@@ -129,12 +129,45 @@ void intDriver (const int NUM, const double t, const double t_end,
 
         for (int i = 0; i < NSP; i++)
         {
-            y_global[tid + i * NUM] = y_local[i];
-            #ifdef STIFF_METRICS
-            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
-              failflag = 1;
+          #ifdef STIFF_METRICS
+          #ifdef CHEM_UTILS_HEAD
+          if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+            if (failflag == 0) {
+              printf("y_local:\n");
+              for (int j = 0; j < NSP - 1; j++) {
+                printf("%.15e,",y_local[j]);
+              }
+              printf("%.15e\n",y_local[NSP - 1]);
+              printf("y_global:\n");
+              for (int j = 0; j < NSP - 1; j++) {
+                printf("%.15e,",y_global[tid + j * NUM]);
+              }
+              printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
             }
-            #endif
+            failflag = 1;
+          }
+          #else
+          if (y_local[i] != y_local[i] || isinf(y_local[i])) {
+            if (failflag == 0) {
+              printf("y_local:\n");
+              for (int j = 0; j < NSP - 1; j++) {
+                printf("%.15e,",y_local[j]);
+              }
+              printf("%.15e\n",y_local[NSP - 1]);
+              printf("y_global:\n");
+              for (int j = 0; j < NSP - 1; j++) {
+                printf("%.15e,",y_global[tid + j * NUM]);
+              }
+              printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
+            }
+            failflag = 1;
+          }
+          #endif
+          // if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+          //   failflag = 1;
+          // }
+          #endif
+          y_global[tid + i * NUM] = y_local[i];
         }
         // printf("%.15e\n", y_local[0]);
         #ifdef STIFF_METRICS
