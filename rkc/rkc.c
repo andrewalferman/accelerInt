@@ -125,7 +125,6 @@ Real rkc_spec_rad (const Real t, const Real pr, const Real hmax, const Real* y,
 void rkc_step (const Real t, const Real pr, const Real h, const Real* y_0, const Real* F_0,
                const int s, Real* y_j) {
 
-    printf("%.15e",h)
     const Real w0 = ONE + TWO / (13.0 * (Real)(s * s));
     Real temp1 = (w0 * w0) - ONE;
     Real temp2 = sqrt(temp1);
