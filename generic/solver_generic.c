@@ -131,7 +131,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Print stiffness metrics and timing info
-        printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime);
+        printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime,y_local[0]);
         #endif
 
     } //end tid loop
