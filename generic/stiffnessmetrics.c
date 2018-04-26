@@ -67,9 +67,9 @@
    // Get the Jacobian
    double jac[NSP*NSP];
    double pr_stiffcalc;
-   if (pr_local <= 1000.0)
+   if (pr_local >= 1000.0)
    {
-     pr_stiffcalc = pr_local * 101325.0;
+     pr_stiffcalc = pr_local / 101325.0;
    }
    else
    {
