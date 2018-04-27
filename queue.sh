@@ -17,13 +17,13 @@
 #   mv speciesdata-radau2a-1e-"$n".csv ../Research/accelerInt_Data/
 #   mv speciesdata-rkc-1e-"$n".csv ../Research/accelerInt_Data/
 # }
-touch timingdata-cvodes-1e-4.csv
-touch timingdata-exp4-1e-4.csv
-touch timingdata-exprb43-1e-4.csv
-touch timingdata-radau2a-1e-4.csv
-touch timingdata-rkc-1e-4.csv
-./cvodes-int 1 1 > timingdata-cvodes-1e-4.csv
-./exp4-int 1 1 > timingdata-exp4-1e-4.csv
-./exprb43-int 1 1 > timingdata-exprb43-1e-4.csv
-./radau2a-int 1 1 > timingdata-radau2a-1e-4.csv
-./rkc-int 1 1 > timingdata-rkc-1e-4.csv
+touch timingdata1-cvodes-1e-4.csv
+touch timingdata1-exp4-1e-4.csv
+touch timingdata1-exprb43-1e-4.csv
+touch timingdata1-radau2a-1e-4.csv
+touch timingdata1-rkc-1e-4.csv
+./cvodes-int > timingdata1-cvodes-1e-4.csv
+./exp4-int > timingdata1-exp4-1e-4.csv
+./exprb43-int > timingdata1-exprb43-1e-4.csv
+./radau2a-int > timingdata1-radau2a-1e-4.csv
+./rkc-int > timingdata1-rkc-1e-4.csv
