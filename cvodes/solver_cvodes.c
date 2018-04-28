@@ -118,7 +118,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
         #ifdef STIFF_METRICS
         double runtime = omp_get_wtime( ) - time0;
-        runtime /= 1000.0;
+        // runtime /= 1000.0;
         //printf("Temp: %.15e, Time: %.15e sec\n", y_local[0], runtime);
 
         // update global array with integrated values and print output
