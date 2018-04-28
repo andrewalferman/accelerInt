@@ -8,6 +8,7 @@
 #define HEADER_GUARD_H
 
 #include <stdlib.h>
+#include <math.h>
 
 //include OpenMP if available
 #ifdef _OPENMP

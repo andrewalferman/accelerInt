@@ -27,7 +27,7 @@ namespace exprb43 {
 //! Krylov matrix stride
 #define STRIDE (M_MAX + P)
 //! Maximum allowed internal timesteps per integration step
-#define MAX_STEPS (100000)
+#define MAX_STEPS (10000000)
 //! Number of consecutive errors on internal integration steps allowed before exit
 #define MAX_CONSECUTIVE_ERRORS (5)
 
