@@ -21,7 +21,7 @@ namespace van_der_pol_cu {
  *
  */
 __device__
-void eval_jacob (const double t, const double mu, const double * __restrict__ y, double * __restrict__ jac, const mechanism_memory * __restrict__ d_mem);
+void eval_jacob (const double t, const double eps, const double * __restrict__ y, double * __restrict__ jac, const mechanism_memory * __restrict__ d_mem);
 
 #ifdef GENERATE_DOCS
 }

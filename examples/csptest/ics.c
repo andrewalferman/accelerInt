@@ -30,10 +30,11 @@ void set_same_initial_conditions(int NUM, double** y_host, double** var_host)
     //now set the values
     for (int i = 0; i < NUM; ++i){
         //set mu
-        (*var_host)[i] = 1000;
-        //set y1, y2
-        (*y_host)[i] = 2;
-        (*y_host)[i + NUM] = 0;
+        (*var_host)[i] = 1.0e-2;
+        //set y1, y2, y3, y4
+        for (int j = 0; j < NSP; ++j) {
+          (*y_host)[i + j * NSP] = 1;
+        }
     }
 }
 

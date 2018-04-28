@@ -21,7 +21,7 @@ namespace van_der_pol {
  * \param[in]        y         The state vector
  * \param[out]       dy        The output RHS (dydt) vector
  */
-void dydt (const double t, const double mu, const double * __restrict__ y, double * __restrict__ dy);
+void dydt (const double t, const double eps, const double * __restrict__ y, double * __restrict__ dy);
 
 #ifdef GENERATE_DOCS
 }

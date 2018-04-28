@@ -28,13 +28,44 @@ namespace van_der_pol_cu {
  * @see gpu_macros.cuh
  */
  __device__
-void dydt (const double t, const double mu, const double * __restrict__ y, double * __restrict__ dy,
+void dydt (const double t, const double eps, const double * __restrict__ y, double * __restrict__ dy,
            const mechanism_memory * __restrict__ d_mem) {
 
-  // y1' = y2
-  dy[INDEX(0)] = y[INDEX(1)];
-  // y2' = mu(1 - y1^2)y2 - y1
-  dy[INDEX(1)] = mu * (1 - y[INDEX(0)] * y[INDEX(0)]) * y[INDEX(1)] - y[INDEX(0)];
+     // Real eps1 = ONE / eps;
+     // Real eps2 = ONE / ( eps * eps );
+     //
+     // Real y2 = ONE + y[1];
+     //
+     // Real y3 = ONE + y[2];
+     // Real y32 = y3 * y3;
+     //
+     // Real y4 = ONE + y[3];
+     // Real y42 = y4 * y4;
+
+     /*
+     ydot[0] = ( eps1 * eps2 ) * ( -y[0] + ( y[1] / y2 ) )
+             - ( y[1] / ( y2 * y2 ) ) - ( y[2] / y32 )
+             - ( y[3] / y42 );
+
+     ydot[1] = eps2 * ( -y[1] + ( y[2] / y3 ) )
+             - ( y[2] / y32 ) - ( y[3] / y42 );
+
+     ydot[2] = eps1 * ( -y[2] + ( y[3] / y4 ) )
+             - ( y[3] / y42 );
+     */
+     dy[INDEX(0)] = ( ( ( 1.0 / (eps * eps * eps) ) * ( -y[INDEX(0)] + ( y[INDEX(1)] / (1.0 + y[INDEX(1)]) ) )
+             - ( y[INDEX(1)] / ( (y[INDEX(1)] + 1.0) * (y[INDEX(1)] + 1.0) ) ) )
+             - ( y[INDEX(2)] / ( (y[INDEX(2)] + 1.0) * (y[INDEX(2)] + 1.0) ) ) )
+             - ( y[INDEX(3)] / ( (y[INDEX(3)] + 1.0) * (y[INDEX(3)] + 1.0) ) );
+
+     dy[INDEX(1)] = ( ( 1.0 / (eps * eps) ) * ( -y[INDEX(1)] + ( y[INDEX(2)] / (1.0 + y[INDEX(2)]) ) )
+             - ( y[INDEX(2)] / ( (y[INDEX(2)] + 1.0) * (y[INDEX(2)] + 1.0) ) ) )
+             - ( y[INDEX(3)] / ( (y[INDEX(3)] + 1.0) * (y[INDEX(3)] + 1.0) ) );
+
+     dy[INDEX(2)] = ( 1.0 / eps ) * ( -y[INDEX(2)] + ( y[INDEX(3)] / (1.0 + y[INDEX(3)]) ) )
+             - ( y[INDEX(3)] / ( (y[INDEX(3)] + 1.0) * (y[INDEX(3)] + 1.0) ) );
+
+     dy[INDEX(3)] = -y[INDEX(3)];
 
 } // end dydt
 

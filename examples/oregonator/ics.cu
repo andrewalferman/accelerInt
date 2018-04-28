@@ -32,9 +32,9 @@ void set_same_initial_conditions(int NUM, double** y_host, double** var_host)
       //Dummy value, this won't do anything important for the Oregonator
       (*var_host)[i] = 1000;
       //set y values
-      (*y_host)[i] = 2;
-      (*y_host)[i + NUM] = 0;
-      (*y_host)[i + 2 * NUM] = 0;
+      (*y_host)[i] = 1;
+      (*y_host)[i + NUM] = 1;
+      (*y_host)[i + 2 * NUM] = 2;
     }
 }
 

@@ -22,7 +22,7 @@ namespace van_der_pol {
  * \param[out]          jac             The jacobian to populate
  *
  */
-void eval_jacob (const double t, const double mu, const double * __restrict__ y, double * __restrict__ jac);
+void eval_jacob (const double t, const double eps, const double * __restrict__ y, double * __restrict__ jac);
 
 #ifdef GENERATE_DOCS
 }
