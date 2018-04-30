@@ -117,6 +117,9 @@
    printf("%i\n",n);
    printf("Jacobian:");
    for (int i = 0; i < NSP * NSP; ++i) {
+     if (abs(jac[i]) < 1.0e-150) {
+       jac[i] = (double) 0.0;
+     }
      printf("%.15e,",jac[i]);
    }
    printf("\n");

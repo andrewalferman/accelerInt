@@ -122,9 +122,6 @@ void intDriver (const int NUM, const double t, const double t_end,
             //   failflag = 1;
             // }
             #endif
-            if (abs(y_local[i]) < 1.0e-200) {
-              y_local[i] = (double) 0.0;
-            }
             y_global[tid + i * NUM] = y_local[i];
         }
         // printf("%.15e\n", y_local[0]);
