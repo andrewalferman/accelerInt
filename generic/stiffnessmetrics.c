@@ -66,7 +66,7 @@
      }
    }
    #endif
-   for (int i = 0; i < NSP; i++) {
+  // for (int i = 0; i < NSP; i++) {
 	// printf("%.15e,",re_local[i]);
   //  }
   //  printf("\n");
