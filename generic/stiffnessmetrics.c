@@ -82,6 +82,7 @@
    {
      pr_stiffcalc = pr_local;
    }
+   printf("%.15e\n",pr_local);
    eval_jacob(t, pr_local, re_local, jac);
    // Get the Hermitian
    double hermitian[NSP*NSP];
