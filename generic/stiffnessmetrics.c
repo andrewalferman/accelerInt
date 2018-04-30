@@ -112,18 +112,6 @@
    double wr[N], wi[N], vl[LDVL*N], vr[LDVR*N];
    double xr[N], xi[N], ul[LDVL*N], ur[LDVR*N];
 
-   printf("Got here\n");
-   printf("%i\n",NSP);
-   printf("%i\n",n);
-   printf("Jacobian:");
-   for (int i = 0; i < NSP * NSP; ++i) {
-     if (abs(jac[i]) < 1.0e-150) {
-       jac[i] = (double) 0.0;
-     }
-     printf("%.15e,",jac[i]);
-   }
-   printf("\n");
-   printf("lda:%i\n",lda);
    /* Query and allocate the optimal workspace */
    // First, the Jacobian
    lwork = -1;
@@ -132,15 +120,6 @@
    lwork = (int)wkopt;
    work = (double*)malloc( lwork*sizeof(double) );
    /* Solve eigenproblem */
-   printf("Testing in between\n");
-   printf("%i\n",NSP);
-   printf("%i\n",n);
-   printf("Jacobian:");
-   for (int i = 0; i < NSP * NSP; ++i) {
-     printf("%.15e,",jac[i]);
-   }
-   printf("\n");
-   printf("lda:%i\n",lda);
    dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
     work, &lwork, &info );
    /* Check for convergence */
@@ -149,7 +128,6 @@
            exit( 1 );
    }
    // Next, the Hermitian
-   printf("Also got here.\n");
    lworkh = -1;
    dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
     &wkopth, &lworkh, &infoh );
