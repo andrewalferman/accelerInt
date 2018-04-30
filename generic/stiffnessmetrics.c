@@ -65,13 +65,13 @@
      re_local[NSP] = nmf;
    #else
    double re_local[NSP];
-   for (int i = 0; i < NSP; i++)
-   {
-     re_local[i] = y_local[i];
-     if (abs(re_local[i]) < 1.0e-200) {
-       re_local[i] = (double) 0.0;
-     }
-   }
+   // for (int i = 0; i < NSP; i++)
+   // {
+   //   re_local[i] = y_local[i];
+   //   if (abs(re_local[i]) < 1.0e-200) {
+   //     re_local[i] = (double) 0.0;
+   //   }
+   // }
    #endif
   // for (int i = 0; i < NSP; i++) {
 	// printf("%.15e,",re_local[i]);
