@@ -31,7 +31,6 @@
  #define LDVR N
  // Need a better way of sending this the N2 position
  #ifdef CHEM_UTILS_HEAD
- printf("%i", NSP);
    #if (NSP == 53)
     #define N2POS 48
    #elif (NSP == 13)
