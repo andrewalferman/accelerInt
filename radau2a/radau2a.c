@@ -35,7 +35,7 @@ namespace radau2a {
 #endif
 
 //! Maximum number of allowed internal timesteps before error
-#define Max_no_steps (200000)
+#define Max_no_steps (2000000000)
 //! Maximum number of allowed Newton iteration steps before error
 #define NewtonMaxit (8)
 //! Use quadratic interpolation from previous step if possible

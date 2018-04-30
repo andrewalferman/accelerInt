@@ -24,7 +24,7 @@ namespace van_der_pol {
 #endif
 
 //! The IVP system size
-#define NSP (2)
+#define NSP (4)
 //! Input vector size (in read_initial_conditions)
 #define NN (NSP)
 
