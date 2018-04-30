@@ -103,11 +103,11 @@
        hermitian[i * NSP + j] = (double) 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
      }
    }
-   printf("Hermitian:");
-   for (int i = 0; i < NSP*NSP; ++i) {
-     printf("%.15e,",hermitian[i]);
-   }
-   printf("\n");
+   // printf("Hermitian:");
+   // for (int i = 0; i < NSP*NSP; ++i) {
+   //   printf("%.15e,",hermitian[i]);
+   // }
+   // printf("\n");
    // Get the inverse of the diagonals of the Jacobian matrix
    // double diagonals[NSP];
    // for (int i = 0; i < NSP; i++) {
