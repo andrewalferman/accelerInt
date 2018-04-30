@@ -115,6 +115,12 @@
    printf("Got here\n");
    printf("%i\n",NSP);
    printf("%i\n",n);
+   printf("Jacobian:");
+   for (int i = 0; i < NSP * NSP; ++i) {
+     printf("%.15e,"jac[i]);
+   }
+   printf("\n");
+   printf("lda:%i\n",lda)
    /* Query and allocate the optimal workspace */
    // First, the Jacobian
    lwork = -1;
@@ -126,6 +132,12 @@
    printf("Testing in between\n");
    printf("%i\n",NSP);
    printf("%i\n",n);
+   printf("Jacobian:");
+   for (int i = 0; i < NSP * NSP; ++i) {
+     printf("%.15e,"jac[i]);
+   }
+   printf("\n");
+   printf("lda:%i\n",lda)
    dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
     work, &lwork, &info );
    /* Check for convergence */
