@@ -1,7 +1,7 @@
 #ifndef SPARSE_HEAD
 #define SPARSE_HEAD
 
-#define N_A 2809
+#define N_A 169
 #include "header.h"
 
 void sparse_multiplier (const double *, const double *, double*);
