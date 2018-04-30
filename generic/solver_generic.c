@@ -47,7 +47,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double pr_local = pr_global[tid];
 
         // load local array with initial values from global array
-        printf("Beginning State:")
+        printf("Beginning State:");
         for (int i = 0; i < NSP; i++)
         {
             y_local[i] = y_global[tid + i * NUM];
