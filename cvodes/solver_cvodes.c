@@ -182,7 +182,15 @@ void intDriver (const int NUM, const double t, const double t_end,
         }
 
         // Print stiffness metrics and timing info
+        #ifdef CHEM_UTILS_HEAD
         printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime,y_local[0]);
+        #else
+        printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime);
+        for (int i = 0; i < NSP; ++i) {
+          printf("%.15e,", y_local[i]);
+        }
+        printf("\n");
+        #endif
         // /* Print eigenvalues */
         // print_eigenvalues( "Eigenvalues", n, wr, wi );
 
