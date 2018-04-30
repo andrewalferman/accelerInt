@@ -98,7 +98,9 @@ void intDriver (const int NUM, const double t, const double t_end,
               //   }
               //   printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
               }
-
+            if (y_local[i] < 1.0e-250) {
+              y_local[i] = (double) 0.0;
+            }
             #else
             if (y_local[i] != y_local[i] || isinf(y_local[i])) {
               if (failflag == 0) {
