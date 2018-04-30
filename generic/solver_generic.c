@@ -139,8 +139,8 @@ void intDriver (const int NUM, const double t, const double t_end,
           printf("%.15e,", y_local[i]);
         }
         printf("\n");
-        }
         #endif
+
         #endif
 
     } //end tid loop
