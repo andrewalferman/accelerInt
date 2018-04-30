@@ -78,7 +78,7 @@
   for (int i = 0; i < NSP; i++) {
 
 	   printf("%.15e,",re_local[i]);
-      if (abs(re_local[i]) < 1.0e-300) {
+      if (abs(re_local[i]) < DBL_EPSILON) {
           re_local[i] = (double) 0.0;
           correction = 1;
       }
