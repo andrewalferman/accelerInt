@@ -47,7 +47,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         double pr_local = pr_global[tid];
 
         // load local array with initial values from global array
-
+        printf("Beginning State:")
         for (int i = 0; i < NSP; i++)
         {
             y_local[i] = y_global[tid + i * NUM];
@@ -141,7 +141,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         // printf("%i,%.15e,%.15e,%.15e\n", tid, t, runtime, y_local[0]);
         // #else
         //printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime);
-        printf("%i,%.15e,%.15e,", tid, t, runtime);
+        printf("End State:%i,%.15e,%.15e,", tid, t, runtime);
         for (int i = 0; i < NSP; ++i) {
           printf("%.15e,", y_local[i]);
         }
