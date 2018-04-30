@@ -94,7 +94,7 @@
 
    // Calculate the stiffness metrics
    // Get the Jacobian
-   double jac[NSP*NSP];
+   double jac[NSP*NSP] = {0.0};
    double pr_stiffcalc;
    if (pr_local >= 1000.0)
    {
