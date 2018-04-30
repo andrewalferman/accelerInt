@@ -73,7 +73,7 @@
    //   }
    // }
    #endif
-   printf("Jacobian State:   ");
+   printf("Jacobian State: ");
   for (int i = 0; i < NSP; i++) {
 
 	printf("%.15e,",re_local[i]);
