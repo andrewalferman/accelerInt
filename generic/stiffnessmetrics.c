@@ -80,7 +80,7 @@
 	   printf("%.15e,",re_local[i]);
       if (abs(re_local[i]) < DBL_EPSILON) {
           printf("Value:\n");
-          printf("%.15e\n",re_local[i]);
+          printf("%.15e\n",abs(re_local[i]);
           printf("Double epsilon:\n");
           printf("%.15e\n",DBL_EPSILON);
           re_local[i] = (double) 0.0;
