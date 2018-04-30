@@ -43,7 +43,7 @@
                       const double t, const double t_end)
   {
 
-    printf("Metrics State:");
+    printf("Metrics State:  ");
     for (int i = 0; i < NSP; i++)
     {
         printf("%.15e,",y_local[i]);
@@ -73,10 +73,11 @@
    //   }
    // }
    #endif
-  // for (int i = 0; i < NSP; i++) {
-	// printf("%.15e,",re_local[i]);
-  //  }
-  //  printf("\n");
+  for (int i = 0; i < NSP; i++) {
+  printf("Jacobian State:   ");
+	printf("%.15e,",re_local[i]);
+   }
+   printf("\n");
    // Calculate the stiffness metrics
    // Get the Jacobian
    double jac[NSP*NSP];
