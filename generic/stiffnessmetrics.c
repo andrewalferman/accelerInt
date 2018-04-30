@@ -104,10 +104,12 @@
    {
      pr_stiffcalc = pr_local;
    }
-   printf("%.15e,%.15e",t,pr_local);
+   printf("Jac size: %i\n",(sizeof(jac)/sizeof(double)));
+   printf("%.15e,%.15e\n",t,pr_local);
+   printf("jac[169] before: %.15e", jac[169]);
    eval_jacob(t, pr_local, re_local, jac);
+   printf("jac[169] after: %.15e", jac[169]);
    // Get the Hermitian
-   printf("%i\n",(sizeof(jac)/sizeof(double)));
    printf("Jacobian:");
    // Error checking loop, intended to fix problem with exp4 solver
    for (int i = 0; i <= NSP*NSP; ++i) {
