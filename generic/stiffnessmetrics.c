@@ -113,6 +113,8 @@
    double xr[N], xi[N], ul[LDVL*N], ur[LDVR*N];
 
    printf("Got here\n");
+   printf("%i\n",NSP);
+   printf("%i\n",n);
    /* Query and allocate the optimal workspace */
    // First, the Jacobian
    lwork = -1;
@@ -129,7 +131,7 @@
            exit( 1 );
    }
    // Next, the Hermitian
-   printf("Also got here.\n")
+   printf("Also got here.\n");
    lworkh = -1;
    dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
     &wkopth, &lworkh, &infoh );
