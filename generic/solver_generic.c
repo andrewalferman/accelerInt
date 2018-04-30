@@ -145,7 +145,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         for (int i = 0; i < NSP; ++i) {
           printf("%.15e,", y_local[i]);
         }
-        // #endif
+        #endif
 
         #endif
 
