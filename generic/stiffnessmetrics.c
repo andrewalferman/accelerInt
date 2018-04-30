@@ -78,11 +78,7 @@
   for (int i = 0; i < NSP; i++) {
 
 	   printf("%.15e,",re_local[i]);
-      if (fabs(re_local[i]) < DBL_EPSILON) {
-          printf("Value:\n");
-          printf("%.15e\n",fabs(re_local[i]));
-          printf("Double epsilon:\n");
-          printf("%.15e\n",DBL_EPSILON);
+      if (fabs(re_local[i]) < DBL_EPSILON && re_local[i] != (double) 0.0) {
           re_local[i] = (double) 0.0;
           correction = 1;
       }
