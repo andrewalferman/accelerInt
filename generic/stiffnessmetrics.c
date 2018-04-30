@@ -82,15 +82,24 @@
    {
      pr_stiffcalc = pr_local;
    }
-   printf("%.15e\n",pr_local);
    eval_jacob(t, pr_local, re_local, jac);
    // Get the Hermitian
+   printf("Jacobian:");
+   for (int i = 0; i < NSP*NSP; ++i) {
+     printf("%.15e",jac[i]);
+   }
+   printf("\n");
    double hermitian[NSP*NSP];
    for (int i = 0; i < NSP; i++) {
      for (int j = 0; j < NSP; j++) {
        hermitian[i * NSP + j] = (double) 0.5 * (jac[i * NSP + j] + jac[j * NSP + i]);
      }
    }
+   printf("Hermitian:");
+   for (int i = 0; i < NSP*NSP; ++i) {
+     printf("%.15e",hermitian[i]);
+   }
+   printf("\n");
    // Get the inverse of the diagonals of the Jacobian matrix
    // double diagonals[NSP];
    // for (int i = 0; i < NSP; i++) {
