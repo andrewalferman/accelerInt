@@ -42,6 +42,14 @@
                       double* stiffindicator, double* CEM, double* CSP, int* M,
                       const double t, const double t_end)
   {
+
+    printf("Metrics State:");
+    for (int i = 0; i < NSP; i++)
+    {
+        y_local[i] = y_global[tid + i * NUM];
+        printf("%.15e,",y_local[i]);
+    }
+    printf("\n");
    // Rearrange the solution vector for pyJac
    #ifdef CHEM_UTILS_HEAD
      double re_local[NSP];
