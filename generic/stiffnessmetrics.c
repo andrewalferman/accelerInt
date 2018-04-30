@@ -129,6 +129,7 @@
            exit( 1 );
    }
    // Next, the Hermitian
+   printf("Also got here.\n")
    lworkh = -1;
    dgeev( "Vectors", "Vectors", &nh, hermitian, &ldah, xr, xi, ul, &ldvlh, ur, &ldvrh,
     &wkopth, &lworkh, &infoh );
