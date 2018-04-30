@@ -63,6 +63,10 @@
      re_local[i] = y_local[i];
    }
    #endif
+   for (int i = 0; i < NSP; i++) {
+	printf("%.15e,",re_local[i]);
+   }
+   printf("\n");
    // Calculate the stiffness metrics
    // Get the Jacobian
    double jac[NSP*NSP];
