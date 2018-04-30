@@ -43,12 +43,12 @@
                       const double t, const double t_end)
   {
 
-    printf("Metrics State:  ");
-    for (int i = 0; i < NSP; i++)
-    {
-        printf("%.15e,",y_local[i]);
-    }
-    printf("\n");
+    // printf("Metrics State:  ");
+    // for (int i = 0; i < NSP; i++)
+    // {
+    //     printf("%.15e,",y_local[i]);
+    // }
+    // printf("\n");
    // Rearrange the solution vector for pyJac
    #ifdef CHEM_UTILS_HEAD
      double re_local[NSP];
@@ -73,24 +73,24 @@
    //   }
    // }
    #endif
-   printf("Jacobian State: ");
+   //printf("Jacobian State: ");
    int correction = 0;
   for (int i = 0; i < NSP; i++) {
 
-	   printf("%.15e,",re_local[i]);
+	   //printf("%.15e,",re_local[i]);
       if (fabs(re_local[i]) < DBL_EPSILON && re_local[i] != (double) 0.0) {
           re_local[i] = (double) 0.0;
           correction = 1;
       }
    }
-   printf("\n");
-   if (correction == 1) {
-     printf("Corrected State:");
-     for (int i = 0; i < NSP; i++) {
-   	   printf("%.15e,",re_local[i]);
-     }
-     printf("\n");
-   }
+   //printf("\n");
+   // if (correction == 1) {
+   //   printf("Corrected State:");
+   //   for (int i = 0; i < NSP; i++) {
+   // 	   printf("%.15e,",re_local[i]);
+   //   }
+   //   printf("\n");
+   // }
 
    // Calculate the stiffness metrics
    // Get the Jacobian
@@ -116,9 +116,9 @@
      if (fabs(jac[i]) < DBL_EPSILON && jac[i] != (double) 0.0) {
        jac[i] = (double) 0.0;
      }
-     printf("%.15e,",jac[i]);
+     //printf("%.15e,",jac[i]);
    }
-   printf("\n");
+   //printf("\n");
    double hermitian[NSP*NSP];
    for (int i = 0; i < NSP; i++) {
      for (int j = 0; j < NSP; j++) {
