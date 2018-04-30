@@ -61,12 +61,15 @@
    for (int i = 0; i < NSP; i++)
    {
      re_local[i] = y_local[i];
+     if (abs(re_local[i]) < 1.0e-200) {
+       re_local[i] = (double) 0.0;
+     }
    }
    #endif
    for (int i = 0; i < NSP; i++) {
-	printf("%.15e,",re_local[i]);
-   }
-   printf("\n");
+	// printf("%.15e,",re_local[i]);
+  //  }
+  //  printf("\n");
    // Calculate the stiffness metrics
    // Get the Jacobian
    double jac[NSP*NSP];
@@ -88,18 +91,18 @@
      }
    }
    // Get the inverse of the diagonals of the Jacobian matrix
-   double diagonals[NSP];
-   for (int i = 0; i < NSP; i++) {
-     if (jac[i * NSP + i] > DBL_MIN) {
-       diagonals[i] = (double) 1.0 / jac[i * NSP + i];
-     }
-     else if ((double) -1.0 * jac[i * NSP + i] > DBL_MIN) {
-       diagonals[i] = (double) -1.0 / jac[i * NSP + i];
-     }
-     else {
-       diagonals[i] = -1.0;
-     }
-   }
+   // double diagonals[NSP];
+   // for (int i = 0; i < NSP; i++) {
+   //   if (jac[i * NSP + i] > DBL_MIN) {
+   //     diagonals[i] = (double) 1.0 / jac[i * NSP + i];
+   //   }
+   //   else if ((double) -1.0 * jac[i * NSP + i] > DBL_MIN) {
+   //     diagonals[i] = (double) -1.0 / jac[i * NSP + i];
+   //   }
+   //   else {
+   //     diagonals[i] = -1.0;
+   //   }
+   // }
    // Get the eigenvalues of both matrices
    // Made 2 sets of variables in case dgeev messes them up
    int n = N, lda = LDA, ldvl = LDVL, ldvr = LDVR, info, lwork;
