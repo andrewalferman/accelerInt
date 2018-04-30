@@ -46,7 +46,6 @@
     printf("Metrics State:");
     for (int i = 0; i < NSP; i++)
     {
-        y_local[i] = y_global[tid + i * NUM];
         printf("%.15e,",y_local[i]);
     }
     printf("\n");
