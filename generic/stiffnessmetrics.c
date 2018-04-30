@@ -112,7 +112,7 @@
    // Get the Hermitian
    // printf("Jacobian:\n");
    // Error checking loop, intended to fix problem with exp4 solver
-   for (int i = 0; i <= NSP*NSP; ++i) {
+   for (int i = 0; i < NSP*NSP; ++i) {
      if (fabs(jac[i]) < DBL_EPSILON && jac[i] != (double) 0.0) {
        jac[i] = (double) 0.0;
      }
