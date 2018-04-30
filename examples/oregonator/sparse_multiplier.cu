@@ -20,8 +20,9 @@ namespace oregonator_cu {
  */
 __device__
 void sparse_multiplier(const double * A, const double * Vm, double* w) {
-  w[INDEX(0)] =  A[INDEX(0)] * Vm[INDEX(0)] +  A[INDEX(NSP)] * Vm[INDEX(1)];
-  w[INDEX(1)] =  A[INDEX(1)] * Vm[INDEX(0)] +  A[INDEX(NSP + 1)] * Vm[INDEX(1)];
+  w[INDEX(0)] =  A[INDEX(0)] * Vm[INDEX(0)] +  A[INDEX(3)] * Vm[INDEX(1)] + A[INDEX(6)] * Vm[INDEX(2)];
+  w[INDEX(1)] =  A[INDEX(1)] * Vm[INDEX(0)] +  A[INDEX(4)] * Vm[INDEX(1)] + A[INDEX(7)] * Vm[INDEX(2)];
+  w[INDEX(2)] =  A[INDEX(2)] * Vm[INDEX(0)] +  A[INDEX(5)] * Vm[INDEX(1)] + A[INDEX(8)] * Vm[INDEX(2)];
 }
 
 

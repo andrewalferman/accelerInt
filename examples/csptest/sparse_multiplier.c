@@ -19,8 +19,10 @@ namespace van_der_pol {
  * \param[out]          w           The (NSP x 1) vector to store the result in, \f$w := A * Vm\f$
  */
 void sparse_multiplier(const double * A, const double * Vm, double* w) {
-  w[0] =  A[0] * Vm[0] +  A[NSP] * Vm[1];
-  w[1] =  A[1] * Vm[0] +  A[NSP + 1] * Vm[1];
+  w[0] =  A[0] * Vm[0] +  A[4] * Vm[1] + A[8] * Vm[2] + A[12] * Vm[3];
+  w[1] =  A[1] * Vm[0] +  A[5] * Vm[1] + A[9] * Vm[2] + A[13] * Vm[3];
+  w[2] =  A[2] * Vm[0] +  A[6] * Vm[1] + A[10] * Vm[2] + A[14] * Vm[3];
+  w[3] =  A[3] * Vm[0] +  A[7] * Vm[1] + A[11] * Vm[2] + A[15] * Vm[3];
 }
 
 

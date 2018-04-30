@@ -20,8 +20,9 @@ namespace oregonator {
  */
  //Needs to be modified for Oregonator
 void sparse_multiplier(const double * A, const double * Vm, double* w) {
-  w[0] =  A[0] * Vm[0] +  A[NSP] * Vm[1];
-  w[1] =  A[1] * Vm[0] +  A[NSP + 1] * Vm[1];
+  w[0] =  A[0] * Vm[0] +  A[3] * Vm[1] + A[6] * Vm[2];
+  w[1] =  A[1] * Vm[0] +  A[4] * Vm[1] + A[7] * Vm[2];
+  w[2] =  A[2] * Vm[0] +  A[5] * Vm[1] + A[8] * Vm[2];
 }
 
 
