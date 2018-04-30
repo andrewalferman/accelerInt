@@ -112,6 +112,7 @@
    double wr[N], wi[N], vl[LDVL*N], vr[LDVR*N];
    double xr[N], xi[N], ul[LDVL*N], ur[LDVR*N];
 
+   printf("Got here\n");
    /* Query and allocate the optimal workspace */
    // First, the Jacobian
    lwork = -1;
