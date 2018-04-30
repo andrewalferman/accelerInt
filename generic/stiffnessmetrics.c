@@ -123,7 +123,9 @@
    lwork = (int)wkopt;
    work = (double*)malloc( lwork*sizeof(double) );
    /* Solve eigenproblem */
-   printf("Testing in between");
+   printf("Testing in between\n");
+   printf("%i\n",NSP);
+   printf("%i\n",n);
    dgeev( "Vectors", "Vectors", &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr,
     work, &lwork, &info );
    /* Check for convergence */
