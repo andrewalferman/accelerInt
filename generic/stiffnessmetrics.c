@@ -77,18 +77,18 @@
    int correction = 0;
   for (int i = 0; i < NSP; i++) {
 
-	printf("%.15e,",re_local[i]);
-  if (abs(re_local[i]) < 1.0e-300) {
-    re_local[i] = (double) 0.0;
-    correction = 1
-  }
+	   printf("%.15e,",re_local[i]);
+      if (abs(re_local[i]) < 1.0e-300) {
+          re_local[i] = (double) 0.0;
+          correction = 1;
+      }
    }
    printf("\n");
    if (correction == 1) {
      printf("Corrected State:");
      for (int i = 0; i < NSP; i++) {
-   	printf("%.15e,",re_local[i]);
-  }
+   	   printf("%.15e,",re_local[i]);
+     }
      printf("\n");
    }
 
