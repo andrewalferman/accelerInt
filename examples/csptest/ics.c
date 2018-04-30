@@ -28,14 +28,11 @@ void set_same_initial_conditions(int NUM, double** y_host, double** var_host)
     (*y_host) = (double*)malloc(NUM * NSP * sizeof(double));
     (*var_host) = (double*)malloc(NUM * sizeof(double));
     //now set the values
-    printf("Error checking part\n");
-    printf("%i\n", NUM * NSP);
     for (int i = 0; i < NUM; ++i){
         //set mu
         (*var_host)[i] = 1.0e-2;
         //set y1, y2, y3, y4
         for (int j = 0; j < NSP; ++j) {
-          printf("%i,%i\n",i,(i + j * NSP));
           (*y_host)[i + j * NSP] = 1;
         }
     }
