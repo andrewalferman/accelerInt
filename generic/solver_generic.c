@@ -100,7 +100,7 @@ void intDriver (const int NUM, const double t, const double t_end,
               //   }
               //   printf("%.15e\n",y_global[tid + (NSP - 1) * NUM]);
               }
-            if (y_local[i] < 1.0e-250) {
+            if (fabs(y_local[i]) < DBL_EPSILON) {
               y_local[i] = (double) 0.0;
             }
             #else
