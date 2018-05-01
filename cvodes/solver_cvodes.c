@@ -131,7 +131,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             #ifdef STIFF_METRICS
             #ifdef CHEM_UTILS_HEAD
-            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (double) 0.0) {
+            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (-1.0 * DBL_EPSILON)) {
               if (failflag == 0) {
                 printf("Bad values:\n");
               }
