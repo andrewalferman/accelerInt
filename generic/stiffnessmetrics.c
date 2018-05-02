@@ -50,30 +50,32 @@
     // }
     // printf("\n");
    // Rearrange the solution vector for pyJac
+  double re_local[NSP];
+  for (int i = 0; i < NSP; i++)
+  {
+    re_local[i] = y_local[i];
+    // if (i == N2POS)
+    // {
+    //   double nmf = y_local[i];
+    // }
+  }
    #ifdef CHEM_UTILS_HEAD
-     double re_local[NSP];
-     double nmf;
-     for (int i = 0; i < NSP; i++)
-     {
-       re_local[i] = y_local[i];
-       // if (i == N2POS)
-       // {
-       //   double nmf = y_local[i];
-       // }
-     }
+
+     //double nmf;
+
      apply_mask(re_local);
      // re_local[N2POS] = re_local[NSP];
      // re_local[NSP] = nmf;
-   #else
-   double re_local[NSP];
-   // for (int i = 0; i < NSP; i++)
-   // {
-   //   re_local[i] = y_local[i];
-   //   if (abs(re_local[i]) < 1.0e-200) {
-   //     re_local[i] = (double) 0.0;
-   //   }
-   // }
-   #endif
+   // #else
+   // double re_local[NSP];
+   // // for (int i = 0; i < NSP; i++)
+   // // {
+   // //   re_local[i] = y_local[i];
+   // //   if (abs(re_local[i]) < 1.0e-200) {
+   // //     re_local[i] = (double) 0.0;
+   // //   }
+   // // }
+   // #endif
    //printf("Jacobian State: ");
    int correction = 0;
   for (int i = 0; i < NSP; i++) {
