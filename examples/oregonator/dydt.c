@@ -27,9 +27,6 @@ namespace oregonator {
  */
 void dydt (const double t, const double mu, const double * __restrict__ y, double * __restrict__ dy) {
 
- /* It would be nice to be able to customize these, but accelerInt and pyJac
-  * are currenlty not configured to do so.
-  */
   double s = 77.27;
   double q = 8.375E-6;
   double w = 0.161;

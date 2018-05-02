@@ -31,9 +31,9 @@ for i, file in enumerate(files):
 plt.legend(loc=0)
 
 # title and labels
-plt.title('van der Pol equation')
+plt.title('Oregonator equation')
 plt.xlabel('Time(s)')
 plt.ylabel('$y_1$')
 
 # and save fig
-plt.savefig('van_der_pol.png', dpi=300, size=(5, 3))
+plt.savefig('oregonator.png', dpi=300, size=(5, 3))
