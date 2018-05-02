@@ -30,13 +30,13 @@
  #define LDVL N
  #define LDVR N
  // Need a better way of sending this the N2 position
- #ifdef CHEM_UTILS_HEAD
-   #if (NSP == 53)
-    #define N2POS 48
-   #elif (NSP == 13)
-    #define N2POS 11
-   #endif
- #endif
+ // #ifdef CHEM_UTILS_HEAD
+ //   #if (NSP == 53)
+ //    #define N2POS 48
+ //   #elif (NSP == 13)
+ //    #define N2POS 11
+ //   #endif
+ // #endif
 
  void calculatemetrics(double* y_local, double pr_local, double* stiffratio,
                       double* stiffindicator, double* CEM, double* CSP, int* M,
@@ -56,13 +56,14 @@
      for (int i = 0; i < NSP; i++)
      {
        re_local[i] = y_local[i];
-       if (i == N2POS)
-       {
-         double nmf = y_local[i];
-       }
+       // if (i == N2POS)
+       // {
+       //   double nmf = y_local[i];
+       // }
      }
-     re_local[N2POS] = re_local[NSP];
-     re_local[NSP] = nmf;
+     apply_mask(re_local);
+     // re_local[N2POS] = re_local[NSP];
+     // re_local[NSP] = nmf;
    #else
    double re_local[NSP];
    // for (int i = 0; i < NSP; i++)
