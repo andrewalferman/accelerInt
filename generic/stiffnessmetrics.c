@@ -75,7 +75,7 @@
    // //     re_local[i] = (double) 0.0;
    // //   }
    // // }
-   // #endif
+   #endif
    //printf("Jacobian State: ");
    int correction = 0;
   for (int i = 0; i < NSP; i++) {
