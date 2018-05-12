@@ -63,7 +63,8 @@ void intDriver (const int NUM, const double t, const double t_end,
         int M;
         calculatemetrics(y_local, pr_local, &stiffratio, &stiffindicator, &CEM,
                         &CSP, &M, t, t_end);
-
+        #endif
+        #ifdef PRINT_TS
         //StartTimer();
         double time0 = omp_get_wtime( );
         #endif
@@ -72,7 +73,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         check_error(tid, integrate (t, t_end, pr_local, y_local));
         //double runtime = GetTimer();
 
-        #ifdef STIFF_METRICS
+        #ifdef PRINT_TS
         double runtime = omp_get_wtime( ) - time0;
         // runtime /= 1000.0;
 
@@ -81,7 +82,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         // update global array with integrated values
         for (int i = 0; i < NSP; i++)
         {
-            #ifdef STIFF_METRICS
+            #ifdef PRINT_TS
             #ifdef CHEM_UTILS_HEAD
             if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (-1.0 * DBL_EPSILON)) {
               if (failflag == 0) {
@@ -129,7 +130,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             y_global[tid + i * NUM] = y_local[i];
         }
         // printf("%.15e\n", y_local[0]);
-        #ifdef STIFF_METRICS
+        #ifdef PRINT_TS
         if (failflag == 1) {
           printf("\n");
           runtime = -1;

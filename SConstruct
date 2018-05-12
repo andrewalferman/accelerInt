@@ -206,7 +206,9 @@ config_options = [
     ('CV_MAX_STEPS', 'If specified, the maximum stepsize for CVode', '20000'),
     ('CONST_TIME_STEP', 'If specified, adaptive timestepping will be turned off (for logging purposes)', False),
     BoolVariable(
-        'STIFF_METRICS', 'Calculate the stiffness metrics (work in progress)', False)
+        'STIFF_METRICS', 'Calculate the stiffness metrics (work in progress)', False),
+    BoolVariable(
+        'PRINT_TS', 'Time each individual timestep (work in progress)', False)
 ]
 
 opts.AddVariables(*config_options)
@@ -484,6 +486,12 @@ def write_options(lang, dir):
             file.write("""
         /*! Calculate the stiffness metrics */
         #define STIFF_METRICS
+            """)
+
+        if env['PRINT_TS']:
+            file.write("""
+        /*! Time each individual timestep */
+        #define PRINT_TS
             """)
 
         file.write("""

@@ -26,10 +26,15 @@
 #endif
 
 //our code
+#ifdef STIFF_METRICS
+  #ifndef PRINT_TS
+    #define PRINT_TS
+  #endif
+#endif
 #include "header.h"
 #include "solver.h"
-#ifndef STIFF_METRICS
-#include "timer.h"
+#ifndef PRINT_TS
+  #include "timer.h"
 #endif
 #include "read_initial_conditions.h"
 
@@ -140,7 +145,7 @@ int main (int argc, char *argv[])
 
     #endif
 
-    #ifndef STIFF_METRICS
+    #ifndef PRINT_TS
     // print number of independent ODEs
     printf ("# ODEs: %d\n", NUM);
     printf ("# threads: %d\n", num_threads);
@@ -195,7 +200,7 @@ int main (int argc, char *argv[])
     init_solver_log();
 #endif
 
-    #ifndef STIFF_METRICS
+    #ifndef PRINT_TS
     //////////////////////////////
     // start timer
     StartTimer();
@@ -249,7 +254,7 @@ int main (int argc, char *argv[])
     solver_log();
 #endif
 
-    #ifndef STIFF_METRICS
+    #ifndef PRINT_TS
     /////////////////////////////////
     // end timer
     double runtime = GetTimer();
@@ -265,7 +270,7 @@ int main (int argc, char *argv[])
 #ifdef IGN
     printf ("Ig. Delay (s): %e\n", t_ign);
 #endif
-    #ifndef STIFF_METRICS
+    #ifndef PRINT_TS
     printf("TFinal: %e\n", y_host[0]);
     #endif
 
