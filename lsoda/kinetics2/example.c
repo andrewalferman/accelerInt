@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include
+#include <stdlib.h>
 
 static void *fex (neq, t, y, ydot) double t, *y, *ydot; int neq;
 {

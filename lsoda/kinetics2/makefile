@@ -11,7 +11,7 @@ SAMPL= example.o
 #SAMPL= react1.o
 
 example: $(SAMPL) $(FILES)
-	cc -o example $(SAMPL) $(FILES) -s $(LIB) -lq -lm
+	cc -o example $(SAMPL) $(FILES) -s $(LIB) -lm -O3
 
 libq.a: $(FILES)
 	ar cr libq.a `lorder $(FILES) | tsort`; ranlib libq.a
