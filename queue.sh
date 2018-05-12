@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 python -m pyjac -i examples/pyJac/h2.cti -l c -b out/
-python data_bin_writer.py -d ../Research/H2_CO/
+python data_bin_writer.py -d ../Research/H2_CO/Partial_PaSR/
 file=./ign_data.bin
 if [ -e "$file" ]; then
   echo "Deleting old ign_data file"
@@ -9,6 +9,7 @@ if [ -e "$file" ]; then
   cp ../Research/H2_CO/data.bin ./ign_data.bin
 else
   cp ../Research/H2_CO/data.bin ./ign_data.bin
+fi
 for ((n=8;n>3;n--))
 {
   touch speciesdata-h2-cvodes-1e-"$n".csv
