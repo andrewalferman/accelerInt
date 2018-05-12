@@ -1,3 +1,6 @@
+# Misc
+*.png
+
 # Object files
 *.o
 *.ko
@@ -75,3 +78,4 @@ log/
 ign_data.bin
 ign_data_H2CO.bin
 ign_data_GRI
+ign_data_old
