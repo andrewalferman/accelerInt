@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
 python -m pyjac -i examples/pyJac/h2.cti -l c -b out/
-python data_bin_writer.py -d ../Research/H2_CO/Partial_PaSR/
 file=./ign_data.bin
 if [ -e "$file" ]; then
-  echo "Deleting old ign_data file"
+  echo "Deleting old data.bin file"
   rm -f "$file"
-  cp ../Research/H2_CO/data.bin ./ign_data.bin
+  cp ./initials/H2_CO/ign_data.bin ./ign_data.bin
 else
-  cp ../Research/H2_CO/data.bin ./ign_data.bin
+  cp ./initials/H2_CO/ign_data.bin ./ign_data.bin
 fi
 for ((n=8;n>3;n--))
 {
@@ -33,7 +32,7 @@ for ((n=8;n>3;n--))
 python -m pyjac -i ../Research/GRI_Mech_3/grimech30.cti -l c -b out/
 python data_bin_writer.py -d ../Research/GRI_Mech_3/
 rm -f ./ign_data.bin
-cp ../Research/GRI_Mech_3/data.bin ./ign_data.bin
+cp ./initials/GRI_Mech_3/ign_data.bin ./ign_data.bin
 for ((n=8;n>3;n--))
 {
   touch speciesdata-grimech-cvodes-1e-"$n".csv
