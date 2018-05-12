@@ -77,5 +77,8 @@ log/
 #ignore specific initial condition files
 ign_data.bin
 ign_data_H2CO.bin
-ign_data_GRI
-ign_data_old
+ign_data_GRI.bin
+ign_data_old.bin
+
+# Ignore mechanism files
+out/
