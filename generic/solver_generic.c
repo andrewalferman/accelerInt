@@ -12,11 +12,11 @@
 
 #include "header.h"
 #include "solver.h"
+#include "jacob.h"
 
 #ifdef STIFF_METRICS
 #include "stiffnessmetrics.h"
 #include "math.h"
-#include "jacob.h"
 #endif
 
 #ifdef GENERATE_DOCS
