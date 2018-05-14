@@ -161,6 +161,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             for (int q = 0; q < 10; ++q) {
               if (q * printevery == currentstep) {
                 printstep = 1;
+                printf("%i,%i,%i\n",q,printevery,currentstep)
               }
               if (printstep == 1) {
                 printf("%i,%.15e,%.15e,", tid, t, runtime);
