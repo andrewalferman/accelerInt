@@ -158,8 +158,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             }
             int currentstep = t / dt;
             int printstep = 0;
-            printf("%i,%i,%i",scale,printevery,currentstep);
-            for (int q = 0; q < 10; ) {
+            for (int q = 0; q < 10; ++q) {
               if (q * printevery == currentstep) {
                 printstep = 1;
               }
@@ -183,7 +182,6 @@ void intDriver (const int NUM, const double t, const double t_end,
         #endif
 
         #endif
-
     } //end tid loop
     //double runtime = GetTimer();
     //runtime /= 1000.0;
