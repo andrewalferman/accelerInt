@@ -186,18 +186,41 @@ void intDriver (const int NUM, const double t, const double t_end,
         //printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,%.15e\n", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime,y_local[0]);
         printf("%i,%.15e,%.15e,%.15e\n", tid, t, runtime, y_local[0]);
         #else
-        //printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime);
-        printf("%i,%.15e,%.15e,", tid, t, runtime);
-        for (int i = 0; i < NSP; ++i) {
-          printf("%.15e,", y_local[i]);
-        }
-        printf("\n");
+          #ifdef CSPPRINTING
+          if (t == 0.0) {
+            printf("%i,%.15e,%.15e,", tid, t, runtime);
+            for (int i = 0; i < NSP; ++i) {
+              printf("%.15e,", y_local[i]);
+            }
+            printf("\n");
+          }
+          else {
+            float dt = t_end - t;
+            int refscale = log10(dt);
+            int scale = log10(t);
+            int printevery = 1;
+            for (int p = 2; p < scale - refscale; ++p) {
+              printevery *= 10;
+            }
+            int currentstep = t / dt;
+            if (currentstep % printevery == 0) {
+              printf("%i,%.15e,%.15e,", tid, t, runtime);
+              for (int i = 0; i < NSP; ++i) {
+                printf("%.15e,", y_local[i]);
+              }
+              printf("\n");
+            }
+          }
+          #else
+            //printf("%i,%.15e,%.15e,%.15e,%.15e,%i,%.15e,", tid, stiffratio, stiffindicator, CEM, CSP, M, runtime);
+            printf("%i,%.15e,%.15e,", tid, t, runtime);
+            for (int i = 0; i < NSP; ++i) {
+              printf("%.15e,", y_local[i]);
+            }
+            printf("\n");
+          #endif
         #endif
-        // /* Print eigenvalues */
-        // print_eigenvalues( "Eigenvalues", n, wr, wi );
 
-        //Test print statement
-        //printf("%.15e, %.15e\n", jacobian[0][0], jacobian[0][10])
         #endif
 
     } // end tid loop

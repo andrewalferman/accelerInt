@@ -158,15 +158,12 @@ void intDriver (const int NUM, const double t, const double t_end,
               printevery *= 10;
             }
             int currentstep = t / dt;
-            for (int q = 1; q <= 1000; ++q) {
-              if (q * printevery == currentstep) {
-                printf("%i,%.15e,%.15e,", tid, t, runtime);
-                for (int i = 0; i < NSP; ++i) {
-                  printf("%.15e,", y_local[i]);
-                }
-                printf("\n");
-		break;
+            if (currentstep % printevery == 0) {
+              printf("%i,%.15e,%.15e,", tid, t, runtime);
+              for (int i = 0; i < NSP; ++i) {
+                printf("%.15e,", y_local[i]);
               }
+              printf("\n");
             }
           }
           #else
