@@ -154,17 +154,18 @@ void intDriver (const int NUM, const double t, const double t_end,
             int refscale = log10(dt);
             int scale = log10(t);
             int printevery = 1;
-            for (int p = 1; p < scale - refscale; ++p) {
+            for (int p = 2; p < scale - refscale; ++p) {
               printevery *= 10;
             }
             int currentstep = t / dt;
-            for (int q = 1; q <= 10; ++q) {
+            for (int q = 1; q <= 1000; ++q) {
               if (q * printevery == currentstep) {
                 printf("%i,%.15e,%.15e,", tid, t, runtime);
                 for (int i = 0; i < NSP; ++i) {
                   printf("%.15e,", y_local[i]);
                 }
                 printf("\n");
+		break;
               }
             }
           }
