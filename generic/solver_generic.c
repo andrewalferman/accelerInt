@@ -158,6 +158,7 @@ void intDriver (const int NUM, const double t, const double t_end,
             }
             int currentstep = t / dt;
             int printstep = 0;
+            printf("%i,%i,%i",scale,printevery,currentstep);
             for (int q = 0; q < 10; ) {
               if (q * printevery == currentstep) {
                 printstep = 1;

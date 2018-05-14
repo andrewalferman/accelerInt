@@ -34,7 +34,6 @@ void set_same_initial_conditions(int NUM, double** y_host, double** var_host)
         (*var_host)[i] = 1.0e-2;
         //set y1, y2, y3, y4
         for (int j = 0; j < NSP; ++j) {
-	  printf("%i\n",(i + j * NUM));
           (*y_host)[i + j * NUM] = 1;
         }
     }
