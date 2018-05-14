@@ -1,8 +1,9 @@
 /**
  * \file
- * \brief Contains a header definition for the van der Pol Jacobian evaluation
+ * \brief Contains a header definition for the CSP test problem Jacobian evaluation
  *
  */
+#define CSPPRINTING
 
 #ifndef JACOB_H
 #define JACOB_H
