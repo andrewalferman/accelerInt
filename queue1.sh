@@ -24,7 +24,7 @@
 # ./radau2a-int > timingdata-radau2a-oregonator.csv
 # ./rkc-int > timingdata-rkc-oregonator.csv
 
-scons ATOL=1.0e-12 RTOL=1.0e-08 t_step=1.0e-9 t_end=10.0 SAME_IC=True mechanism_dir=examples/csptest -j 4
+scons ATOL=1.0e-16 RTOL=1.0e-12 t_step=1.0e-7 t_end=10.0 SAME_IC=True mechanism_dir=examples/csptest -j 4
 touch timingdata-cvodes-csptest.csv
 touch timingdata-exp4-csptest.csv
 touch timingdata-exprb43-csptest.csv
