@@ -37,7 +37,7 @@ def readingfunc(problem, solver):
     sol = np.array(sol)
     return ts, comptimes, sol
 
-problems = ['vdp', 'oregonator', 'h2', 'grimech']
+problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
 solvers = ['cvodes', 'exp4', 'exprb43', 'radau2a', 'rkc']
 
 for i in range(10):
@@ -58,12 +58,12 @@ for i, problem in enumerate(problems):
 
     plt.suptitle('Timing Plots for ' + problem)
     axarr[0,1].set_title('Solution')
-    if problem == 'CSPtest':
+    if problem == 'csptest':
         showsols = 4
         axarr[0,0].set_xscale('log')
         axarr[0,1].set_xscale('log')
         plt.xlabel('x Value')
-    elif problem == 'Oregonator':
+    elif problem == 'oregonator':
         showsols = 3
         # axarr[0,0].set_yscale('log')
         plt.xlabel('Time')
@@ -72,7 +72,7 @@ for i, problem in enumerate(problems):
         plt.xlabel('x Value')
     for j, solver in enumerate(solvers):
         ts, comptimes, sol = readingfunc(problem, solver)
-        if problem == 'CSPtest' or problem == 'Oregonator':
+        if problem == 'csptest' or problem == 'oregonator':
             axarr[j,1].legend(loc='upper left', bbox_to_anchor=(1,1),
                               fontsize='x-small')
         axarr[j,0].set_title(solver)
