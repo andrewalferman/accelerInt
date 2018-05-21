@@ -24,17 +24,17 @@
 # ./radau2a-int > timingdata-radau2a-oregonator.csv
 # ./rkc-int > timingdata-rkc-oregonator.csv
 
-scons ATOL=1.0e-16 RTOL=1.0e-12 t_step=1.0e-7 t_end=10.0 SAME_IC=True mechanism_dir=examples/csptest -j 4
-touch timingdata-cvodes-csptest.csv
-touch timingdata-exp4-csptest.csv
-touch timingdata-exprb43-csptest.csv
-touch timingdata-radau2a-csptest.csv
-touch timingdata-rkc-csptest.csv
-./cvodes-int > timingdata-cvodes-csptest.csv
-./exp4-int > timingdata-exp4-csptest.csv
-./exprb43-int > timingdata-exprb43-csptest.csv
-./radau2a-int > timingdata-radau2a-csptest.csv
-./rkc-int > timingdata-rkc-csptest.csv
+scons ATOL=1.0e-16 RTOL=1.0e-12 t_step=1.0e-8 t_end=10.0 SAME_IC=True mechanism_dir=examples/csptest -j 4
+touch timingdata-cvodes-csptest1.csv
+touch timingdata-exp4-csptest1.csv
+touch timingdata-exprb43-csptest1.csv
+touch timingdata-radau2a-csptest1.csv
+touch timingdata-rkc-csptest1.csv
+./cvodes-int > timingdata-cvodes-csptest1.csv
+./exp4-int > timingdata-exp4-csptest1.csv
+./exprb43-int > timingdata-exprb43-csptest1.csv
+./radau2a-int > timingdata-radau2a-csptest1.csv
+./rkc-int > timingdata-rkc-csptest1.csv
 
 # python -m pyjac -i examples/pyJac/h2.cti -l c -b out/ -ic 850.479868012,25.0000000098,H=9.06756542017123e-12,H2=0.027895867750221768,O=1.9159861828260505e-11,OH=1.249516207574034e-10,H2O=0.005443952757524492,O2=0.22127041463199268,HO2=7.783263342726486e-06,H2O2=0.00026485299052499324,AR=0.0,HE=0.0,CO=0.0,CO2=0.0,N2=0.7451171284532142
 # scons ATOL=1.0e-17 RTOL=1.0e-13 t_step=1e-4 t_end=0.2 mechanism_dir=out/ -j 4
