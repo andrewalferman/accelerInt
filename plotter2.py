@@ -37,7 +37,8 @@ def readingfunc(problem, solver):
     sol = np.array(sol)
     return ts, comptimes, sol
 
-problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
+#problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
+problems = ['csptest']
 solvers = ['cvodes', 'exp4', 'exprb43', 'radau2a', 'rkc']
 
 for i in range(10):
@@ -72,15 +73,15 @@ for i, problem in enumerate(problems):
         plt.xlabel('x Value')
     for j, solver in enumerate(solvers):
         ts, comptimes, sol = readingfunc(problem, solver)
-        if problem == 'csptest' or problem == 'oregonator':
-            axarr[j,1].legend(loc='upper left', bbox_to_anchor=(1,1),
-                              fontsize='x-small')
         axarr[j,0].set_title(solver)
         axarr[j,0].plot(ts, comptimes)
         axarr[j,0].set_yscale('log')
         for k in range(showsols):
             lab = 'Y' + str(k+1)
             axarr[j,1].plot(ts, sol[:, k], label=lab)
+        if problem == 'csptest' or problem == 'oregonator':
+            axarr[j,1].legend(loc='upper left', bbox_to_anchor=(1,1),
+                              fontsize='x-small')
 
     # Fine-tune figure; make subplots farther from each other.
     f.subplots_adjust(hspace=0.3)
