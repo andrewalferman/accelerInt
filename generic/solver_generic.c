@@ -84,7 +84,7 @@ void intDriver (const int NUM, const double t, const double t_end,
         {
             #ifdef PRINT_TS
             #ifdef CHEM_UTILS_HEAD
-            if (y_local[i] != y_local[i] || isinf(y_local[i]) || y_local[i] < (-1.0 * DBL_EPSILON)) {
+            if (y_local[i] != y_local[i] || isinf(y_local[i])) { //|| y_local[i] < (-1.0 * DBL_EPSILON)) {
               if (failflag == 0) {
                 printf("Bad values:\n");
               }

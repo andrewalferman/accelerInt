@@ -20,7 +20,7 @@ from matplotlib.ticker import NullFormatter
 
 def readingfunc(problem, solver):
     [ts, comptimes, sol] = [[] for i in range(3)]
-    filename = 'timingdata-' + solver + '-' + problem + '.csv'
+    filename = 'AutonomousODEs/timingdata-' + solver + '-' + problem + '.csv'
     with open(filename, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
@@ -38,7 +38,7 @@ def readingfunc(problem, solver):
     return ts, comptimes, sol
 
 #problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
-problems = ['csptest']
+problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
 solvers = ['cvodes', 'exp4', 'exprb43', 'radau2a', 'rkc']
 
 for i in range(10):
@@ -51,41 +51,42 @@ figformat = 'png'
 for i, problem in enumerate(problems):
     plt.figure(i)
 
-    f, axarr = plt.subplots(5, 2, sharex='col', figsize=(9.0, 7.5))
+    f, axarr = plt.subplots(5, 1, sharex='col', figsize=(9.0/2, 7.5))
     #plt.gca().yaxis.set_minor_formatter(NullFormatter())
     f.add_subplot(111, frameon=False)
     plt.tick_params(labelcolor='none', top='off', bottom='off', left='off',
                     right='off')
 
-    plt.suptitle('Timing Plots for ' + problem)
-    axarr[0,1].set_title('Solution')
+    #plt.suptitle('Timing Plots for ' + problem)
+    #axarr[0,1].set_title('Solution')
     if problem == 'csptest':
-        showsols = 4
-        axarr[0,0].set_xscale('log')
-        axarr[0,1].set_xscale('log')
+        #showsols = 4
+        axarr[0].set_xscale('log')
+        #axarr[0,1].set_xscale('log')
         plt.xlabel('x Value')
     elif problem == 'oregonator':
-        showsols = 3
+        #showsols = 3
         # axarr[0,0].set_yscale('log')
         plt.xlabel('Time')
     else:
-        showsols = 1
+        #showsols = 1
         plt.xlabel('x Value')
     for j, solver in enumerate(solvers):
         ts, comptimes, sol = readingfunc(problem, solver)
-        axarr[j,0].set_title(solver)
-        axarr[j,0].plot(ts, comptimes)
-        axarr[j,0].set_yscale('log')
-        for k in range(showsols):
-            lab = 'Y' + str(k+1)
-            axarr[j,1].plot(ts, sol[:, k], label=lab)
-        if problem == 'csptest' or problem == 'oregonator':
-            axarr[j,1].legend(loc='upper left', bbox_to_anchor=(1,1),
-                              fontsize='x-small')
+        axarr[j].set_title(solver)
+        axarr[j].plot(ts, comptimes)
+        axarr[j].set_yscale('log')
+        # for k in range(showsols):
+        #     lab = 'Y' + str(k+1)
+        #     axarr[j,1].plot(ts, sol[:, k], label=lab)
+        # if problem == 'csptest' or problem == 'oregonator':
+        #     axarr[j].legend(loc='upper left', bbox_to_anchor=(1,1),
+        #                       fontsize='x-small')
 
     # Fine-tune figure; make subplots farther from each other.
     f.subplots_adjust(hspace=0.3)
     f.subplots_adjust(wspace=0.3)
+    plt.tight_layout()
 
     plt.savefig(problem + '.png', dpi=600)
 
