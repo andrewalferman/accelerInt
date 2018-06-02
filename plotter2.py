@@ -20,7 +20,7 @@ from matplotlib.ticker import NullFormatter
 
 def readingfunc(problem, solver):
     [ts, comptimes, sol] = [[] for i in range(3)]
-    filename = 'AutonomousODEs/timingdata-' + solver + '-' + problem + '.csv'
+    filename = 'AutonomousODEs/timingdata-' + solver + '-' + problem + '-ht.csv'
     with open(filename, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
@@ -88,6 +88,6 @@ for i, problem in enumerate(problems):
     f.subplots_adjust(wspace=0.3)
     plt.tight_layout()
 
-    plt.savefig(problem + '.png', dpi=600)
+    plt.savefig(problem + '-ht.png', dpi=600)
 
 plt.show()
