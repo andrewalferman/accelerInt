@@ -16,7 +16,7 @@ for ((n=8;n>3;n--))
   touch speciesdata-h2-exprb43-1e-"$n"-ht.csv
   touch speciesdata-h2-radau2a-1e-"$n"-ht.csv
   touch speciesdata-h2-rkc-1e-"$n"-ht.csv
-  scons ATOL=1.0e-17 RTOL=1.0e-13 t_step=1e-"$n" t_end=1e-"$n" SAME_IC=False -j 4
+  scons ATOL=1.0e-10 RTOL=1.0e-6 t_step=1e-"$n" t_end=1e-"$n" SAME_IC=False -j 4
   ./cvodes-int 4 900900 > speciesdata-h2-cvodes-1e-"$n"-ht.csv
   ./exp4-int 4 900900 > speciesdata-h2-exp4-1e-"$n"-ht.csv
   ./exprb43-int 4 900900 > speciesdata-h2-exprb43-1e-"$n"-ht.csv
@@ -40,7 +40,7 @@ for ((n=8;n>3;n--))
   touch speciesdata-grimech-exprb43-1e-"$n"-ht.csv
   touch speciesdata-grimech-radau2a-1e-"$n"-ht.csv
   touch speciesdata-grimech-rkc-1e-"$n"-ht.csv
-  scons ATOL=1.0e-17 RTOL=1.0e-13 t_step=1e-"$n" t_end=1e-"$n" -j 4
+  scons ATOL=1.0e-10 RTOL=1.0e-6 t_step=1e-"$n" t_end=1e-"$n" -j 4
   ./cvodes-int 4 450900 > speciesdata-grimech-cvodes-1e-"$n"-ht.csv
   ./exp4-int 4 450900 > speciesdata-grimech-exp4-1e-"$n"-ht.csv
   ./exprb43-int 4 450900 > speciesdata-grimech-exprb43-1e-"$n"-ht.csv

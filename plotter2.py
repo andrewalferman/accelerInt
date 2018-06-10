@@ -40,6 +40,7 @@ def readingfunc(problem, solver):
 #problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
 problems = ['vdp', 'oregonator', 'csptest', 'h2', 'grimech']
 solvers = ['cvodes', 'exp4', 'exprb43', 'radau2a', 'rkc']
+printtimes = False
 
 for i in range(10):
     plt.figure(i)
@@ -49,6 +50,8 @@ plt.close('all')
 figformat = 'png'
 
 for i, problem in enumerate(problems):
+    if printtimes:
+        print(problem + ':')
     plt.figure(i)
 
     f, axarr = plt.subplots(5, 1, sharex='col', figsize=(9.0/2, 7.5))
@@ -64,30 +67,46 @@ for i, problem in enumerate(problems):
         axarr[0].set_xscale('log')
         #axarr[0,1].set_xscale('log')
         plt.xlabel('x Value')
+        ymin = 4.5E-7
+        ymax = 7.E-3
     elif problem == 'oregonator':
         #showsols = 3
         # axarr[0,0].set_yscale('log')
         plt.xlabel('Time')
-    else:
-        #showsols = 1
+        ymin = 1.E-6
+        ymax = 3E-2
+    elif problem == 'vdp':
         plt.xlabel('x Value')
+        ymin = 9.E-7
+        ymax = 1.5E-1
+    elif problem == 'h2':
+        plt.xlabel('Time')
+        ymin = 2.E-5
+        ymax = 3.E-2
+    elif problem == 'grimech':
+        #showsols = 1
+        plt.xlabel('Time')
+        ymin = 3.5E-4
+        ymax = 5.E0
     for j, solver in enumerate(solvers):
         ts, comptimes, sol = readingfunc(problem, solver)
-        axarr[j].set_title(solver)
-        axarr[j].plot(ts, comptimes)
-        axarr[j].set_yscale('log')
-        # for k in range(showsols):
-        #     lab = 'Y' + str(k+1)
-        #     axarr[j,1].plot(ts, sol[:, k], label=lab)
-        # if problem == 'csptest' or problem == 'oregonator':
-        #     axarr[j].legend(loc='upper left', bbox_to_anchor=(1,1),
-        #                       fontsize='x-small')
+        if printtimes:
+            print('Max, min times for ' + solver + ': {:.1E}, {:.1E}'.format(max(comptimes),min(comptimes)))
+        else:
+            axarr[j].set_title(solver)
+            axarr[j].plot(ts, comptimes)
+            axarr[j].set_yscale('log')
+            axarr[j].set_ylim(ymin, ymax)
 
-    # Fine-tune figure; make subplots farther from each other.
-    f.subplots_adjust(hspace=0.3)
-    f.subplots_adjust(wspace=0.3)
-    plt.tight_layout()
+    if not printtimes:
+        # Fine-tune figure; make subplots farther from each other.
+        f.subplots_adjust(hspace=0.3)
+        f.subplots_adjust(wspace=0.3)
+        plt.tight_layout()
 
-    plt.savefig(problem + '-ht.png', dpi=600)
+        plt.savefig(problem + '-ht.png')
 
-plt.show()
+if printtimes:
+    sys.exit()
+else:
+    plt.show()
