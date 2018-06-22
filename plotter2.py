@@ -66,26 +66,26 @@ for i, problem in enumerate(problems):
         #showsols = 4
         axarr[0].set_xscale('log')
         #axarr[0,1].set_xscale('log')
-        plt.xlabel('x Value')
+        plt.xlabel('x Value (-)')
         ymin = 4.5E-7
         ymax = 7.E-3
     elif problem == 'oregonator':
         #showsols = 3
         # axarr[0,0].set_yscale('log')
-        plt.xlabel('Time')
+        plt.xlabel('Time (s)')
         ymin = 1.E-6
         ymax = 3E-2
     elif problem == 'vdp':
-        plt.xlabel('x Value')
+        plt.xlabel('x Value (-)')
         ymin = 9.E-7
         ymax = 1.5E-1
     elif problem == 'h2':
-        plt.xlabel('Time')
+        plt.xlabel('Time (s)')
         ymin = 2.E-5
         ymax = 3.E-2
     elif problem == 'grimech':
         #showsols = 1
-        plt.xlabel('Time')
+        plt.xlabel('Time (s)')
         ymin = 3.5E-4
         ymax = 5.E0
     for j, solver in enumerate(solvers):
@@ -100,13 +100,12 @@ for i, problem in enumerate(problems):
 
     if not printtimes:
         # Fine-tune figure; make subplots farther from each other.
-        f.subplots_adjust(hspace=0.3)
-        f.subplots_adjust(wspace=0.3)
+        #f.subplots_adjust(hspace=0.3)
+        #f.subplots_adjust(wspace=0.3)
+        plt.text(-0.2, 0.7, 'Computational time per time step (s)', rotation='vertical')
         plt.tight_layout()
 
-        plt.savefig(problem + '-ht.png')
+        plt.savefig(problem + '-ht.pdf')
 
 if printtimes:
     sys.exit()
-else:
-    plt.show()
